@@ -62,6 +62,16 @@ sources = [
 ]
 
 [[facts]]
+id = "f-klein-origin"
+statement = """Klein Moretti is a citizen of the Northern Continent's Loen Kingdom, in Awwa County, City of Tingen."""
+entities = ["klein-moretti", "northern-continent", "loen-kingdom", "awwa-county", "tingen-city"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "a citizen of the Northern Continent's Loen Kingdom, Awwa County, City of Tingen" },
+]
+
+[[facts]]
 id = "f-klein-father"
 statement = """Klein's father was an Imperial Army sergeant who died in a colonial conflict on the Southern Continent."""
 entities = ["klein-moretti", "southern-continent"]

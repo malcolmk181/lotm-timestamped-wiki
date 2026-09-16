@@ -13,7 +13,12 @@
 #   first_seen chapter (1-based) where this thing is first knowable to the reader
 #   aliases    other names the reader might search (static; name *changes* over
 #              time belong in facts, not here)
-#   summary    optional one-liner, shown on the wiki
+#
+# NOTE: there is deliberately NO free-text "summary"/"description" field here.
+# A one-line description is *knowledge about the entity*, which by definition
+# can change or be revealed chapter by chapter — so descriptions live in facts
+# (timestamped, sourced, refineable/supersedeable) like everything else. Any
+# free-text here would be unschedulable and would leak future chapters backward.
 # =============================================================================
 
 [[entities]]
@@ -22,7 +27,6 @@ name = "Klein Moretti"
 type = "character"
 first_seen = 1
 aliases = ["Klein"]
-summary = "History graduate of Khoy University, resident of Tingen. The body Zhou Mingrui wakes up in."
 
 [[entities]]
 id = "zhou-mingrui"
@@ -30,7 +34,6 @@ name = "Zhou Mingrui"
 type = "character"
 first_seen = 1
 aliases = ["Zhou"]
-summary = "The modern Earthling whose consciousness wakes inside Klein Moretti's body."
 
 [[entities]]
 id = "melissa-moretti"
@@ -38,7 +41,6 @@ name = "Melissa Moretti"
 type = "character"
 first_seen = 3
 aliases = ["Melissa"]
-summary = "Klein's younger sister, an aspiring steam mechanic."
 
 [[entities]]
 id = "benson-moretti"
@@ -46,98 +48,84 @@ name = "Benson Moretti"
 type = "character"
 first_seen = 2
 aliases = ["Benson"]
-summary = "Klein's elder brother, a clerk who supports the family."
 
 [[entities]]
 id = "george-iii"
 name = "King George III"
 type = "character"
 first_seen = 2
-summary = "Reigning monarch of the Loen Kingdom."
 
 [[entities]]
 id = "mr-franky"
 name = "Mr. Franky"
 type = "character"
 first_seen = 2
-summary = "The Moretti family's landlord."
 
 [[entities]]
 id = "loen-kingdom"
 name = "Loen Kingdom"
 type = "location"
 first_seen = 1
-summary = "A kingdom on the Northern Continent; home of the Moretti family."
 
 [[entities]]
 id = "tingen-city"
 name = "Tingen"
 type = "location"
 first_seen = 1
-summary = "City in Awwa County, Loen Kingdom, where Klein lives."
 
 [[entities]]
 id = "awwa-county"
 name = "Awwa County"
 type = "location"
 first_seen = 1
-summary = "County in the Loen Kingdom containing Tingen."
 
 [[entities]]
 id = "northern-continent"
 name = "Northern Continent"
 type = "location"
 first_seen = 1
-summary = "One of the continents of this world."
 
 [[entities]]
 id = "southern-continent"
 name = "Southern Continent"
 type = "location"
 first_seen = 1
-summary = "The other continent, site of the Loen colonial conflict."
 
 [[entities]]
 id = "khoy-university"
 name = "Khoy University"
 type = "organization"
 first_seen = 1
-summary = "Where Klein studied History."
 
 [[entities]]
 id = "tingen-university"
 name = "Tingen University"
 type = "organization"
 first_seen = 3
-summary = "University where Klein has a History department interview."
 
 [[entities]]
 id = "backlund-university"
 name = "Backlund University"
 type = "organization"
 first_seen = 3
-summary = "Another university that gave Klein a recommendation."
 
 [[entities]]
 id = "tingen-technical-school"
 name = "Tingen Technical School"
 type = "organization"
 first_seen = 3
-summary = "Melissa's school (Steam and Machinery department)."
 
 [[entities]]
 id = "church-of-evernight"
 name = "Church of the Evernight Goddess"
 type = "organization"
 first_seen = 3
-summary = "Church of the Evernight Goddess; historically ran Sunday schools."
 
 [[entities]]
 id = "evernight-goddess"
 name = "Evernight Goddess"
 type = "deity"
 first_seen = 1
-summary = "One of the seven orthodox gods; the goddess Klein's mother worshipped."
 
 [[entities]]
 id = "lord-of-storms"
@@ -180,67 +168,57 @@ id = "seven-orthodox-gods"
 name = "Seven Orthodox Gods"
 type = "concept"
 first_seen = 3
-summary = "The seven deities the Northern Continent's religion is built around."
 
 [[entities]]
 id = "feysac-language"
 name = "Ancient Feysac"
 type = "language"
 first_seen = 1
-summary = "Deemed the origin of all Northern Continent languages."
 
 [[entities]]
 id = "hermes-language"
 name = "Hermes Language"
 type = "language"
 first_seen = 1
-summary = "Appears in ancient mausoleums and sacrificial/prayer texts."
 
 [[entities]]
 id = "crimson-moon"
 name = "Crimson Moon"
 type = "concept"
 first_seen = 1
-summary = "This world's moon, which glows crimson."
 
 [[entities]]
 id = "luck-enhancement-ritual"
 name = "Luck Enhancement Ritual"
 type = "ritual"
 first_seen = 2
-summary = "A ritual Zhou Mingrui performed on Earth from an old divination book."
 
 [[entities]]
 id = "quintessential-divination"
 name = "Quintessential Divination and Arcane Arts of the Qin and Han Dynasty"
 type = "item"
 first_seen = 2
-summary = "Thread-bound book Zhou bought at an old bookstore on Earth."
 
 [[entities]]
 id = "brass-revolver"
 name = "Brass Revolver"
 type = "item"
 first_seen = 1
-summary = "Revolver found on Klein's desk; its origin is unexplained."
 
 [[entities]]
 id = "hermes-notebook"
 name = "Hermes-language Notebook"
 type = "item"
 first_seen = 1
-summary = "The open notebook on Klein's desk, bearing a Hermes-language message."
 
 [[entities]]
 id = "copper-penny"
 name = "Copper Penny"
 type = "currency"
 first_seen = 2
-summary = "Basic currency unit of the Loen Kingdom."
 
 [[entities]]
 id = "silver-pocket-watch"
 name = "Silver Vine-Leaf Pocket Watch"
 type = "item"
 first_seen = 3
-summary = "Heirloom watch bearing the siblings' father's photo; prone to breaking."

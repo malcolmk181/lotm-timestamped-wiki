@@ -65,7 +65,7 @@ uv run python -m http.server -d site 8000   # preview locally
 - [x] Schema: entities + timestamped facts with refine/supersede chains
 - [x] Build pipeline (validation + resolution)
 - [x] Static site with chapter slider, entity browser, changes view
-- [x] `data/` authored for chapters 1–3 (~34 entities, ~28 facts)
+- [x] `data/` authored for chapters 1–3 (33 entities, 29 facts)
 - [ ] Extract chapters 4–25
 - [ ] Automated/LLM-assisted extraction pipeline (spoiler-bounded, per-chapter)
 - [ ] GitHub Pages deployment

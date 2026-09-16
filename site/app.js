@@ -173,12 +173,6 @@ function renderEntityDetail(content) {
     alias.textContent = "Also: " + e.aliases.join(", ");
     content.appendChild(alias);
   }
-  if (e.summary) {
-    const sum = document.createElement("p");
-    sum.className = "entity-summary";
-    sum.textContent = e.summary;
-    content.appendChild(sum);
-  }
   const intro = document.createElement("p");
   intro.className = "entity-intro";
   intro.textContent = `First known at chapter ${e.first_seen}.`;

@@ -6,8 +6,7 @@
     "first_seen": 1,
     "aliases": [
       "Klein"
-    ],
-    "summary": "History graduate of Khoy University, resident of Tingen. The body Zhou Mingrui wakes up in."
+    ]
   },
   {
     "id": "zhou-mingrui",
@@ -16,8 +15,7 @@
     "first_seen": 1,
     "aliases": [
       "Zhou"
-    ],
-    "summary": "The modern Earthling whose consciousness wakes inside Klein Moretti's body."
+    ]
   },
   {
     "id": "melissa-moretti",
@@ -26,8 +24,7 @@
     "first_seen": 3,
     "aliases": [
       "Melissa"
-    ],
-    "summary": "Klein's younger sister, an aspiring steam mechanic."
+    ]
   },
   {
     "id": "benson-moretti",
@@ -36,99 +33,85 @@
     "first_seen": 2,
     "aliases": [
       "Benson"
-    ],
-    "summary": "Klein's elder brother, a clerk who supports the family."
+    ]
   },
   {
     "id": "george-iii",
     "name": "King George III",
     "type": "character",
-    "first_seen": 2,
-    "summary": "Reigning monarch of the Loen Kingdom."
+    "first_seen": 2
   },
   {
     "id": "mr-franky",
     "name": "Mr. Franky",
     "type": "character",
-    "first_seen": 2,
-    "summary": "The Moretti family's landlord."
+    "first_seen": 2
   },
   {
     "id": "loen-kingdom",
     "name": "Loen Kingdom",
     "type": "location",
-    "first_seen": 1,
-    "summary": "A kingdom on the Northern Continent; home of the Moretti family."
+    "first_seen": 1
   },
   {
     "id": "tingen-city",
     "name": "Tingen",
     "type": "location",
-    "first_seen": 1,
-    "summary": "City in Awwa County, Loen Kingdom, where Klein lives."
+    "first_seen": 1
   },
   {
     "id": "awwa-county",
     "name": "Awwa County",
     "type": "location",
-    "first_seen": 1,
-    "summary": "County in the Loen Kingdom containing Tingen."
+    "first_seen": 1
   },
   {
     "id": "northern-continent",
     "name": "Northern Continent",
     "type": "location",
-    "first_seen": 1,
-    "summary": "One of the continents of this world."
+    "first_seen": 1
   },
   {
     "id": "southern-continent",
     "name": "Southern Continent",
     "type": "location",
-    "first_seen": 1,
-    "summary": "The other continent, site of the Loen colonial conflict."
+    "first_seen": 1
   },
   {
     "id": "khoy-university",
     "name": "Khoy University",
     "type": "organization",
-    "first_seen": 1,
-    "summary": "Where Klein studied History."
+    "first_seen": 1
   },
   {
     "id": "tingen-university",
     "name": "Tingen University",
     "type": "organization",
-    "first_seen": 3,
-    "summary": "University where Klein has a History department interview."
+    "first_seen": 3
   },
   {
     "id": "backlund-university",
     "name": "Backlund University",
     "type": "organization",
-    "first_seen": 3,
-    "summary": "Another university that gave Klein a recommendation."
+    "first_seen": 3
   },
   {
     "id": "tingen-technical-school",
     "name": "Tingen Technical School",
     "type": "organization",
-    "first_seen": 3,
-    "summary": "Melissa's school (Steam and Machinery department)."
+    "first_seen": 3
   },
   {
     "id": "church-of-evernight",
     "name": "Church of the Evernight Goddess",
     "type": "organization",
-    "first_seen": 3,
-    "summary": "Church of the Evernight Goddess; historically ran Sunday schools."
+    "first_seen": 3
   },
   {
     "id": "evernight-goddess",
     "name": "Evernight Goddess",
     "type": "deity",
-    "first_seen": 1,
-    "summary": "One of the seven orthodox gods; the goddess Klein's mother worshipped."
+    "first_seen": 1
   },
   {
     "id": "lord-of-storms",
@@ -170,70 +153,60 @@
     "id": "seven-orthodox-gods",
     "name": "Seven Orthodox Gods",
     "type": "concept",
-    "first_seen": 3,
-    "summary": "The seven deities the Northern Continent's religion is built around."
+    "first_seen": 3
   },
   {
     "id": "feysac-language",
     "name": "Ancient Feysac",
     "type": "language",
-    "first_seen": 1,
-    "summary": "Deemed the origin of all Northern Continent languages."
+    "first_seen": 1
   },
   {
     "id": "hermes-language",
     "name": "Hermes Language",
     "type": "language",
-    "first_seen": 1,
-    "summary": "Appears in ancient mausoleums and sacrificial/prayer texts."
+    "first_seen": 1
   },
   {
     "id": "crimson-moon",
     "name": "Crimson Moon",
     "type": "concept",
-    "first_seen": 1,
-    "summary": "This world's moon, which glows crimson."
+    "first_seen": 1
   },
   {
     "id": "luck-enhancement-ritual",
     "name": "Luck Enhancement Ritual",
     "type": "ritual",
-    "first_seen": 2,
-    "summary": "A ritual Zhou Mingrui performed on Earth from an old divination book."
+    "first_seen": 2
   },
   {
     "id": "quintessential-divination",
     "name": "Quintessential Divination and Arcane Arts of the Qin and Han Dynasty",
     "type": "item",
-    "first_seen": 2,
-    "summary": "Thread-bound book Zhou bought at an old bookstore on Earth."
+    "first_seen": 2
   },
   {
     "id": "brass-revolver",
     "name": "Brass Revolver",
     "type": "item",
-    "first_seen": 1,
-    "summary": "Revolver found on Klein's desk; its origin is unexplained."
+    "first_seen": 1
   },
   {
     "id": "hermes-notebook",
     "name": "Hermes-language Notebook",
     "type": "item",
-    "first_seen": 1,
-    "summary": "The open notebook on Klein's desk, bearing a Hermes-language message."
+    "first_seen": 1
   },
   {
     "id": "copper-penny",
     "name": "Copper Penny",
     "type": "currency",
-    "first_seen": 2,
-    "summary": "Basic currency unit of the Loen Kingdom."
+    "first_seen": 2
   },
   {
     "id": "silver-pocket-watch",
     "name": "Silver Vine-Leaf Pocket Watch",
     "type": "item",
-    "first_seen": 3,
-    "summary": "Heirloom watch bearing the siblings' father's photo; prone to breaking."
+    "first_seen": 3
   }
 ]
