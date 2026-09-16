@@ -103,11 +103,11 @@ def test_normalize_delta_assigns_coarse_kind():
     raw = {"new_entities": [
         {"id": "a", "name": "A", "type": "character"},
         {"id": "b", "name": "B", "type": "pathway"},
-        {"id": "c", "name": "C", "type": "zoo", "kind": "idea"},
+        {"id": "c", "name": "C", "type": "zoo"},
     ], "new_facts": [], "summary_updates": []}
     norm, _ = normalize_delta(raw, prior, 1)
     kinds = {e["id"]: e["kind"] for e in norm["new_entities"]}
-    assert kinds == {"a": "person", "b": "idea", "c": "idea"}
+    assert kinds == {"a": "person", "b": "idea", "c": "thing"}
 
 
 def test_chapter_files_skips_metadata(tmp_path):

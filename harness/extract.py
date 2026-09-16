@@ -37,7 +37,7 @@ sys.path.insert(0, str(ROOT))
 
 from build import BuildError, load_toml  # noqa: E402
 from harness.schema import (  # noqa: E402
-    DELTA_SCHEMA, NewEntity, NewFact, SummaryUpdate, kind_for,
+    DELTA_SCHEMA, NewEntity, NewFact, SummaryUpdate, clean_type, kind_for,
 )
 from pydantic import ValidationError
 
@@ -120,11 +120,12 @@ HARD RULES:
 4. Be noisy and detailed: prefer many small, specific claims over a few big ones. This is what makes later refinements and overturns meaningful.
 5. Output NOTHING already captured in the prior state. new_entities is ONLY for entities not listed under ENTITIES below; new_facts is ONLY for claims the FACTS list does not already state; emit a summary_update ONLY when you add to or change an entity's description. If a chapter adds nothing new, return empty arrays. Re-emiting an existing entity id is a hard error.
 6. Enumerate fully. When the text gives a list or roll-call (e.g. "seven orthodox gods: the Eternal Blazing Sun, the Lord of Storms, ..."), do not truncate it: emit an entity for the collective plus one entity for each named member, and a fact that names the complete list. Lists like this are core world-building and must not be shortened.
-7. Field values are literal strings ONLY. Never write reasoning, questions, hedging, or alternatives inside a value (e.g. type is "character", never "character, or maybe 'person'").
+7. Use the top-level `reasoning` field for any chain-of-thought (it is discarded). Every OTHER field value is a literal string ONLY — never put reasoning, questions, hedging, or alternatives inside a value (e.g. type is "character", never "character, or maybe 'person'").
 
 OUTPUT SCHEMA (exactly this JSON object):
 {
-  "new_entities": [ {"id": "<slug>", "name": "<name>", "type": "<type>", "kind": "<person|place|thing|idea>", "aliases": ["<name>"]} ],
+  "reasoning": "<optional free-form chain-of-thought — discarded; use THIS to think, never the other fields>",
+  "new_entities": [ {"id": "<slug>", "name": "<name>", "type": "<type>", "aliases": ["<name>"]} ],
   "new_facts": [ {"id": "<slug>", "statement": "<claim>", "entities": ["<entity-id>"], "certainty": "<level>", "sources": [{"chapter": N, "quote": "<exact short quote>"}], "refines": ["<fact-id>"], "supersedes": ["<fact-id>"]} ],
   "summary_updates": [ {"entity": "<entity-id>", "text": "<prose paragraph>"} ],
 }
@@ -132,7 +133,6 @@ Omit empty arrays. Omit optional fields you don't need.
 
 FIELD RULES:
 - entity.type: one short lowercase kebab-case label (e.g. character, location, organization, deity, concept, language, item, ritual, city, country, family, pathway, artifact). Reuse an existing label; invent a new one only if nothing fits. Never a synonym of an existing label.
-- entity.kind: "person", "place", "thing", or "idea" (a coarse grouping). Nothing else.
 - entity.id: kebab-case slug, stable, e.g. "klein-moretti", "tingen-city". For a NEW entity, invent a unique kebab-case id. For an entity already in the prior state, DO NOT re-emit it — reference its existing id instead.
 - entity.aliases: only genuinely different names for the same thing (e.g. "Klein" for "Klein Moretti"). Omit the field (or leave it []) if there is no other name. Never repeat the display name as an alias.
 - fact.id: "f-" + kebab-case, e.g. "f-klein-origin". Must be unique (never reuse a prior id).
@@ -322,9 +322,13 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
             warnings.append(f"entity {e.id!r}: already known, dropped")
             continue
         seen_entity_ids.add(e.id)
+        raw_type = (e.type or "").strip()
+        t = clean_type(raw_type)
+        if len(raw_type) > 60:
+            warnings.append(f"entity {e.id!r}: type was reasoning-soup, coerced to {t!r}")
         new_entities.append({
-            "id": e.id, "name": e.name, "type": e.type,
-            "kind": kind_for(e.type, e.kind),
+            "id": e.id, "name": e.name, "type": t,
+            "kind": kind_for(t),
             "aliases": e.aliases, "first_seen": chapter_num,
         })
     entity_ids = existing_entity | seen_entity_ids

@@ -8,6 +8,7 @@ from harness.schema import (
     NewEntity,
     NewFact,
     SummaryUpdate,
+    clean_type,
     kind_for,
 )
 
@@ -50,7 +51,7 @@ def test_defaults_applied():
 
 def test_schema_exposes_top_level_keys():
     assert set(DELTA_SCHEMA["properties"].keys()) == {
-        "new_entities", "new_facts", "summary_updates"}
+        "reasoning", "new_entities", "new_facts", "summary_updates"}
 
 
 def test_summary_update_shape_has_no_supersedes_field():
@@ -61,23 +62,18 @@ def test_summary_update_shape_has_no_supersedes_field():
 
 
 def test_kind_for_maps_known_types():
-    assert kind_for("character", None) == "person"
-    assert kind_for("location", None) == "place"
-    assert kind_for("pathway", None) == "idea"
-    assert kind_for("xylophone", None) == "thing"  # unknown -> thing
+    assert kind_for("character") == "person"
+    assert kind_for("location") == "place"
+    assert kind_for("pathway") == "idea"
+    assert kind_for("xylophone") == "thing"  # unknown -> thing
 
 
-def test_kind_for_prefers_explicit_kind():
-    assert kind_for("character", "thing") == "thing"
+def test_clean_type_keeps_short_labels():
+    assert clean_type("character") == "character"
+    assert clean_type("Sealed-Artifact") == "sealed-artifact"
 
 
-def test_new_entity_accepts_kind():
-    e = NewEntity.model_validate({"id": "e1", "name": "One",
-                                  "type": "character", "kind": "person"})
-    assert e.kind == "person"
-
-
-def test_new_entity_bad_kind_rejected():
-    with pytest.raises(ValidationError):
-        NewEntity.model_validate({"id": "e1", "name": "One",
-                                  "type": "character", "kind": "goofy"})
+def test_clean_type_coerces_soup():
+    soup = "character-human-from-earth-in-transmigration-process-very-long-" \
+           "essay-the-model-wrote-instead-of-a-type-label"
+    assert clean_type(soup) == "character"  # recovers leading known type
