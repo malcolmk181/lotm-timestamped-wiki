@@ -3,6 +3,9 @@ name = "lotm-timestamped-wiki"
 version = "0.1.0"
 description = "A chapter-timestamped, spoiler-safe wiki of the world of Lord of the Mysteries."
 requires-python = ">=3.11"
+dependencies = [
+    "python-dotenv>=1.2.3",
+]
 
 [dependency-groups]
 dev = []

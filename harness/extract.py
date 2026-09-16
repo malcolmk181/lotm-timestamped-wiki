@@ -30,6 +30,8 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
@@ -46,19 +48,8 @@ API_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 
 # ---------------------------------------------------------------------------
-# .env
+# .env (loaded via python-dotenv in main())
 # ---------------------------------------------------------------------------
-def load_env() -> dict[str, str]:
-    env: dict[str, str] = {}
-    path = ROOT / ".env"
-    if path.exists():
-        for line in path.read_text().splitlines():
-            line = line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            k, v = line.split("=", 1)
-            env[k.strip()] = v.strip().strip('"').strip("'")
-    return env
 
 
 # ---------------------------------------------------------------------------
@@ -389,7 +380,7 @@ def main() -> int:
         print("--apply is not implemented yet; run draft mode and review first.")
         return 1
 
-    env = load_env()
+    load_dotenv(ROOT / ".env")
     model = args.model or os.environ.get("LOTM_MODEL") or DEFAULT_MODEL
     webnovel_dir = Path(args.webnovel_dir or os.environ.get("LOTM_WEBWOVEL_DIR") or DEFAULT_WEBWOVEL)
 
@@ -397,7 +388,7 @@ def main() -> int:
     end_n = args.chapters[-1]
 
     if not args.mock:
-        api_key = env.get("OPENROUTER_API_KEY", "")
+        api_key = os.environ.get("OPENROUTER_API_KEY", "")
         if not api_key:
             print("OPENROUTER_API_KEY not found in .env — add it (see .env.example).")
             return 1
