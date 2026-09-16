@@ -141,7 +141,7 @@ FIELD RULES:
 - fact.sources[].quote: a short exact phrase from the chapter, verbatim, that backs the claim.
 - refines: ids of facts this claim EXTENDS or clarifies without contradicting. Only point at facts established in an EARLIER chapter (their established_at < N).
 - supersedes: ids of facts this claim CONTRADICTS/REPLACES. Only earlier facts. This is how the wiki records that a prior understanding was wrong.
-- summary_updates: write a readable prose PARAGRAPH describing an entity, in natural English, suitable for a reader. Emit one when a chapter meaningfully changes or adds to an entity's description — either a brand-new entity (entity id may be one you just created above) or an updated understanding of an existing one. You do NOT set supersedes: the harness automatically links your new paragraph to the entity's previous version. A changed understanding is as important as a new entity: if a chapter tells you something new about an entity that already has a summary (for example, learning that the Evernight Goddess is one of the seven orthodox gods), you MUST emit a summary_update for it. If a chapter adds nothing new about that entity, do not emit a summary for it.
+- summary_updates: write a readable prose PARAGRAPH for an entity ONLY when this chapter materially changes what that entity IS (its identity, nature, or role). Do NOT emit a summary for routine new details, and never re-summarize an entity whose existing summary is still accurate. Most chapters will have few or no summary_updates.
 - summary text must be chapter-accurate: it may only state what is knowable by chapter N.
 
 Write entity names, quotes, and claims exactly as the chapter states them. Do not editorialize beyond what the text says."""
@@ -253,7 +253,12 @@ def extract_delta(api_key: str, model: str, messages: list[dict],
                 failure = "empty output"
                 continue  # retry this tier
             try:
-                return parse_json(content)
+                delta = parse_json(content)
+                usage = resp.get("usage", {})
+                if usage:
+                    print(f"    [usage] {usage.get('prompt_tokens')} prompt -> "
+                          f"{usage.get('completion_tokens')} completion", flush=True)
+                return delta
             except (BuildError, json.JSONDecodeError) as e:
                 failure = f"unparseable JSON: {e}"
                 continue  # retry this tier
