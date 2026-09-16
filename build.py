@@ -3,7 +3,8 @@
 
 Run with `uv run python build.py`. Add `--selfcheck` to also exercise the
 temporal resolution logic against a tiny synthetic corpus (proves that
-supersede/refine chains and "previous understanding" resolve correctly).
+supersede/refine chains and "previous understanding" resolve correctly, for
+both facts and summaries).
 
 No third-party dependencies: uses only the stdlib (tomllib, json, pathlib).
 """
@@ -34,9 +35,64 @@ def load_toml(path: Path) -> dict:
         return tomllib.load(fh)
 
 
-def validate_and_resolve(entities, facts) -> tuple[list, list, int]:
-    entity_ids = {e["id"] for e in entities}
-    if len(entity_ids) != len(entities):
+def resolve_temporal(items: list[dict]) -> list[dict]:
+    """Resolve forward supersedes/refines pointers into reverse pointers.
+
+    Authoring rule: the newer item declares `supersedes` / `refines` on the
+    older item's id. Here we derive, on the older item, `revoked_at`
+    (from supersedes) and `superseded_by` / `refined_by`. Mutates nothing;
+    returns fresh dicts.
+    """
+    ids = [i["id"] for i in items]
+    if len(set(ids)) != len(ids):
+        raise BuildError("duplicate id in temporal corpus")
+    by_id = {i["id"]: i for i in items}
+
+    for it in items:
+        for dep in it.get("supersedes", []):
+            if dep not in by_id:
+                raise BuildError(f"{it['id']!r}: supersedes unknown {dep!r}")
+            if by_id[dep]["established_at"] >= it["established_at"]:
+                raise BuildError(
+                    f"{it['id']!r}: supersedes {dep!r} which is not strictly "
+                    "older — overturn must point backward in time")
+        for dep in it.get("refines", []):
+            if dep not in by_id:
+                raise BuildError(f"{it['id']!r}: refines unknown {dep!r}")
+            if by_id[dep]["established_at"] > it["established_at"]:
+                raise BuildError(
+                    f"{it['id']!r}: refines {dep!r} which is established "
+                    "later — refinement must point backward")
+
+    resolved = []
+    for it in items:
+        r = dict(it)
+        r.setdefault("supersedes", [])
+        r.setdefault("refines", [])
+        r["revoked_at"] = None
+        r["superseded_by"] = []
+        r["refined_by"] = []
+        resolved.append(r)
+
+    for r in resolved:
+        for dep_id in r["supersedes"]:
+            dep = next(x for x in resolved if x["id"] == dep_id)
+            dep["revoked_at"] = r["established_at"]
+            dep["superseded_by"].append(r["id"])
+        for dep_id in r["refines"]:
+            dep = next(x for x in resolved if x["id"] == dep_id)
+            dep["refined_by"].append(r["id"])
+
+    for r in resolved:
+        r["superseded_by"].sort()
+        r["refined_by"].sort()
+
+    return resolved
+
+
+def validate_entities(entities: list[dict]) -> None:
+    ids = [e["id"] for e in entities]
+    if len(set(ids)) != len(ids):
         raise BuildError("duplicate entity id")
     for e in entities:
         if e["type"] not in ENTITY_TYPES:
@@ -44,11 +100,8 @@ def validate_and_resolve(entities, facts) -> tuple[list, list, int]:
         if e["first_seen"] < 1:
             raise BuildError(f"entity {e['id']!r}: first_seen must be >= 1")
 
-    fact_ids = [f["id"] for f in facts]
-    if len(set(fact_ids)) != len(fact_ids):
-        raise BuildError("duplicate fact id")
 
-    by_id = {f["id"]: f for f in facts}
+def validate_facts(facts: list[dict], entity_ids: set) -> None:
     for f in facts:
         if f["certainty"] not in CERTAINTIES:
             raise BuildError(
@@ -61,104 +114,106 @@ def validate_and_resolve(entities, facts) -> tuple[list, list, int]:
         for src in f["sources"]:
             if src.get("chapter", 0) < 1:
                 raise BuildError(f"fact {f['id']!r}: source missing chapter")
-        for dep in f.get("refines", []):
-            if dep not in by_id:
-                raise BuildError(f"fact {f['id']!r}: refines unknown {dep!r}")
-            if by_id[dep]["established_at"] > f["established_at"]:
+
+
+def validate_summaries(summaries: list[dict], entity_ids: set) -> None:
+    by_id = {s["id"]: s for s in summaries}
+    for s in summaries:
+        if s["entity"] not in entity_ids:
+            raise BuildError(
+                f"summary {s['id']!r}: unknown entity {s['entity']!r}")
+        if s["established_at"] < 1:
+            raise BuildError(
+                f"summary {s['id']!r}: established_at must be >= 1")
+        for dep in s.get("supersedes", []):
+            if dep in by_id and by_id[dep]["entity"] != s["entity"]:
                 raise BuildError(
-                    f"fact {f['id']!r}: refines {dep!r} which is established "
-                    "later — refinement must point backward")
-        for dep in f.get("supersedes", []):
-            if dep not in by_id:
-                raise BuildError(f"fact {f['id']!r}: supersedes unknown {dep!r}")
-            if by_id[dep]["established_at"] >= f["established_at"]:
-                raise BuildError(
-                    f"fact {f['id']!r}: supersedes {dep!r} which is not "
-                    "strictly older — overturn must point backward in time")
-
-    # Resolve reverse pointers. Mutate copies so the author's source is the
-    # single direction of truth and never edits revoked_at by hand.
-    resolved = []
-    for f in facts:
-        r = dict(f)
-        r.setdefault("supersedes", [])
-        r.setdefault("refines", [])
-        r["revoked_at"] = None
-        r["superseded_by"] = []
-        r["refined_by"] = []
-        resolved.append(r)
-
-    for f in resolved:
-        for dep_id in f["supersedes"]:
-            dep = by_id[dep_id]
-            dep_resolved = next(x for x in resolved if x["id"] == dep_id)
-            # revoked_at = earliest chapter where a replacement arrives
-            dep_resolved["revoked_at"] = f["established_at"]
-            dep_resolved["superseded_by"].append(f["id"])
-        for dep_id in f["refines"]:
-            dep_resolved = next(x for x in resolved if x["id"] == dep_id)
-            dep_resolved["refined_by"].append(f["id"])
-
-    for f in resolved:
-        f["superseded_by"].sort()
-        f["refined_by"].sort()
-
-    max_chapter = max(
-        [e["first_seen"] for e in entities]
-        + [f["established_at"] for f in resolved]
-        + [f["revoked_at"] for f in resolved if f["revoked_at"]],
-        default=0,
-    )
-    return resolved, list(entities), max_chapter
+                    f"summary {s['id']!r}: supersedes {dep!r} which belongs "
+                    "to a different entity")
+        for src in s["sources"]:
+            if src.get("chapter", 0) < 1:
+                raise BuildError(f"summary {s['id']!r}: source missing chapter")
 
 
 def build():
     entities = load_toml(DATA / "entities.toml")["entities"]
     facts = load_toml(DATA / "facts.toml")["facts"]
-    resolved, out_entities, max_chapter = validate_and_resolve(entities, facts)
+    summaries = load_toml(DATA / "summaries.toml")["summaries"]
+    entity_ids = {e["id"] for e in entities}
+
+    validate_entities(entities)
+    validate_facts(facts, entity_ids)
+    validate_summaries(summaries, entity_ids)
+
+    out_facts = resolve_temporal(facts)
+    out_summaries = resolve_temporal(summaries)
+
+    def cmax():
+        for e in entities:
+            yield e["first_seen"]
+        for f in out_facts:
+            yield f["established_at"]
+            if f["revoked_at"]:
+                yield f["revoked_at"]
+        for s in out_summaries:
+            yield s["established_at"]
+            if s["revoked_at"]:
+                yield s["revoked_at"]
+
+    max_chapter = max(cmax(), default=0)
 
     out = SITE / "data"
     out.mkdir(parents=True, exist_ok=True)
     (out / "facts.json").write_text(
-        json.dumps(resolved, ensure_ascii=False, indent=2))
+        json.dumps(out_facts, ensure_ascii=False, indent=2))
     (out / "entities.json").write_text(
-        json.dumps(out_entities, ensure_ascii=False, indent=2))
+        json.dumps(entities, ensure_ascii=False, indent=2))
+    (out / "summaries.json").write_text(
+        json.dumps(out_summaries, ensure_ascii=False, indent=2))
     (out / "meta.json").write_text(json.dumps({
         "max_chapter": max_chapter,
         "title": "Lord of the Mysteries — World Wiki",
-        "fact_count": len(resolved),
-        "entity_count": len(out_entities),
+        "fact_count": len(out_facts),
+        "entity_count": len(entities),
+        "summary_count": len(out_summaries),
     }, indent=2))
 
     print(
-        f"built: {len(out_entities)} entities, {len(resolved)} facts, "
-        f"max chapter {max_chapter} -> {out}"
+        f"built: {len(entities)} entities, {len(out_facts)} facts, "
+        f"{len(out_summaries)} summaries, max chapter {max_chapter} -> {out}"
     )
 
 
 def selfcheck():
-    """Synthetic corpus proving supersede/refine resolution."""
+    """Synthetic corpus proving supersede/refine resolution (facts + summaries)."""
     entities = [
         {"id": "x", "name": "X", "type": "concept", "first_seen": 1},
     ]
     facts = [
-        # plain fact
-        {"id": "a", "statement": "A", "entities": ["x"],
-         "established_at": 1, "certainty": "fact", "sources": [{"chapter": 1}]},
-        # refines a
+        {"id": "a", "statement": "A", "entities": ["x"], "established_at": 1,
+         "certainty": "fact", "sources": [{"chapter": 1}]},
         {"id": "b", "statement": "B", "entities": ["x"], "established_at": 2,
          "certainty": "fact", "sources": [{"chapter": 2}], "refines": ["a"]},
-        # supersedes a at ch 3
         {"id": "c", "statement": "C", "entities": ["x"], "established_at": 3,
          "certainty": "fact", "sources": [{"chapter": 3}], "supersedes": ["a"]},
     ]
-    resolved, _, max_chapter = validate_and_resolve(entities, facts)
-    a = next(f for f in resolved if f["id"] == "a")
+    summaries = [
+        {"id": "s1", "entity": "x", "established_at": 1,
+         "text": "v1", "sources": [{"chapter": 1}]},
+        {"id": "s2", "entity": "x", "established_at": 3,
+         "text": "v2", "sources": [{"chapter": 3}], "supersedes": ["s1"]},
+    ]
+    rf = resolve_temporal(facts)
+    a = next(f for f in rf if f["id"] == "a")
     assert a["refined_by"] == ["b"], a
     assert a["superseded_by"] == ["c"], a
     assert a["revoked_at"] == 3, a
-    assert max_chapter == 3, max_chapter
-    print("selfcheck OK: supersede/refine resolution and max_chapter correct")
+
+    rs = resolve_temporal(summaries)
+    s1 = next(s for s in rs if s["id"] == "s1")
+    assert s1["superseded_by"] == ["s2"], s1
+    assert s1["revoked_at"] == 3, s1
+    print("selfcheck OK: supersede/refine resolution correct for facts and summaries")
 
 
 if __name__ == "__main__":

@@ -10,9 +10,10 @@ understandings* with sources and a pointer to what replaced them.
 There is no server and no database. The whole thing is:
 
 1. **Plain-text data** in [`data/`](data/) — `entities.toml` (the stable
-   "things") and `facts.toml` (timestamped claims). This is the source of
-   truth, and it lives in git, so every revision of the wiki's understanding
-   has full history, diffs, and blame for free.
+   "things"), `facts.toml` (timestamped claims), and `summaries.toml`
+   (timestamped prose descriptions). This is the source of truth, and it lives
+   in git, so every revision of the wiki's understanding has full history,
+   diffs, and blame for free.
 2. **`build.py`** — a stdlib-only Python script that validates the corpus,
    resolves the supersede/refine chains, and emits JSON into `site/data/`.
 3. **A static site** in [`site/`](site/) — a single-page app with a chapter
@@ -24,8 +25,8 @@ Run `uv run python build.py` and commit the regenerated `site/data/*.json`.
 
 ## Data model
 
-See the field documentation at the top of [`data/entities.toml`](data/entities.toml)
-and [`data/facts.toml`](data/facts.toml).
+See the field documentation at the top of [`data/entities.toml`](data/entities.toml),
+[`data/facts.toml`](data/facts.toml), and [`data/summaries.toml`](data/summaries.toml).
 
 Core idea: a fact is **valid over an interval** `[established_at, revoked_at)`.
 
@@ -35,6 +36,13 @@ Core idea: a fact is **valid over an interval** `[established_at, revoked_at)`.
 - `refines` — a later fact extends/clarifies an earlier one without
   contradicting it.
 - `supersedes` — a later fact overturns an earlier one.
+
+A **summary** is the same interval idea applied to prose: each entity has
+versioned paragraphs, and a new version `supersedes` an earlier one when the
+understanding changes. On the entity page the current paragraph is shown with
+any earlier versions available as "earlier understanding" — so at chapter 3
+the Evernight Goddess is "one of the seven orthodox gods," but at chapter 1
+the count of seven is correctly absent.
 
 The two axes that make the wiki faithful to a mystery novel:
 
@@ -62,10 +70,10 @@ uv run python -m http.server -d site 8000   # preview locally
 
 ## Status
 
-- [x] Schema: entities + timestamped facts with refine/supersede chains
+- [x] Schema: entities + timestamped facts + timestamped prose summaries
 - [x] Build pipeline (validation + resolution)
 - [x] Static site with chapter slider, entity browser, changes view
-- [x] `data/` authored for chapters 1–3 (33 entities, 29 facts)
+- [x] `data/` authored for chapters 1–3 (33 entities, 29 facts, 36 summaries)
 - [ ] Extract chapters 4–25
 - [ ] Automated/LLM-assisted extraction pipeline (spoiler-bounded, per-chapter)
 - [ ] GitHub Pages deployment

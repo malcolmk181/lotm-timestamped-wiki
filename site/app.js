@@ -3,6 +3,7 @@
 // ---- state ---------------------------------------------------------------
 let facts = [];
 let entities = [];
+let summaries = [];
 let meta = { max_chapter: 1 };
 let chapter = 1;
 let view = "entities";
@@ -33,9 +34,10 @@ async function load(path) {
 }
 
 async function init() {
-  [facts, entities, meta] = await Promise.all([
+  [facts, entities, summaries, meta] = await Promise.all([
     load("data/facts.json"),
     load("data/entities.json"),
+    load("data/summaries.json"),
     load("data/meta.json"),
   ]);
   factMap = byId(facts);
@@ -74,7 +76,7 @@ function render() {
   const footer = document.getElementById("footer");
   footer.textContent =
     `${meta.entity_count} entities · ${meta.fact_count} facts · ` +
-    `showing world as of chapter ${chapter}`;
+    `${meta.summary_count} descriptions · showing world as of chapter ${chapter}`;
 
   if (view === "entities") {
     renderEntityIndex(sidebar);
@@ -96,6 +98,31 @@ function activeEntityFacts(eid) {
 
 function entityCount(eid) {
   return activeEntityFacts(eid).length;
+}
+
+function currentSummary(eid) {
+  const cands = summaries.filter(
+    (s) => s.entity === eid && s.established_at <= chapter &&
+      (s.revoked_at === null || s.revoked_at > chapter));
+  cands.sort((a, b) => b.established_at - a.established_at);
+  return cands[0] || null;
+}
+
+function priorSummaries(eid) {
+  return summaries
+    .filter((s) => s.entity === eid && s.revoked_at !== null &&
+      s.revoked_at <= chapter && s.established_at <= chapter)
+    .sort((a, b) => a.established_at - b.established_at);
+}
+
+function appendProse(parent, text, className) {
+  const parts = String(text).split(/\n+/).filter((p) => p.trim());
+  for (const part of parts) {
+    const p = document.createElement("p");
+    p.className = className;
+    p.textContent = part.trim();
+    parent.appendChild(p);
+  }
 }
 
 function renderEntityIndex(sidebar) {
@@ -178,6 +205,27 @@ function renderEntityDetail(content) {
   intro.textContent = `First known at chapter ${e.first_seen}.`;
   content.appendChild(intro);
 
+  const cur = currentSummary(e.id);
+  if (cur) {
+    const box = document.createElement("div");
+    box.className = "summary";
+    appendProse(box, cur.text, "summary-text");
+    content.appendChild(box);
+  }
+  for (const prior of priorSummaries(e.id)) {
+    const det = document.createElement("details");
+    det.className = "prior-summary";
+    const sum = document.createElement("summary");
+    sum.textContent =
+      `Earlier understanding (ch ${prior.established_at}–${prior.revoked_at})`;
+    det.appendChild(sum);
+    const body = document.createElement("div");
+    body.className = "prior-summary-body";
+    appendProse(body, prior.text, "summary-text");
+    det.appendChild(body);
+    content.appendChild(det);
+  }
+
   const fs = activeEntityFacts(e.id).sort(
     (a, b) => a.established_at - b.established_at);
   const h = document.createElement("h3");
@@ -259,7 +307,37 @@ function renderChanges(sidebar, content) {
     }
   }
 
-  if (!refined.length && !overturned.length) {
+  // Summary revisions: descriptions that were replaced by this chapter.
+  const revSummary = summaries.filter(
+    (s) => s.revoked_at !== null && s.revoked_at <= chapter);
+  if (revSummary.length) {
+    const h = document.createElement("h2");
+    h.textContent = "Summary revisions (descriptions that changed)";
+    content.appendChild(h);
+    for (const s of revSummary.sort((a, b) => a.revoked_at - b.revoked_at)) {
+      const card = document.createElement("div");
+      card.className = "change overturned";
+      const lbl = document.createElement("p");
+      lbl.className = "change-label";
+      lbl.textContent =
+        `${entityMap[s.entity].name} — description ch ${s.established_at} → ${s.revoked_at}:`;
+      card.appendChild(lbl);
+      const oldBox = document.createElement("div");
+      oldBox.className = "summary";
+      appendProse(oldBox, s.text, "summary-text");
+      card.appendChild(oldBox);
+      for (const id of s.superseded_by) {
+        const rep = summaries.find((x) => x.id === id);
+        const newBox = document.createElement("div");
+        newBox.className = "summary replacement";
+        appendProse(newBox, rep.text, "summary-text");
+        card.appendChild(newBox);
+      }
+      content.appendChild(card);
+    }
+  }
+
+  if (!refined.length && !overturned.length && !revSummary.length) {
     const p2 = document.createElement("p");
     p2.className = "empty hint";
     p2.textContent =

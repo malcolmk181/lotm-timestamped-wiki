@@ -1,0 +1,402 @@
+# =============================================================================
+# SUMMARIES — prose descriptions of entities, timestamped like facts.
+#
+# A summary is the "readable paragraph" version of an entity's knowledge. It is
+# every bit as chapter-bounded as a fact: it appears only at established_at,
+# and when the understanding changes a NEW summary supersedes the old one, so
+# the slider can show "what we believed this entity to be" at any chapter.
+#
+# Fields:
+#   id            slug, unique (convention "s-<entity>-<n>")
+#   entity        id of the entity this summarizes
+#   established_at  chapter (1-based) where this version first holds
+#   text          prose (one or more paragraphs) — write naturally, for reading
+#   supersedes    [optional] ids of earlier summary versions this one replaces
+#   sources       list of { chapter, quote? } backing the summary
+#
+# Rule (as with facts): author only the forward `supersedes` pointer on the
+# NEWER version. build.py derives revoked_at / superseded_by on the old one.
+# A summary may only state what is knowable by its own established_at.
+# =============================================================================
+
+# ---- Klein Moretti -----------------------------------------------------------
+
+[[summaries]]
+id = "s-klein-moretti-1"
+entity = "klein-moretti"
+established_at = 1
+text = """Klein Moretti was a history graduate of Khoy University, a poor young man of the Loen Kingdom living in a two-bedroom apartment in Tingen, Awwa County, with his elder brother Benson and younger sister Melissa. His father, an Imperial Army sergeant, had died in a colonial conflict on the Southern Continent; his mother, a devotee of the Evernight Goddess, died the year he passed his university entrance exams. It is his body that the transmigrator Zhou Mingrui awakens inside — Klein himself is dead, his temple bearing a gruesome wound and a bloody handprint beside his desk."""
+sources = [
+  { chapter = 1 },
+]
+
+[[summaries]]
+id = "s-klein-moretti-2"
+entity = "klein-moretti"
+established_at = 2
+supersedes = ["s-klein-moretti-1"]
+text = """Klein Moretti was a history graduate of Khoy University, a poor young man of the Loen Kingdom living in a two-bedroom apartment in Tingen, Awwa County, with his elder brother Benson and younger sister Melissa. His father, an Imperial Army sergeant, had died in a colonial conflict on the Southern Continent; his mother, a devotee of the Evernight Goddess, died the year he passed his university entrance exams. He apparently shot himself in the temple with a brass revolver whose presence remains unexplained, and his flesh healed with unnatural speed — a restoration the transmigrator Zhou Mingrui, now waking in his body, credits to the effects of transmigration."""
+sources = [
+  { chapter = 2, quote = "Releasing a round with a revolver pointed at the temple?" },
+]
+
+# ---- Zhou Mingrui ------------------------------------------------------------
+
+[[summaries]]
+id = "s-zhou-mingrui-1"
+entity = "zhou-mingrui"
+established_at = 1
+text = """Zhou Mingrui is a modern Chinese Earthling who, after cataloguing a run of bad luck and trying an arcane 'luck enhancement ritual' from an old divination book, awakes in the body of a recently dead young man named Klein Moretti in a world under a crimson moon. Torn between terror and the dreamlike thrill of a web-novel fan living out a transmigration fantasy, his first concern is to understand what happened to him — and whether he can get home."""
+sources = [
+  { chapter = 1, quote = "C-could I have transmigrated?" },
+]
+
+# ---- Melissa Moretti ---------------------------------------------------------
+
+[[summaries]]
+id = "s-melissa-moretti-1"
+entity = "melissa-moretti"
+established_at = 3
+text = """Melissa Moretti is Klein's fifteen-year-old younger sister. Unlike her brothers she was schooled under the Loen Kingdom's new Basic Education Law rather than the Evernight Church's Sunday school, and she is a natural with machinery — her ambition is to become a steam mechanic, and she studies in the Steam and Machinery department of Tingen Technical School. Sharp-eyed and a little exasperated by her 'dull' brother, she fixes the family's heirloom pocket watch with ease while chivvying him over the household groceries."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- Benson Moretti ----------------------------------------------------------
+
+[[summaries]]
+id = "s-benson-moretti-1"
+entity = "benson-moretti"
+established_at = 2
+text = """Benson Moretti is Klein's elder brother, a literate clerk at an import-export company who has kept the family afloat since their father's death, even talking the landlord into installing a gas lamp for Klein's studies. As the Southern Continent's troubles squeeze his company's profits, he shoulders longer hours and harsher postings rather than risk his job."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- Loen Kingdom ------------------------------------------------------------
+
+[[summaries]]
+id = "s-loen-kingdom-1"
+entity = "loen-kingdom"
+established_at = 1
+text = """The Loen Kingdom is a nation of the Northern Continent — the home of Klein Moretti's family and of the city of Tingen — where gas meters, horse carriages, and a copper-penny currency coexist with a different, crimson moon. It is a place at war, its Imperial Army having fought a colonial conflict against the Southern Continent that cost Klein's father his life."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- Tingen ------------------------------------------------------------------
+
+[[summaries]]
+id = "s-tingen-city-1"
+entity = "tingen-city"
+established_at = 1
+text = """Tingen is a city in Awwa County, in the Loen Kingdom, where the Moretti family rents a two-bedroom apartment from a watchful landlord. It is the setting of Zhou Mingrui's awakening."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- Awwa County -------------------------------------------------------------
+
+[[summaries]]
+id = "s-awwa-county-1"
+entity = "awwa-county"
+established_at = 1
+text = """Awwa County is a county of the Loen Kingdom that contains the city of Tingen, home of the Moretti family."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- Northern Continent ------------------------------------------------------
+
+[[summaries]]
+id = "s-northern-continent-1"
+entity = "northern-continent"
+established_at = 1
+text = """The Northern Continent is the landmass that holds the Loen Kingdom (and Klein Moretti's hometown of Tingen), whose ancient Feysac language is held to be the root of all the continent's tongues. Its weeks are — as Zhou soon learns — divided into seven days for reasons of religion rather than astronomy."""
+sources = [
+  { chapter = 1 },
+  { chapter = 3 },
+]
+
+# ---- Southern Continent ------------------------------------------------------
+
+[[summaries]]
+id = "s-southern-continent-1"
+entity = "southern-continent"
+established_at = 1
+text = """The Southern Continent is the other landmass of this world, against which the Loen Kingdom has fought a colonial conflict — the war in which Klein Moretti's father, an Imperial Army sergeant, was killed."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- Khoy University ---------------------------------------------------------
+
+[[summaries]]
+id = "s-khoy-university-1"
+entity = "khoy-university"
+established_at = 1
+text = """Khoy University is the institution where Klein Moretti graduated from the Department of History, having scraped through evening study with the help of his brother Benson."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- Evernight Goddess (timestamped demo: v1 -> v2 at ch 3) ------------------
+
+[[summaries]]
+id = "s-evernight-goddess-1"
+entity = "evernight-goddess"
+established_at = 1
+text = """The Evernight Goddess is a deity worshiped in the Loen Kingdom — Klein Moretti's late mother was one of her devotees."""
+sources = [
+  { chapter = 1 },
+]
+
+[[summaries]]
+id = "s-evernight-goddess-2"
+entity = "evernight-goddess"
+established_at = 3
+supersedes = ["s-evernight-goddess-1"]
+text = """The Evernight Goddess is one of the seven orthodox gods of the Northern Continent, whose churches — alongside those of the Lord of Storms and the God of Steam and Machinery — once ran the region's Sunday schools before the Loen Kingdom's Basic Education Law founded religiously neutral public schools. Klein Moretti's late mother was one of her devotees."""
+sources = [
+  { chapter = 3, quote = "the Northern Continent had seven orthodox gods" },
+]
+
+# ---- Seven Orthodox Gods -----------------------------------------------------
+
+[[summaries]]
+id = "s-seven-orthodox-gods-1"
+entity = "seven-orthodox-gods"
+established_at = 3
+text = """The Northern Continent's religion is organized around seven orthodox gods: the Eternal Blazing Sun, the Lord of Storms, the God of Knowledge and Wisdom, the Evernight Goddess, Earth Mother, the God of Combat, and the God of Steam and Machinery. The seven-day week is a product of this faith, the twelve-month year one of astronomical observation."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- The six named deities (first named together in ch 3) --------------------
+
+[[summaries]]
+id = "s-lord-of-storms-1"
+entity = "lord-of-storms"
+established_at = 3
+text = """The Lord of Storms is one of the seven orthodox gods of the Northern Continent."""
+sources = [
+  { chapter = 3 },
+]
+
+[[summaries]]
+id = "s-god-of-steam-and-machinery-1"
+entity = "god-of-steam-and-machinery"
+established_at = 3
+text = """The God of Steam and Machinery is one of the seven orthodox gods of the Northern Continent."""
+sources = [
+  { chapter = 3 },
+]
+
+[[summaries]]
+id = "s-eternal-blazing-sun-1"
+entity = "eternal-blazing-sun"
+established_at = 3
+text = """The Eternal Blazing Sun is one of the seven orthodox gods of the Northern Continent."""
+sources = [
+  { chapter = 3 },
+]
+
+[[summaries]]
+id = "s-god-of-knowledge-and-wisdom-1"
+entity = "god-of-knowledge-and-wisdom"
+established_at = 3
+text = """The God of Knowledge and Wisdom is one of the seven orthodox gods of the Northern Continent."""
+sources = [
+  { chapter = 3 },
+]
+
+[[summaries]]
+id = "s-earth-mother-1"
+entity = "earth-mother"
+established_at = 3
+text = """Earth Mother is one of the seven orthodox gods of the Northern Continent."""
+sources = [
+  { chapter = 3 },
+]
+
+[[summaries]]
+id = "s-god-of-combat-1"
+entity = "god-of-combat"
+established_at = 3
+text = """The God of Combat is one of the seven orthodox gods of the Northern Continent."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- Languages ---------------------------------------------------------------
+
+[[summaries]]
+id = "s-feysac-language-1"
+entity = "feysac-language"
+established_at = 1
+text = """Ancient Feysac is the language held to be the origin of all the languages of the Northern Continent — something Klein Moretti, as a history student, had to learn late, well behind the noble and wealthy children taught it from infancy."""
+sources = [
+  { chapter = 1 },
+]
+
+[[summaries]]
+id = "s-hermes-language-1"
+entity = "hermes-language"
+established_at = 1
+text = """Hermes is a language that appears in ancient mausoleums and in texts of sacrificial and prayer rituals — and it is the language of the ominous note Klein finds on his desk: 'Everyone will die, including me.'"""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- Crimson Moon ------------------------------------------------------------
+
+[[summaries]]
+id = "s-crimson-moon-1"
+entity = "crimson-moon"
+established_at = 1
+text = """The crimson moon is this world's moon, hanging red where Earth's would hang silver — one of the first things that tells Zhou Mingrui he is no longer home."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- Luck Enhancement Ritual -------------------------------------------------
+
+[[summaries]]
+id = "s-luck-enhancement-ritual-1"
+entity = "luck-enhancement-ritual"
+established_at = 2
+text = """The luck enhancement ritual is a folk charm described at the front of an old divination book Zhou Mingrui once picked up: set four portions of staple food at the four corners of a room, walk a counter-clockwise square chanting blessings to four heavenly worthies, then stand still and wait. It appeared to do nothing when Zhou tried it — until he transmigrated, at which point he begins to suspect the ritual is the cause."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- Quintessential Divination ----------------------------------------------
+
+[[summaries]]
+id = "s-quintessential-divination-1"
+entity = "quintessential-divination"
+established_at = 2
+text = """'Quintessential Divination and Arcane Arts of the Qin and Han Dynasty' is a thread-bound Chinese book Zhou Mingrui bought at an old bookstore for idle curiosity; its opening pages contain the luck enhancement ritual he later performed."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- Brass Revolver ----------------------------------------------------------
+
+[[summaries]]
+id = "s-brass-revolver-1"
+entity = "brass-revolver"
+established_at = 1
+text = """A brass revolver, aged and unexplained, sits on Klein Moretti's desk beside his notebook — its cylinder holds five live rounds and one spent cartridge, and its presence in so poor a household is a puzzle Zhou Mingrui cannot immediately solve."""
+sources = [
+  { chapter = 1 },
+]
+
+[[summaries]]
+id = "s-brass-revolver-2"
+entity = "brass-revolver"
+established_at = 2
+supersedes = ["s-brass-revolver-1"]
+text = """A brass revolver, aged and unexplained, sits on Klein Moretti's desk — it is, Zhou reasons, the weapon with which Klein apparently shot himself in the temple, though where a poor household got it, and why its report drew no one's attention, remain open questions."""
+sources = [
+  { chapter = 2, quote = "Well, I'll consider it as suicide for now." },
+]
+
+# ---- Hermes-language Notebook ------------------------------------------------
+
+[[summaries]]
+id = "s-hermes-notebook-1"
+entity = "hermes-notebook"
+established_at = 1
+text = """The notebook left open on Klein Moretti's desk is written in the Hermes language and bears a single chilling sentence: 'Everyone will die, including me.'"""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- Copper Penny ------------------------------------------------------------
+
+[[summaries]]
+id = "s-copper-penny-1"
+entity = "copper-penny"
+established_at = 2
+text = """The copper penny is the basic coin of the Loen Kingdom, minted since the ascension of King George III; a penny buys roughly what three or four yuan would have bought Zhou Mingrui in his old life, with fivepence, halfpence, and quarterpence as the other common denominations."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- Silver Pocket Watch -----------------------------------------------------
+
+[[summaries]]
+id = "s-silver-pocket-watch-1"
+entity = "silver-pocket-watch"
+established_at = 3
+text = """A silver vine-leaf pocket watch, the most valuable thing the Moretti siblings' father ever left them, bears his photograph inside its case and has a habit of breaking — until Melissa, with her knack for machinery, sets it ticking again."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- King George III ---------------------------------------------------------
+
+[[summaries]]
+id = "s-george-iii-1"
+entity = "george-iii"
+established_at = 2
+text = """King George III is the reigning monarch of the Loen Kingdom, whose portrait graces the copper penny; the coinage dates from his ascension to the throne."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- Mr. Franky --------------------------------------------------------------
+
+[[summaries]]
+id = "s-mr-franky-1"
+entity = "mr-franky"
+established_at = 2
+text = """Mr. Franky is the Morettis' landlord — a short, thin gentleman in top hat and waistcoat whose courtliness vanishes the moment he hears the bathroom water running, since water is included in the rent."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- Tingen Technical School -------------------------------------------------
+
+[[summaries]]
+id = "s-tingen-technical-school-1"
+entity = "tingen-technical-school"
+established_at = 3
+text = """Tingen Technical School is a secondary school in Tingen teaching practical trades; it is where Melissa Moretti passed her entrance exams last July to study in the Steam and Machinery department."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- Church of the Evernight Goddess ----------------------------------------
+
+[[summaries]]
+id = "s-church-of-evernight-1"
+entity = "church-of-evernight"
+established_at = 3
+text = """The Church of the Evernight Goddess is one of the orthodox churches of the Northern Continent; before the Loen Kingdom's Basic Education Law it ran the Sunday schools that taught poorer children like the Morettis, at a copper penny a week."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- Tingen University -------------------------------------------------------
+
+[[summaries]]
+id = "s-tingen-university-1"
+entity = "tingen-university"
+established_at = 3
+text = """Tingen University is where Klein Moretti had been recommended for a History department interview, two days after his awakening — a post he is expected to attend in his newly fragile memory state."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- Backlund University -----------------------------------------------------
+
+[[summaries]]
+id = "s-backlund-university-1"
+entity = "backlund-university"
+established_at = 3
+text = """Backlund University is one of the universities to which Klein Moretti's mentor wrote him a recommendation letter, alongside Tingen University."""
+sources = [
+  { chapter = 3 },
+]
