@@ -98,6 +98,18 @@ def test_normalize_delta_drops_whole_junk_without_raising():
     assert len(warns) == 3
 
 
+def test_normalize_delta_assigns_coarse_kind():
+    prior = {"entities": [], "facts": [], "summaries": []}
+    raw = {"new_entities": [
+        {"id": "a", "name": "A", "type": "character"},
+        {"id": "b", "name": "B", "type": "pathway"},
+        {"id": "c", "name": "C", "type": "zoo", "kind": "idea"},
+    ], "new_facts": [], "summary_updates": []}
+    norm, _ = normalize_delta(raw, prior, 1)
+    kinds = {e["id"]: e["kind"] for e in norm["new_entities"]}
+    assert kinds == {"a": "person", "b": "idea", "c": "idea"}
+
+
 def test_chapter_files_skips_metadata(tmp_path):
     for n in (0, 1, 2):
         (tmp_path / f"{n:04d}.md").write_text("x")

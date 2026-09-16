@@ -18,6 +18,37 @@ from pydantic import BaseModel, Field
 
 Certainty = Literal["fact", "inference", "hypothesis", "speculation"]
 
+Kind = Literal["person", "place", "thing", "idea"]
+
+# Coarse kind by fine type (fallback when the model doesn't emit an explicit
+# kind). New types default to "thing". Extend freely as the taxonomy grows.
+KIND_MAP = {
+    "character": "person",
+    "deity": "person",
+    "location": "place",
+    "organization": "thing",
+    "concept": "idea",
+    "language": "idea",
+    "item": "thing",
+    "ritual": "idea",
+    "currency": "thing",
+    "pathway": "idea",
+    "artifact": "thing",
+    "era": "idea",
+    "event": "idea",
+    "creature": "thing",
+    "family": "thing",
+    "sequence": "idea",
+    "potion": "thing",
+}
+
+
+def kind_for(type_: str, kind: str | None) -> str:
+    """Resolve the coarse kind: explicit kind, else KIND_MAP, else 'thing'."""
+    if kind in {"person", "place", "thing", "idea"}:
+        return kind
+    return KIND_MAP.get((type_ or "").strip().lower(), "thing")
+
 
 class Source(BaseModel):
     chapter: int
@@ -28,6 +59,7 @@ class NewEntity(BaseModel):
     id: str
     name: str
     type: str
+    kind: Kind | None = None
     aliases: list[str] = Field(default_factory=list)
 
 

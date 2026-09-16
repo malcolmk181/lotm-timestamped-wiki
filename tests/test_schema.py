@@ -8,6 +8,7 @@ from harness.schema import (
     NewEntity,
     NewFact,
     SummaryUpdate,
+    kind_for,
 )
 
 
@@ -57,3 +58,26 @@ def test_summary_update_shape_has_no_supersedes_field():
     props = SummaryUpdate.model_json_schema()["properties"]
     assert "supersedes" not in props
     assert set(props.keys()) == {"entity", "text"}
+
+
+def test_kind_for_maps_known_types():
+    assert kind_for("character", None) == "person"
+    assert kind_for("location", None) == "place"
+    assert kind_for("pathway", None) == "idea"
+    assert kind_for("xylophone", None) == "thing"  # unknown -> thing
+
+
+def test_kind_for_prefers_explicit_kind():
+    assert kind_for("character", "thing") == "thing"
+
+
+def test_new_entity_accepts_kind():
+    e = NewEntity.model_validate({"id": "e1", "name": "One",
+                                  "type": "character", "kind": "person"})
+    assert e.kind == "person"
+
+
+def test_new_entity_bad_kind_rejected():
+    with pytest.raises(ValidationError):
+        NewEntity.model_validate({"id": "e1", "name": "One",
+                                  "type": "character", "kind": "goofy"})

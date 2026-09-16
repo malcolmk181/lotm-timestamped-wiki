@@ -37,7 +37,7 @@ sys.path.insert(0, str(ROOT))
 
 from build import BuildError, load_toml  # noqa: E402
 from harness.schema import (  # noqa: E402
-    DELTA_SCHEMA, NewEntity, NewFact, SummaryUpdate,
+    DELTA_SCHEMA, NewEntity, NewFact, SummaryUpdate, kind_for,
 )
 from pydantic import ValidationError
 
@@ -123,7 +123,7 @@ HARD RULES:
 
 OUTPUT SCHEMA (exactly this JSON object):
 {
-  "new_entities": [ {"id": "<slug>", "name": "<name>", "type": "<type>", "aliases": ["<name>"]} ],
+  "new_entities": [ {"id": "<slug>", "name": "<name>", "type": "<type>", "kind": "<person|place|thing|idea>", "aliases": ["<name>"]} ],
   "new_facts": [ {"id": "<slug>", "statement": "<claim>", "entities": ["<entity-id>"], "certainty": "<level>", "sources": [{"chapter": N, "quote": "<exact short quote>"}], "refines": ["<fact-id>"], "supersedes": ["<fact-id>"]} ],
   "summary_updates": [ {"entity": "<entity-id>", "text": "<prose paragraph>"} ],
 }
@@ -132,6 +132,7 @@ Omit empty arrays. Omit optional fields you don't need.
 FIELD RULES:
 - entity.type: a short, lowercase, hyphenated label for the KIND of thing. Reuse an existing type whenever it fits (character, location, organization, deity, concept, language, item, ritual — and new kinds as the book introduces them, e.g. pathway, artifact, era, event). If nothing fits, invent a clear new type; never coin a near-synonym of an existing one (use "character", not "person"; "location", not "place").
 - entity.type guidance: "item" for significant, recurring physical objects (a named revolver, a specific book, an heirloom, a coin); "concept" for abstract or cosmic phenomena (the crimson moon); "ritual" for ceremonies; "currency" for money; "language" for languages.
+- entity.kind: one of exactly four coarse buckets — "person" (an individual being: character, deity), "place" (a location), "thing" (a physical object or institution: item, organization, artifact, currency), "idea" (an abstract system or concept: concept, language, ritual, pathway, era, event). Nest every fine type under one of these four. Invent arbitrary fine types freely, but always assign the correct coarse kind.
 - entity.id: kebab-case slug, stable, e.g. "klein-moretti", "tingen-city". For a NEW entity, invent a unique kebab-case id. For an entity already in the prior state, DO NOT re-emit it — reference its existing id instead.
 - entity.aliases: only genuinely different names for the same thing (e.g. "Klein" for "Klein Moretti"). Omit the field (or leave it []) if there is no other name. Never repeat the display name as an alias.
 - fact.id: "f-" + kebab-case, e.g. "f-klein-origin". Must be unique (never reuse a prior id).
@@ -318,6 +319,7 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
         seen_entity_ids.add(e.id)
         new_entities.append({
             "id": e.id, "name": e.name, "type": e.type,
+            "kind": kind_for(e.type, e.kind),
             "aliases": e.aliases, "first_seen": chapter_num,
         })
     entity_ids = existing_entity | seen_entity_ids
@@ -415,7 +417,7 @@ def render_report(chapter_num: int, title: str, normalized: dict, warnings: list
     if ne:
         lines += ["", "## New entities", ""]
         for e in ne:
-            lines.append(f"- **{e['name']}** (`{e['id']}`, {e['type']})"
+            lines.append(f"- **{e['name']}** (`{e['id']}`, {e['type']}, {e.get('kind', '?')})"
                          + (f" aka {', '.join(e['aliases'])}" if e.get("aliases") else ""))
     if nf:
         lines += ["", "## New facts", ""]
