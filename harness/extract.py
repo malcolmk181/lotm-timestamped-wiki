@@ -124,7 +124,7 @@ OUTPUT SCHEMA (exactly this JSON object):
 {
   "new_entities": [ {"id": "<slug>", "name": "<name>", "type": "<type>", "aliases": ["<name>"]} ],
   "new_facts": [ {"id": "<slug>", "statement": "<claim>", "entities": ["<entity-id>"], "certainty": "<level>", "sources": [{"chapter": N, "quote": "<exact short quote>"}], "refines": ["<fact-id>"], "supersedes": ["<fact-id>"]} ],
-  "summary_updates": [ {"entity": "<entity-id>", "text": "<prose paragraph>", "supersedes": ["<summary-id>"], "sources": [{"chapter": N}]} ]
+  "summary_updates": [ {"entity": "<entity-id>", "text": "<prose paragraph>"} ],
 }
 Omit empty arrays. Omit optional fields you don't need.
 
@@ -139,7 +139,7 @@ FIELD RULES:
 - fact.sources[].quote: a short exact phrase from the chapter, verbatim, that backs the claim.
 - refines: ids of facts this claim EXTENDS or clarifies without contradicting. Only point at facts established in an EARLIER chapter (their established_at < N).
 - supersedes: ids of facts this claim CONTRADICTS/REPLACES. Only earlier facts. This is how the wiki records that a prior understanding was wrong.
-- summary_updates: write a readable prose PARAGRAPH describing an entity, in natural English, suitable for a reader. Emit one when a chapter meaningfully changes or adds to an entity's description — either a brand-new entity (entity id may be one you just created above) or an updated understanding (then set "supersedes" to the id(s) of the prior summary version(s), listed in the prior state). A changed understanding is as important as a new entity: if a chapter tells you something new about an entity that already has a summary (for example, learning that the Evernight Goddess is one of the seven orthodox gods), you MUST emit a summary_update that supersedes the old version. If a chapter adds nothing new about that entity, do not emit a summary for it.
+- summary_updates: write a readable prose PARAGRAPH describing an entity, in natural English, suitable for a reader. Emit one when a chapter meaningfully changes or adds to an entity's description — either a brand-new entity (entity id may be one you just created above) or an updated understanding of an existing one. You do NOT set supersedes: the harness automatically links your new paragraph to the entity's previous version. A changed understanding is as important as a new entity: if a chapter tells you something new about an entity that already has a summary (for example, learning that the Evernight Goddess is one of the seven orthodox gods), you MUST emit a summary_update for it. If a chapter adds nothing new about that entity, do not emit a summary for it.
 - summary text must be chapter-accurate: it may only state what is knowable by chapter N.
 
 Write entity names, quotes, and claims exactly as the chapter states them. Do not editorialize beyond what the text says."""
@@ -228,91 +228,110 @@ def parse_json(text: str) -> dict:
 # ---------------------------------------------------------------------------
 # Validation / normalisation of the model's delta
 # ---------------------------------------------------------------------------
-def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> dict:
+def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, list[str]]:
+    """Normalize + validate the model's delta, leniently.
+
+    Salvages valid items; drops invalid ones with a warning rather than
+    rejecting the whole chapter (an LLM will occasionally re-emit an entity,
+    invent a fact id, or point at a non-existent target). Returns
+    (normalized, warnings).
+    """
+    warnings: list[str] = []
     existing_entity = {e["id"] for e in prior["entities"]}
     existing_fact = {f["id"] for f in prior["facts"]}
-    existing_summary = {s["id"] for s in prior["summaries"]}
-    summary_of = {s["id"]: s["entity"] for s in prior["summaries"]}
-    # current per-entity summary version, to number new versions
-    version = {}
+    facts_index = {f["id"]: f for f in prior["facts"]}
+
+    # latest summary version id per entity, to auto-link supersedes
+    latest_summary_id: dict[str, str] = {}
+    summary_version: dict[str, int] = {}
     for s in prior["summaries"]:
-        m = re.match(r"s-(.+)-(\d+)$", s["id"])
-        if m:
-            ent, n = m.group(1), int(m.group(2))
-            version[s["entity"]] = max(version.get(s["entity"], 0), n)
+        m = re.search(r"-(\d+)$", s["id"])
+        n = int(m.group(1)) if m else 0
+        if n >= summary_version.get(s["entity"], 0):
+            summary_version[s["entity"]] = n
+            latest_summary_id[s["entity"]] = s["id"]
 
-    new_entities = raw.get("new_entities", [])
-    new_facts = raw.get("new_facts", [])
-    summary_updates = raw.get("summary_updates", [])
-
-    # --- entities ---
-    seen_entity_ids = set()
-    for e in new_entities:
+    # --- entities (drop duplicates/bad types instead of failing) ---
+    seen_entity_ids: set[str] = set()
+    new_entities: list[dict] = []
+    for e in raw.get("new_entities", []):
         if not all(k in e for k in ("id", "name", "type")):
-            raise BuildError(f"new_entity missing id/name/type: {e}")
+            warnings.append(f"entity missing id/name/type: {e}")
+            continue
         if e["type"] not in ENTITY_TYPES:
-            raise BuildError(f"entity {e['id']!r}: bad type {e['type']!r}")
+            warnings.append(f"entity {e['id']!r}: bad type {e['type']!r}")
+            continue
         if e["id"] in existing_entity or e["id"] in seen_entity_ids:
-            raise BuildError(f"duplicate entity id {e['id']!r}")
+            warnings.append(f"entity {e['id']!r}: already known, dropped")
+            continue
         seen_entity_ids.add(e["id"])
         e["first_seen"] = chapter_num
         e.setdefault("aliases", [])
+        new_entities.append(e)
     entity_ids = existing_entity | seen_entity_ids
 
-    # --- facts ---
-    for f in new_facts:
-        if f.get("id") in existing_fact:
-            raise BuildError(f"fact id {f['id']!r} already exists")
-        if f["certainty"] not in CERTAINTIES:
-            raise BuildError(f"fact {f['id']!r}: bad certainty {f['certainty']!r}")
-        for ent in f["entities"]:
-            if ent not in entity_ids:
-                raise BuildError(f"fact {f['id']!r}: unknown entity {ent!r}")
-        f["established_at"] = chapter_num
-        facts_index = {x["id"]: x for x in prior["facts"]}
-        for dep in f.get("refines", []):
-            if dep not in existing_fact:
-                raise BuildError(f"fact {f['id']!r}: refines unknown {dep!r}")
-            if facts_index[dep]["established_at"] >= chapter_num:
-                raise BuildError(f"fact {f['id']!r}: refines {dep!r} from same/later chapter")
-        for dep in f.get("supersedes", []):
-            if dep not in existing_fact:
-                raise BuildError(f"fact {f['id']!r}: supersedes unknown {dep!r}")
-            if facts_index[dep]["established_at"] >= chapter_num:
-                raise BuildError(f"fact {f['id']!r}: supersedes {dep!r} from same/later chapter")
-        for src in f["sources"]:
-            if src.get("chapter", 0) != chapter_num:
-                raise BuildError(f"fact {f['id']!r}: source chapter must be {chapter_num}")
-        f.setdefault("refines", [])
-        f.setdefault("supersedes", [])
+    # --- facts (drop invalid ones individually) ---
+    new_facts: list[dict] = []
+    for f in raw.get("new_facts", []):
+        fid = f.get("id")
+        if not fid or fid in existing_fact:
+            warnings.append(f"fact id missing/duplicate: {fid!r}")
+            continue
+        if f.get("certainty") not in CERTAINTIES:
+            warnings.append(f"fact {fid!r}: bad certainty {f.get('certainty')!r}")
+            continue
+        ents = [x for x in f.get("entities", []) if x in entity_ids]
+        if not ents:
+            warnings.append(f"fact {fid!r}: no valid entity refs, dropped")
+            continue
+        refines = [d for d in f.get("refines", [])
+                   if d in existing_fact and facts_index[d]["established_at"] < chapter_num]
+        supersedes = [d for d in f.get("supersedes", [])
+                      if d in existing_fact and facts_index[d]["established_at"] < chapter_num]
+        srcs = [{"chapter": chapter_num, "quote": s.get("quote", "")}
+                for s in f.get("sources", []) if s.get("quote")]
+        if not srcs:
+            srcs = [{"chapter": chapter_num}]
+        new_facts.append({
+            "id": fid,
+            "statement": f.get("statement", ""),
+            "entities": ents,
+            "certainty": f["certainty"],
+            "sources": srcs,
+            "refines": refines,
+            "supersedes": supersedes,
+            "established_at": chapter_num,
+        })
 
-    # --- summary updates (harness assigns ids) ---
-    out_summaries = []
-    for su in summary_updates:
+    # --- summary updates (harness owns versioning + linking) ---
+    out_summaries: list[dict] = []
+    for su in raw.get("summary_updates", []):
         entity = su.get("entity")
+        text = su.get("text")
+        if not entity or not text:
+            warnings.append(f"summary_update missing entity/text: {su}")
+            continue
         if entity not in entity_ids:
-            raise BuildError(f"summary_update: unknown entity {entity!r}")
-        for dep in su.get("supersedes", []):
-            if dep not in existing_summary:
-                raise BuildError(f"summary_update: supersedes unknown {dep!r}")
-            if summary_of[dep] != entity:
-                raise BuildError(f"summary_update: supersedes {dep!r} of a different entity")
-        n = version.get(entity, 0) + 1
-        version[entity] = n
+            warnings.append(f"summary_update unknown entity {entity!r}")
+            continue
+        n = summary_version.get(entity, 0) + 1
+        summary_version[entity] = n
+        prev = latest_summary_id.get(entity)
         out_summaries.append({
             "id": f"s-{entity}-{n}",
             "entity": entity,
             "established_at": chapter_num,
-            "text": su["text"],
-            "supersedes": list(su.get("supersedes", [])),
+            "text": text,
+            "supersedes": [prev] if prev else [],
             "sources": [{"chapter": chapter_num}],
         })
+        latest_summary_id[entity] = f"s-{entity}-{n}"
 
     return {
         "new_entities": new_entities,
         "new_facts": new_facts,
         "summary_updates": out_summaries,
-    }
+    }, warnings
 
 
 # ---------------------------------------------------------------------------
@@ -368,10 +387,12 @@ def render_report(chapter_num: int, title: str, normalized: dict) -> str:
 # Mock response for offline plumbing testing only (NOT real content).
 def mock_delta(chapter_num: int, prior: dict) -> dict:
     return {
-        "new_entities": [],
+        "new_entities": [
+            {"id": f"mock-entity-{chapter_num}", "name": "Mock Entity", "type": "concept"},
+        ],
         "new_facts": [
             {"id": f"f-mock-{chapter_num}", "statement": "MOCK FACT — do not trust.",
-             "entities": [prior["entities"][0]["id"]],
+             "entities": [f"mock-entity-{chapter_num}"],
              "certainty": "fact", "sources": [{"chapter": chapter_num, "quote": "mock"}]},
         ],
         "summary_updates": [],
@@ -436,20 +457,25 @@ def main() -> int:
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": user},
                 ])
-                raw = parse_json(resp["choices"][0]["message"]["content"])
+                content = resp["choices"][0]["message"]["content"]
             except (KeyError, IndexError) as e:
                 print(f"chapter {n}: bad API response {e}")
                 continue
             except RuntimeError as e:
                 print(f"chapter {n}: API failed — {e}")
                 continue
+            if not content or not content.strip():
+                print(f"chapter {n}: empty model output, skipping")
+                continue
+            try:
+                raw = parse_json(content)
+            except (BuildError, json.JSONDecodeError) as e:
+                print(f"chapter {n}: unparseable JSON — {e}; skipping")
+                continue
 
-        try:
-            normalized = normalize_delta(raw, prior, n)
-        except BuildError as e:
-            print(f"chapter {n}: INVALID — {e}")
-            print("  raw:", json.dumps(raw, ensure_ascii=False)[:400])
-            continue
+        normalized, warnings = normalize_delta(raw, prior, n)
+        for w in warnings:
+            print(f"  chapter {n}: note: {w}")
 
         report = render_report(n, title, normalized)
         path = write_draft(n, normalized, title, model, report)
