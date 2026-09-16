@@ -12,6 +12,9 @@
 - The harness's delta schema lives in `harness/schema.py` (pydantic). Keep its
   `EntityType` / `Certainty` literals in sync with `build.py`'s `ENTITY_TYPES`
   / `CERTAINTIES` sets.
+- Dependencies: avoid unnecessary ones, but small, well-known, performant
+  packages that solve an annoying problem are fine (pydantic, python-dotenv).
+  For frontend JS in `site/`, load libraries from a CDN rather than vendoring.
 
 ## Data authoring (the important part)
 - **No spoilers.** A fact may only cite/mention what is knowable by its own
@@ -25,6 +28,11 @@
 - **Be noisy and detailed.** More small facts > fewer big facts. Prefer many
   specific claims over one umbrella claim; this is what makes refinements and
   overturns meaningful.
+- **Specific instances vs systems.** An entity should be a specific individual,
+  place, or significant object, or a *system* worth its own page (a currency,
+  an education system, a religion). Don't entity-ify a generic common noun —
+  group its facts under the relevant system entity instead (e.g. "copper penny"
+  lives under "Loen Currency", not as a standalone entity).
 - **Use `certainty` honestly.** `fact` = shown on the page; `inference` =
   strongly implied; `hypothesis` = a character's explicit guess;
   `speculation` = loose/uncertain.
