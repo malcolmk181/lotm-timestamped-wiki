@@ -117,6 +117,7 @@ HARD RULES:
 2. Current chapter is N. Every fact and summary you emit is first known at chapter N. Never mention anything checkable only at a later chapter.
 3. Respond with a single JSON object and nothing else — no markdown fences, no prose.
 4. Be noisy and detailed: prefer many small, specific claims over a few big ones. This is what makes later refinements and overturns meaningful.
+5. Output NOTHING already captured in the prior state. new_entities is ONLY for entities not listed under ENTITIES below; new_facts is ONLY for claims the FACTS list does not already state; emit a summary_update ONLY when you add to or change an entity's description. If a chapter adds nothing new, return empty arrays. Re-emiting an existing entity id is a hard error.
 
 OUTPUT SCHEMA (exactly this JSON object):
 {
@@ -128,7 +129,9 @@ Omit empty arrays. Omit optional fields you don't need.
 
 FIELD RULES:
 - entity.type is one of: character, location, organization, deity, concept, language, item, ritual, currency.
-- entity.id: kebab-case slug, stable, e.g. "klein-moretti". For a NEW entity, invent a unique kebab-case id. For an entity already in the prior state, DO NOT re-emit it — reference its existing id instead.
+- entity.type guidance: "item" for significant, recurring physical objects (a named revolver, a specific book, an heirloom, a coin); "concept" for abstract or cosmic phenomena (the crimson moon); "ritual" for ceremonies; "currency" for money; "language" for languages.
+- entity.id: kebab-case slug, stable, e.g. "klein-moretti", "tingen-city". For a NEW entity, invent a unique kebab-case id. For an entity already in the prior state, DO NOT re-emit it — reference its existing id instead.
+- entity.aliases: only genuinely different names for the same thing (e.g. "Klein" for "Klein Moretti"). Omit the field (or leave it []) if there is no other name. Never repeat the display name as an alias.
 - fact.id: "f-" + kebab-case, e.g. "f-klein-origin". Must be unique (never reuse a prior id).
 - fact.entities: the entity ids (existing or newly created in this same output) this fact is about.
 - fact.certainty: fact (shown plainly in the text), inference (strongly implied), hypothesis (a character's explicit guess), speculation (loose/uncertain).
@@ -153,7 +156,7 @@ def build_user_prompt(chapter_num: int, title: str, text: str, prior_prompt: str
 # ---------------------------------------------------------------------------
 # OpenRouter
 # ---------------------------------------------------------------------------
-def call_openrouter(api_key: str, model: str, messages: list[dict], max_retries: int = 3) -> dict:
+def call_openrouter(api_key: str, model: str, messages: list[dict], max_retries: int = 4) -> dict:
     body = {
         "model": model,
         "messages": messages,
@@ -172,25 +175,36 @@ def call_openrouter(api_key: str, model: str, messages: list[dict], max_retries:
             },
         )
         try:
-            with urllib.request.urlopen(req, timeout=120) as resp:
+            with urllib.request.urlopen(req, timeout=300) as resp:
                 return json.loads(resp.read().decode("utf-8"))
         except urllib.error.HTTPError as e:
             last_err = e
             detail = e.read().decode("utf-8", "replace")
-            # retry once without response_format if the model rejects it
+            # model rejects response_format -> drop it and retry immediately
             if "response_format" in detail and "response_format" in body:
                 body.pop("response_format")
                 data = json.dumps(body).encode("utf-8")
                 continue
-            if attempt < max_retries - 1:
-                time.sleep(2 ** attempt)
-                continue
+            # rate limit / server error -> back off and retry
+            if e.code == 429 or e.code >= 500:
+                retry_after = e.headers.get("Retry-After")
+                wait = float(retry_after) if retry_after else 2 ** (attempt + 2)
+                if attempt < max_retries - 1:
+                    time.sleep(min(wait, 60))
+                    continue
+            # otherwise (400/401/403/404): don't retry
+            break
         except urllib.error.URLError as e:
             last_err = e
             if attempt < max_retries - 1:
-                time.sleep(2 ** attempt)
+                time.sleep(2 ** (attempt + 1))
                 continue
-    raise RuntimeError(f"OpenRouter call failed: {last_err}")
+        except Exception as e:  # noqa: BLE001
+            last_err = e
+            if attempt < max_retries - 1:
+                time.sleep(2 ** (attempt + 1))
+                continue
+    raise RuntimeError(f"OpenRouter call failed after retries: {last_err}")
 
 
 def parse_json(text: str) -> dict:
@@ -374,6 +388,8 @@ def main() -> int:
     ap.add_argument("--webnovel-dir", default=None)
     ap.add_argument("--mock", action="store_true", help="offline plumbing test (no API call)")
     ap.add_argument("--apply", action="store_true", help="merge drafts into data/ (not yet implemented)")
+    ap.add_argument("--fresh", action="store_true",
+                    help="start from an empty corpus (ignore existing data/) for a clean from-scratch run")
     args = ap.parse_args()
 
     if args.apply:
@@ -393,33 +409,38 @@ def main() -> int:
             print("OPENROUTER_API_KEY not found in .env — add it (see .env.example).")
             return 1
 
-    prior = load_prior_state()
+    prior = load_prior_state() if not args.fresh else {"entities": [], "facts": [], "summaries": []}
     files = dict(chapter_files(webnovel_dir))
     missing = [n for n in range(start_n, end_n + 1) if n not in files]
     if missing:
         print(f"chapters not found in {webnovel_dir}: {missing[:10]}...")
         return 1
 
-    prior_prompt = prior_state_prompt(prior)
     for n in range(start_n, end_n + 1):
-        text = clean_text(files[n].read_text())
+        raw_md = files[n].read_text()
+        text = clean_text(raw_md)
         title = ""
-        m = re.search(r"title:\s*(.+)", files[n].read_text()[:500])
+        m = re.search(r"title:\s*(.+)", raw_md[:500])
         if m:
             title = m.group(1).strip()
+        prior_prompt = prior_state_prompt(prior)
         user = build_user_prompt(n, title, text, prior_prompt)
 
         if args.mock:
             raw = mock_delta(n, prior)
         else:
-            resp = call_openrouter(api_key, model, [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": user},
-            ])
+            print(f"chapter {n}: calling {model} ...", flush=True)
             try:
+                resp = call_openrouter(api_key, model, [
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": user},
+                ])
                 raw = parse_json(resp["choices"][0]["message"]["content"])
             except (KeyError, IndexError) as e:
                 print(f"chapter {n}: bad API response {e}")
+                continue
+            except RuntimeError as e:
+                print(f"chapter {n}: API failed — {e}")
                 continue
 
         try:
@@ -431,6 +452,10 @@ def main() -> int:
 
         report = render_report(n, title, normalized)
         path = write_draft(n, normalized, title, model, report)
+        # accumulate so the next chapter sees this chapter's output as known
+        prior["entities"].extend(normalized["new_entities"])
+        prior["facts"].extend(normalized["new_facts"])
+        prior["summaries"].extend(normalized["summary_updates"])
         print(f"chapter {n}: drafted {path} "
               f"({len(normalized['new_entities'])} entities, "
               f"{len(normalized['new_facts'])} facts, "
