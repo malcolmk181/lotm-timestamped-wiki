@@ -35,10 +35,11 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from build import (  # noqa: E402
-    CERTAINTIES, ENTITY_TYPES, BuildError, load_toml, resolve_temporal,
-    validate_entities, validate_facts, validate_summaries,
+from build import BuildError, load_toml  # noqa: E402
+from harness.schema import (  # noqa: E402
+    DELTA_SCHEMA, NewEntity, NewFact, SummaryUpdate,
 )
+from pydantic import ValidationError
 
 DATA = ROOT / "data"
 DRAFT = ROOT / "_draft"
@@ -158,53 +159,62 @@ def build_user_prompt(chapter_num: int, title: str, text: str, prior_prompt: str
 # OpenRouter
 # ---------------------------------------------------------------------------
 def call_openrouter(api_key: str, model: str, messages: list[dict], max_retries: int = 4) -> dict:
-    body = {
-        "model": model,
-        "messages": messages,
-        "temperature": 0,
-        "max_tokens": 8000,
-        "response_format": {"type": "json_object"},
-    }
-    data = json.dumps(body).encode("utf-8")
+    # Structured-output preference order: full JSON schema first (strictly
+    # guides the shape), then plain JSON mode, then nothing. We degrade on a
+    # provider that rejects a given response_format.
+    response_formats = [
+        {"type": "json_schema",
+         "json_schema": {"name": "extraction", "schema": DELTA_SCHEMA, "strict": False}},
+        {"type": "json_object"},
+        None,
+    ]
     last_err = None
-    for attempt in range(max_retries):
-        req = urllib.request.Request(
-            API_URL, data=data, method="POST",
-            headers={
-                "Authorization": f"Bearer {api_key}",
-                "Content-Type": "application/json",
-            },
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=300) as resp:
-                return json.loads(resp.read().decode("utf-8"))
-        except urllib.error.HTTPError as e:
-            last_err = e
-            detail = e.read().decode("utf-8", "replace")
-            # model rejects response_format -> drop it and retry immediately
-            if "response_format" in detail and "response_format" in body:
-                body.pop("response_format")
-                data = json.dumps(body).encode("utf-8")
-                continue
-            # rate limit / server error -> back off and retry
-            if e.code == 429 or e.code >= 500:
-                retry_after = e.headers.get("Retry-After")
-                wait = float(retry_after) if retry_after else 2 ** (attempt + 2)
+    for rf in response_formats:
+        body = {
+            "model": model,
+            "messages": messages,
+            "temperature": 0,
+            "max_tokens": 8000,
+        }
+        if rf is not None:
+            body["response_format"] = rf
+        data = json.dumps(body).encode("utf-8")
+        for attempt in range(max_retries):
+            req = urllib.request.Request(
+                API_URL, data=data, method="POST",
+                headers={
+                    "Authorization": f"Bearer {api_key}",
+                    "Content-Type": "application/json",
+                },
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=300) as resp:
+                    return json.loads(resp.read().decode("utf-8"))
+            except urllib.error.HTTPError as e:
+                last_err = e
+                detail = e.read().decode("utf-8", "replace")
+                # provider doesn't support this response_format -> next format
+                if any(k in detail for k in ("response_format", "json_schema", "structured_output")):
+                    break
+                # rate limit / server error -> back off and retry
+                if e.code == 429 or e.code >= 500:
+                    retry_after = e.headers.get("Retry-After")
+                    wait = float(retry_after) if retry_after else 2 ** (attempt + 2)
+                    if attempt < max_retries - 1:
+                        time.sleep(min(wait, 60))
+                        continue
+                # otherwise (400/401/403/404): don't retry this format
+                break
+            except urllib.error.URLError as e:
+                last_err = e
                 if attempt < max_retries - 1:
-                    time.sleep(min(wait, 60))
+                    time.sleep(2 ** (attempt + 1))
                     continue
-            # otherwise (400/401/403/404): don't retry
-            break
-        except urllib.error.URLError as e:
-            last_err = e
-            if attempt < max_retries - 1:
-                time.sleep(2 ** (attempt + 1))
-                continue
-        except Exception as e:  # noqa: BLE001
-            last_err = e
-            if attempt < max_retries - 1:
-                time.sleep(2 ** (attempt + 1))
-                continue
+            except Exception as e:  # noqa: BLE001
+                last_err = e
+                if attempt < max_retries - 1:
+                    time.sleep(2 ** (attempt + 1))
+                    continue
     raise RuntimeError(f"OpenRouter call failed after retries: {last_err}")
 
 
@@ -251,52 +261,53 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
             summary_version[s["entity"]] = n
             latest_summary_id[s["entity"]] = s["id"]
 
-    # --- entities (drop duplicates/bad types instead of failing) ---
+    # --- entities (pydantic-validated; drop dupes/bad on warning) ---
     seen_entity_ids: set[str] = set()
     new_entities: list[dict] = []
-    for e in raw.get("new_entities", []):
-        if not all(k in e for k in ("id", "name", "type")):
-            warnings.append(f"entity missing id/name/type: {e}")
+    for e_raw in raw.get("new_entities", []):
+        try:
+            e = NewEntity.model_validate(e_raw)
+        except ValidationError as err:
+            warnings.append(f"entity invalid: {err}")
             continue
-        if e["type"] not in ENTITY_TYPES:
-            warnings.append(f"entity {e['id']!r}: bad type {e['type']!r}")
+        if e.id in existing_entity or e.id in seen_entity_ids:
+            warnings.append(f"entity {e.id!r}: already known, dropped")
             continue
-        if e["id"] in existing_entity or e["id"] in seen_entity_ids:
-            warnings.append(f"entity {e['id']!r}: already known, dropped")
-            continue
-        seen_entity_ids.add(e["id"])
-        e["first_seen"] = chapter_num
-        e.setdefault("aliases", [])
-        new_entities.append(e)
+        seen_entity_ids.add(e.id)
+        new_entities.append({
+            "id": e.id, "name": e.name, "type": e.type,
+            "aliases": e.aliases, "first_seen": chapter_num,
+        })
     entity_ids = existing_entity | seen_entity_ids
 
-    # --- facts (drop invalid ones individually) ---
+    # --- facts (pydantic-validated; drop invalid ones individually) ---
     new_facts: list[dict] = []
-    for f in raw.get("new_facts", []):
-        fid = f.get("id")
-        if not fid or fid in existing_fact:
-            warnings.append(f"fact id missing/duplicate: {fid!r}")
+    for f_raw in raw.get("new_facts", []):
+        try:
+            f = NewFact.model_validate(f_raw)
+        except ValidationError as err:
+            warnings.append(f"fact invalid: {err}")
             continue
-        if f.get("certainty") not in CERTAINTIES:
-            warnings.append(f"fact {fid!r}: bad certainty {f.get('certainty')!r}")
+        if f.id in existing_fact:
+            warnings.append(f"fact {f.id!r}: already known, dropped")
             continue
-        ents = [x for x in f.get("entities", []) if x in entity_ids]
+        ents = [x for x in f.entities if x in entity_ids]
         if not ents:
-            warnings.append(f"fact {fid!r}: no valid entity refs, dropped")
+            warnings.append(f"fact {f.id!r}: no valid entity refs, dropped")
             continue
-        refines = [d for d in f.get("refines", [])
+        refines = [d for d in f.refines
                    if d in existing_fact and facts_index[d]["established_at"] < chapter_num]
-        supersedes = [d for d in f.get("supersedes", [])
+        supersedes = [d for d in f.supersedes
                       if d in existing_fact and facts_index[d]["established_at"] < chapter_num]
-        srcs = [{"chapter": chapter_num, "quote": s.get("quote", "")}
-                for s in f.get("sources", []) if s.get("quote")]
+        srcs = [{"chapter": chapter_num, "quote": s.quote}
+                for s in f.sources if s.quote]
         if not srcs:
             srcs = [{"chapter": chapter_num}]
         new_facts.append({
-            "id": fid,
-            "statement": f.get("statement", ""),
+            "id": f.id,
+            "statement": f.statement,
             "entities": ents,
-            "certainty": f["certainty"],
+            "certainty": f.certainty,
             "sources": srcs,
             "refines": refines,
             "supersedes": supersedes,
@@ -305,27 +316,27 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
 
     # --- summary updates (harness owns versioning + linking) ---
     out_summaries: list[dict] = []
-    for su in raw.get("summary_updates", []):
-        entity = su.get("entity")
-        text = su.get("text")
-        if not entity or not text:
-            warnings.append(f"summary_update missing entity/text: {su}")
+    for su_raw in raw.get("summary_updates", []):
+        try:
+            su = SummaryUpdate.model_validate(su_raw)
+        except ValidationError as err:
+            warnings.append(f"summary invalid: {err}")
             continue
-        if entity not in entity_ids:
-            warnings.append(f"summary_update unknown entity {entity!r}")
+        if su.entity not in entity_ids:
+            warnings.append(f"summary_update unknown entity {su.entity!r}")
             continue
-        n = summary_version.get(entity, 0) + 1
-        summary_version[entity] = n
-        prev = latest_summary_id.get(entity)
+        n = summary_version.get(su.entity, 0) + 1
+        summary_version[su.entity] = n
+        prev = latest_summary_id.get(su.entity)
         out_summaries.append({
-            "id": f"s-{entity}-{n}",
-            "entity": entity,
+            "id": f"s-{su.entity}-{n}",
+            "entity": su.entity,
             "established_at": chapter_num,
-            "text": text,
+            "text": su.text,
             "supersedes": [prev] if prev else [],
             "sources": [{"chapter": chapter_num}],
         })
-        latest_summary_id[entity] = f"s-{entity}-{n}"
+        latest_summary_id[su.entity] = f"s-{su.entity}-{n}"
 
     return {
         "new_entities": new_entities,

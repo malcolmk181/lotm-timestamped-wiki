@@ -70,6 +70,10 @@ uv run python -m http.server -d site 8000   # preview locally
 # extraction harness (needs OPENROUTER_API_KEY in .env)
 uv run python harness/extract.py --chapters 1 25          # draft mode (no data change)
 uv run python harness/extract.py --chapters 1 3 --mock    # offline plumbing test
+
+# tests
+uv run pytest               # run the test suite
+uv run pytest -q            # condensed
 ```
 
 ## Extraction harness
@@ -84,6 +88,14 @@ and summary revisions — so it cannot leak later chapters, and it has to link
 - **Model:** `deepseek/deepseek-v4-flash` (cheap, low refusal). Override with
   `LOTM_MODEL` for higher prose quality (`deepseek/deepseek-v4-pro`) once locked.
 - **Source:** the `webnovel` translation (not `oldtl`).
+- **Schema + structured output:** the delta shape is defined once in
+  [`harness/schema.py`](harness/schema.py) as pydantic models; their JSON
+  schema is sent as the model's `response_format` (with graceful fallback to
+  plain JSON mode), and the models validate the response. `build.py` remains
+  stdlib-only and keeps its own copies of the type/certainty vocabularies.
+- **Lenient normalization:** invalid items (duplicate entity, bad certainty,
+  unknown ref) are dropped with a warning rather than rejecting the whole
+  chapter — an LLM's output is treated as salvageable, not as strict data.
 - **Draft-first:** it writes proposed additions to `_draft/` and never touches
   `data/` unless you `--apply` (merge step still to come). Review the
   `.report.md` per chapter, then merge by hand or via apply.

@@ -4,8 +4,15 @@ version = "0.1.0"
 description = "A chapter-timestamped, spoiler-safe wiki of the world of Lord of the Mysteries."
 requires-python = ">=3.11"
 dependencies = [
+    "pydantic>=2.13.5",
     "python-dotenv>=1.2.3",
 ]
 
 [dependency-groups]
-dev = []
+dev = [
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
