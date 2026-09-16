@@ -9,9 +9,10 @@
 - Use `uv` for Python (`uv run python build.py`), never bare `python3`.
 - `build.py` must remain stdlib-only (tomllib, json, pathlib). Do not add a
   runtime dependency to it without a good reason and a README update.
-- The harness's delta schema lives in `harness/schema.py` (pydantic). Keep its
-  `EntityType` / `Certainty` literals in sync with `build.py`'s `ENTITY_TYPES`
-  / `CERTAINTIES` sets.
+- The harness's delta schema lives in `harness/schema.py` (pydantic). Entity
+  `type` is a free-form string (the taxonomy grows as the book is read);
+  `Certainty` is the one closed enum and must stay in sync with `build.py`'s
+  `CERTAINTIES` set.
 - Dependencies: avoid unnecessary ones, but small, well-known, performant
   packages that solve an annoying problem are fine (pydantic, python-dotenv).
   For frontend JS in `site/`, load libraries from a CDN rather than vendoring.
@@ -36,8 +37,11 @@
 - **Use `certainty` honestly.** `fact` = shown on the page; `inference` =
   strongly implied; `hypothesis` = a character's explicit guess;
   `speculation` = loose/uncertain.
-- Entity `type` and fact `certainty` use controlled vocabularies — extend them
-  deliberately (and update `build.py`'s allowlists), not ad hoc.
+- Fact `certainty` is a controlled vocabulary (`fact`/`inference`/`hypothesis`/
+  `speculation`). Entity `type` is deliberately free-form: reuse existing types
+  and invent new ones as the book reveals them (pathways, artifacts, eras, ...)
+  — but never coin a near-synonym of an existing type ("character", not
+  "person").
 - **No untimestamped free-text.** Entities carry only structured, schedule-safe
   fields (id, name, type, first_seen, aliases). Prose descriptions go in
   `data/summaries.toml` as timestamped, versioned paragraphs (`established_at`

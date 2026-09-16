@@ -53,7 +53,7 @@ def test_normalize_delta_dedups_and_autolinks():
         "new_entities": [
             {"id": "e1", "name": "One", "type": "concept"},       # duplicate
             {"id": "e2", "name": "Two", "type": "character"},
-            {"id": "e3", "name": "Three", "type": "bogus"},       # bad type
+            {"id": "e3", "type": "character"},                    # missing name
         ],
         "new_facts": [
             {"id": "f2", "statement": "s2", "entities": ["e2"],

@@ -130,7 +130,7 @@ OUTPUT SCHEMA (exactly this JSON object):
 Omit empty arrays. Omit optional fields you don't need.
 
 FIELD RULES:
-- entity.type is one of: character, location, organization, deity, concept, language, item, ritual, currency.
+- entity.type: a short, lowercase, hyphenated label for the KIND of thing. Reuse an existing type whenever it fits (character, location, organization, deity, concept, language, item, ritual — and new kinds as the book introduces them, e.g. pathway, artifact, era, event). If nothing fits, invent a clear new type; never coin a near-synonym of an existing one (use "character", not "person"; "location", not "place").
 - entity.type guidance: "item" for significant, recurring physical objects (a named revolver, a specific book, an heirloom, a coin); "concept" for abstract or cosmic phenomena (the crimson moon); "ritual" for ceremonies; "currency" for money; "language" for languages.
 - entity.id: kebab-case slug, stable, e.g. "klein-moretti", "tingen-city". For a NEW entity, invent a unique kebab-case id. For an entity already in the prior state, DO NOT re-emit it — reference its existing id instead.
 - entity.aliases: only genuinely different names for the same thing (e.g. "Klein" for "Klein Moretti"). Omit the field (or leave it []) if there is no other name. Never repeat the display name as an alias.

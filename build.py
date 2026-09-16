@@ -20,10 +20,6 @@ DATA = ROOT / "data"
 SITE = ROOT / "site"
 
 CERTAINTIES = {"fact", "inference", "hypothesis", "speculation"}
-ENTITY_TYPES = {
-    "character", "location", "organization", "deity",
-    "concept", "language", "item", "ritual", "currency",
-}
 
 
 class BuildError(Exception):
@@ -95,8 +91,9 @@ def validate_entities(entities: list[dict]) -> None:
     if len(set(ids)) != len(ids):
         raise BuildError("duplicate entity id")
     for e in entities:
-        if e["type"] not in ENTITY_TYPES:
-            raise BuildError(f"entity {e['id']!r}: unknown type {e['type']!r}")
+        if not isinstance(e.get("type"), str) or not e["type"].strip():
+            raise BuildError(
+                f"entity {e['id']!r}: type must be a non-empty string")
         if e["first_seen"] < 1:
             raise BuildError(f"entity {e['id']!r}: first_seen must be >= 1")
 

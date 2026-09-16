@@ -2,9 +2,13 @@
 
 Single source of truth for the shape of what the LLM returns each chapter.
 `ExtractionDelta.model_json_schema()` is handed to the model as structured
-output, and the models validate the response. Keep the `EntityType` and
-`Certainty` literals in sync with the `ENTITY_TYPES` / `CERTAINTIES` sets in
-`build.py` (build.py stays stdlib-only and keeps its own copies).
+output, and the models validate the response.
+
+Entity `type` is a FREE-FORM string: the taxonomy grows as the book reveals new
+kinds of things (pathways, sealed artifacts, eras, ...), so it is deliberately
+NOT an enum — new types must pass through, not be rejected. `Certainty` is the
+one closed enum (a fixed epistemic scale). Keep it in sync with the
+`CERTAINTIES` set in `build.py` (build.py stays stdlib-only).
 """
 from __future__ import annotations
 
@@ -12,10 +16,6 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-EntityType = Literal[
-    "character", "location", "organization", "deity",
-    "concept", "language", "item", "ritual", "currency",
-]
 Certainty = Literal["fact", "inference", "hypothesis", "speculation"]
 
 
@@ -27,7 +27,7 @@ class Source(BaseModel):
 class NewEntity(BaseModel):
     id: str
     name: str
-    type: EntityType
+    type: str
     aliases: list[str] = Field(default_factory=list)
 
 

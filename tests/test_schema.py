@@ -25,9 +25,10 @@ def test_full_delta_roundtrip():
     assert d.summary_updates[0].text == "hello"
 
 
-def test_bad_entity_type_rejected():
-    with pytest.raises(ValidationError):
-        NewEntity.model_validate({"id": "e1", "name": "One", "type": "nope"})
+def test_new_entity_type_accepted():
+    e = NewEntity.model_validate({"id": "e1", "name": "One",
+                                  "type": "sealed-artifact"})
+    assert e.type == "sealed-artifact"
 
 
 def test_bad_certainty_rejected():
