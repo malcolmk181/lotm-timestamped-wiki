@@ -2,8 +2,9 @@
 from harness.extract import (
     chapter_files,
     clean_text,
-    parse_json,
+    extract_delta,
     normalize_delta,
+    parse_json,
     prior_state_prompt,
 )
 
@@ -114,3 +115,50 @@ def test_prior_state_prompt_lists_entities_and_facts():
     assert "e1 | One | concept" in text
     assert "f1 | s | 1" in text
     assert "s-e1-1 | e1 | 1" in text
+
+
+def _resp(content):
+    return {"choices": [{"message": {"content": content}}]}
+
+
+def test_extract_delta_retries_on_empty_then_succeeds(monkeypatch):
+    import harness.extract as ex
+    calls = {"n": 0}
+
+    def fake_post(api_key, model, messages, response_format):
+        calls["n"] += 1
+        return _resp("") if calls["n"] == 1 else _resp('{"new_entities": []}')
+
+    monkeypatch.setattr(ex, "_openrouter_post", fake_post)
+    assert ex.extract_delta("k", "m", []) == {"new_entities": []}
+    assert calls["n"] == 2
+
+
+def test_extract_delta_retries_on_malformed_then_succeeds(monkeypatch):
+    import harness.extract as ex
+    calls = {"n": 0}
+
+    def fake_post(api_key, model, messages, response_format):
+        calls["n"] += 1
+        return (_resp('{"new_entities": [broken') if calls["n"] == 1
+                else _resp('{"new_entities": []}'))
+
+    monkeypatch.setattr(ex, "_openrouter_post", fake_post)
+    assert ex.extract_delta("k", "m", []) == {"new_entities": []}
+    assert calls["n"] == 2
+
+
+def test_extract_delta_downgrades_tier_on_response_format_error(monkeypatch):
+    import harness.extract as ex
+    formats = []
+
+    def fake_post(api_key, model, messages, response_format):
+        formats.append(response_format)
+        if response_format is not None and response_format.get("type") == "json_schema":
+            raise ex.ResponseFormatError("unsupported")
+        return _resp('{"new_entities": []}')
+
+    monkeypatch.setattr(ex, "_openrouter_post", fake_post)
+    assert ex.extract_delta("k", "m", []) == {"new_entities": []}
+    assert formats[0]["type"] == "json_schema"   # rejected -> downgrade
+    assert formats[1]["type"] == "json_object"   # accepted

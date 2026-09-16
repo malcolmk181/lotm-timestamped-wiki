@@ -158,66 +158,106 @@ def build_user_prompt(chapter_num: int, title: str, text: str, prior_prompt: str
 # ---------------------------------------------------------------------------
 # OpenRouter
 # ---------------------------------------------------------------------------
-def call_openrouter(api_key: str, model: str, messages: list[dict], max_retries: int = 4) -> dict:
-    # Structured-output preference order: full JSON schema first (strictly
-    # guides the shape), then plain JSON mode, then nothing. We degrade on a
-    # provider that rejects a given response_format.
-    response_formats = [
+class ResponseFormatError(RuntimeError):
+    """The provider rejected the requested response_format (downgrade trigger)."""
+
+
+def _openrouter_post(api_key: str, model: str, messages: list[dict],
+                     response_format, max_retries: int = 3) -> dict:
+    """Single chat completion with retry/backoff on transient errors.
+
+    Returns the raw API response. Raises ResponseFormatError if the provider
+    rejects `response_format` (caller should downgrade), or RuntimeError after
+    exhausting retries.
+    """
+    body = {
+        "model": model,
+        "messages": messages,
+        "temperature": 0,
+        "max_tokens": 12000,
+    }
+    if response_format is not None:
+        body["response_format"] = response_format
+    data = json.dumps(body).encode("utf-8")
+    last_err = None
+    for attempt in range(max_retries):
+        req = urllib.request.Request(
+            API_URL, data=data, method="POST",
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=300) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as e:
+            last_err = e
+            detail = e.read().decode("utf-8", "replace")
+            if any(k in detail for k in
+                   ("response_format", "json_schema", "structured_output")):
+                raise ResponseFormatError(detail) from e
+            if e.code == 429 or e.code >= 500:
+                retry_after = e.headers.get("Retry-After")
+                wait = float(retry_after) if retry_after else 2 ** (attempt + 2)
+                if attempt < max_retries - 1:
+                    time.sleep(min(wait, 60))
+                    continue
+            # other 4xx: don't retry
+            break
+        except urllib.error.URLError as e:
+            last_err = e
+            if attempt < max_retries - 1:
+                time.sleep(2 ** (attempt + 1))
+                continue
+        except Exception as e:  # noqa: BLE001
+            last_err = e
+            if attempt < max_retries - 1:
+                time.sleep(2 ** (attempt + 1))
+                continue
+    raise RuntimeError(f"OpenRouter request failed: {last_err}")
+
+
+def extract_delta(api_key: str, model: str, messages: list[dict],
+                  attempts_per_tier: int = 3) -> dict:
+    """Get a parseable, non-empty delta, retrying and downgrading as needed.
+
+    Tries response_format tiers (json_schema -> json_object -> none). For each
+    tier it retries on empty output and malformed JSON, then downgrades the
+    tier. Raises RuntimeError only if every tier and retry fails.
+    """
+    tiers = [
         {"type": "json_schema",
          "json_schema": {"name": "extraction", "schema": DELTA_SCHEMA, "strict": False}},
         {"type": "json_object"},
         None,
     ]
-    last_err = None
-    for rf in response_formats:
-        print(f"    [response_format] {('none' if rf is None else rf.get('type', '?'))}",
-              flush=True)
-        body = {
-            "model": model,
-            "messages": messages,
-            "temperature": 0,
-            "max_tokens": 8000,
-        }
-        if rf is not None:
-            body["response_format"] = rf
-        data = json.dumps(body).encode("utf-8")
-        for attempt in range(max_retries):
-            req = urllib.request.Request(
-                API_URL, data=data, method="POST",
-                headers={
-                    "Authorization": f"Bearer {api_key}",
-                    "Content-Type": "application/json",
-                },
-            )
+    failure = None
+    for tier in tiers:
+        print(f"    [response_format] "
+              f"{('none' if tier is None else tier.get('type', '?'))}", flush=True)
+        for _ in range(attempts_per_tier):
             try:
-                with urllib.request.urlopen(req, timeout=300) as resp:
-                    return json.loads(resp.read().decode("utf-8"))
-            except urllib.error.HTTPError as e:
-                last_err = e
-                detail = e.read().decode("utf-8", "replace")
-                # provider doesn't support this response_format -> next format
-                if any(k in detail for k in ("response_format", "json_schema", "structured_output")):
-                    break
-                # rate limit / server error -> back off and retry
-                if e.code == 429 or e.code >= 500:
-                    retry_after = e.headers.get("Retry-After")
-                    wait = float(retry_after) if retry_after else 2 ** (attempt + 2)
-                    if attempt < max_retries - 1:
-                        time.sleep(min(wait, 60))
-                        continue
-                # otherwise (400/401/403/404): don't retry this format
-                break
-            except urllib.error.URLError as e:
-                last_err = e
-                if attempt < max_retries - 1:
-                    time.sleep(2 ** (attempt + 1))
-                    continue
-            except Exception as e:  # noqa: BLE001
-                last_err = e
-                if attempt < max_retries - 1:
-                    time.sleep(2 ** (attempt + 1))
-                    continue
-    raise RuntimeError(f"OpenRouter call failed after retries: {last_err}")
+                resp = _openrouter_post(api_key, model, messages, tier)
+            except ResponseFormatError:
+                break  # provider rejects this tier -> downgrade immediately
+            except RuntimeError:
+                failure = "request error"
+                continue  # transient -> retry this tier
+            try:
+                content = resp["choices"][0]["message"]["content"]
+            except (KeyError, IndexError, TypeError):
+                content = None
+            if not content or not content.strip():
+                failure = "empty output"
+                continue  # retry this tier
+            try:
+                return parse_json(content)
+            except (BuildError, json.JSONDecodeError) as e:
+                failure = f"unparseable JSON: {e}"
+                continue  # retry this tier
+    raise RuntimeError(f"no parseable delta after all tiers/retries "
+                       f"(last: {failure})")
 
 
 def parse_json(text: str) -> dict:
@@ -470,24 +510,12 @@ def main() -> int:
         else:
             print(f"chapter {n}: calling {model} ...", flush=True)
             try:
-                resp = call_openrouter(api_key, model, [
+                raw = extract_delta(api_key, model, [
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": user},
                 ])
-                content = resp["choices"][0]["message"]["content"]
-            except (KeyError, IndexError) as e:
-                print(f"chapter {n}: bad API response {e}")
-                continue
             except RuntimeError as e:
-                print(f"chapter {n}: API failed — {e}")
-                continue
-            if not content or not content.strip():
-                print(f"chapter {n}: empty model output, skipping")
-                continue
-            try:
-                raw = parse_json(content)
-            except (BuildError, json.JSONDecodeError) as e:
-                print(f"chapter {n}: unparseable JSON — {e}; skipping")
+                print(f"chapter {n}: FAILED after retries — {e}")
                 continue
 
         normalized, warnings = normalize_delta(raw, prior, n)
