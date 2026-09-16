@@ -163,6 +163,13 @@ body {
   font-size: 0.8rem;
 }
 .entity-aliases { color: var(--text-dim); font-style: italic; margin: 6px 0 0; }
+.entity-link {
+  color: var(--gold);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--gold);
+  cursor: pointer;
+}
+.entity-link:hover { color: var(--crimson-bright); border-bottom-color: var(--crimson-bright); }
 .summary {
   background: var(--panel);
   border: 1px solid var(--border);

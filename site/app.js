@@ -12,6 +12,7 @@ let selectedId = null;
 const byId = (arr) => Object.fromEntries(arr.map((e) => [e.id, e]));
 let entityMap = {};
 let factMap = {};
+let entityNameMap = {}; // lowercased name/alias -> entity id (visible at this chapter)
 
 // ---- temporal predicates -------------------------------------------------
 const isActiveAt = (f, ch) =>
@@ -25,6 +26,38 @@ const certaintyLabel = {
   hypothesis: "hypothesis",
   speculation: "speculation",
 };
+
+// ---- entity linking ------------------------------------------------------
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function rebuildEntityLinks() {
+  entityNameMap = {};
+  for (const e of entities) {
+    if (!isVisibleAt(e, chapter)) continue;
+    entityNameMap[e.name.toLowerCase()] = e.id;
+    for (const a of e.aliases || []) entityNameMap[a.toLowerCase()] = e.id;
+  }
+}
+
+function linkify(text) {
+  const names = Object.keys(entityNameMap).sort((a, b) => b.length - a.length);
+  if (!names.length) return escapeHtml(text);
+  const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp("\\b(" + names.map(esc).join("|") + ")\\b", "gi");
+  return String(text).split(re).map((part, i) => {
+    if (i % 2 === 1) {
+      const id = entityNameMap[part.toLowerCase()];
+      return `<a class="entity-link" data-entity="${escapeHtml(id)}" href="#">${escapeHtml(part)}</a>`;
+    }
+    return escapeHtml(part);
+  }).join("");
+}
 
 // ---- loading -------------------------------------------------------------
 async function load(path) {
@@ -65,11 +98,25 @@ async function init() {
     });
   });
 
+  document.addEventListener("click", (ev) => {
+    const link = ev.target.closest(".entity-link");
+    if (!link) return;
+    ev.preventDefault();
+    const id = link.dataset.entity;
+    if (!id || !entityMap[id]) return;
+    selectedId = id;
+    view = "entities";
+    document.querySelectorAll(".view-tab").forEach((b) =>
+      b.classList.toggle("active", b.dataset.view === "entities"));
+    render();
+  });
+
   render();
 }
 
 // ---- rendering -----------------------------------------------------------
 function render() {
+  rebuildEntityLinks();
   updateTopbar();
   const sidebar = document.getElementById("sidebar");
   const content = document.getElementById("content");
@@ -120,7 +167,7 @@ function appendProse(parent, text, className) {
   for (const part of parts) {
     const p = document.createElement("p");
     p.className = className;
-    p.textContent = part.trim();
+    p.innerHTML = linkify(part.trim());
     parent.appendChild(p);
   }
 }
@@ -357,7 +404,7 @@ function factCard(f) {
 
   const stmt = document.createElement("p");
   stmt.className = "fact-statement";
-  stmt.textContent = f.statement;
+  stmt.innerHTML = linkify(f.statement);
   top.appendChild(stmt);
 
   const cert = document.createElement("span");
