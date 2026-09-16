@@ -136,6 +136,13 @@ function render() {
 function updateTopbar() {
   document.getElementById("chapter-value").textContent =
     `${chapter} / ${meta.max_chapter}`;
+  const link = document.getElementById("chapter-link");
+  if (!link) return;
+  const title = meta.chapters ? meta.chapters[String(chapter)] : null;
+  link.textContent = title
+    ? `Read ch ${chapter}: ${title} ↗`
+    : `Read ch ${chapter} ↗`;
+  link.href = `${meta.read_url_base}/${chapter}/`;
 }
 
 function activeEntityFacts(eid) {

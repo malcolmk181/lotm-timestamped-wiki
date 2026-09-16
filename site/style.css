@@ -42,6 +42,13 @@ body {
 .chapter-control { display: flex; align-items: center; gap: 12px; }
 .chapter-label { color: var(--text-dim); font-variant: small-caps; }
 .chapter-value { color: var(--crimson-bright); font-weight: bold; min-width: 60px; }
+.chapter-link {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.chapter-link:hover { text-decoration: underline; color: var(--crimson-bright); }
 
 #chapter-slider {
   -webkit-appearance: none;

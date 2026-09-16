@@ -3,6 +3,7 @@ import pytest
 
 from build import (
     BuildError,
+    read_chapter_titles,
     resolve_temporal,
     validate_entities,
     validate_facts,
@@ -85,3 +86,10 @@ def test_validate_summaries_rejects_unknown_entity():
             "id": "s1", "entity": "nope", "established_at": 1,
             "text": "t", "sources": [{"chapter": 1}],
         }], {"x"})
+
+
+def test_read_chapter_titles(tmp_path):
+    (tmp_path / "0000.md").write_text("---\ntitle: Book meta\n---\n")
+    (tmp_path / "0001.md").write_text("---\ntitle: Crimson\n---\nbody")
+    (tmp_path / "0002.md").write_text("---\ntitle: Situation\n---\nbody")
+    assert read_chapter_titles(tmp_path) == {1: "Crimson", 2: "Situation"}

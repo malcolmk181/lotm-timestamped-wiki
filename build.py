@@ -11,6 +11,7 @@ No third-party dependencies: uses only the stdlib (tomllib, json, pathlib).
 from __future__ import annotations
 
 import json
+import re
 import sys
 import tomllib
 from pathlib import Path
@@ -18,6 +19,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data"
 SITE = ROOT / "site"
+
+# Where the novel is cloned and where any chapter can be read online.
+NOVEL_DIR = ROOT / ".." / "LOTM-Reader" / "chapters" / "lotm" / "webnovel"
+READ_URL_BASE = "https://beyonder.pages.dev/read/lotm/webnovel"
 
 CERTAINTIES = {"fact", "inference", "hypothesis", "speculation"}
 
@@ -29,6 +34,22 @@ class BuildError(Exception):
 def load_toml(path: Path) -> dict:
     with path.open("rb") as fh:
         return tomllib.load(fh)
+
+
+def read_chapter_titles(novel_dir: Path = NOVEL_DIR) -> dict[int, str]:
+    """Map chapter number -> title from the novel's markdown frontmatter."""
+    titles: dict[int, str] = {}
+    if not novel_dir.exists():
+        return titles
+    for p in sorted(novel_dir.glob("*.md")):
+        n = int(p.stem)
+        if n == 0:  # 0000.md is book metadata, not a chapter
+            continue
+        head = p.read_text()[:600]
+        m = re.search(r"^title:\s*(.+)$", head, re.M)
+        if m:
+            titles[n] = m.group(1).strip(" \t\r\n'\"")
+    return titles
 
 
 def resolve_temporal(items: list[dict]) -> list[dict]:
@@ -173,6 +194,8 @@ def build():
         "fact_count": len(out_facts),
         "entity_count": len(entities),
         "summary_count": len(out_summaries),
+        "chapters": {str(n): t for n, t in read_chapter_titles().items()},
+        "read_url_base": READ_URL_BASE,
     }, indent=2))
 
     print(
