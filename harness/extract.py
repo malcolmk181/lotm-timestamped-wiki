@@ -118,6 +118,7 @@ HARD RULES:
 3. Respond with a single JSON object and nothing else — no markdown fences, no prose.
 4. Be noisy and detailed: prefer many small, specific claims over a few big ones. This is what makes later refinements and overturns meaningful.
 5. Output NOTHING already captured in the prior state. new_entities is ONLY for entities not listed under ENTITIES below; new_facts is ONLY for claims the FACTS list does not already state; emit a summary_update ONLY when you add to or change an entity's description. If a chapter adds nothing new, return empty arrays. Re-emiting an existing entity id is a hard error.
+6. Enumerate fully. When the text gives a list or roll-call (e.g. "seven orthodox gods: the Eternal Blazing Sun, the Lord of Storms, ..."), do not truncate it: emit an entity for the collective plus one entity for each named member, and a fact that names the complete list. Lists like this are core world-building and must not be shortened.
 
 OUTPUT SCHEMA (exactly this JSON object):
 {
@@ -138,7 +139,7 @@ FIELD RULES:
 - fact.sources[].quote: a short exact phrase from the chapter, verbatim, that backs the claim.
 - refines: ids of facts this claim EXTENDS or clarifies without contradicting. Only point at facts established in an EARLIER chapter (their established_at < N).
 - supersedes: ids of facts this claim CONTRADICTS/REPLACES. Only earlier facts. This is how the wiki records that a prior understanding was wrong.
-- summary_updates: write a readable prose PARAGRAPH describing an entity, in natural English, suitable for a reader. Emit one when a chapter meaningfully changes or adds to an entity's description — either a brand-new entity (entity id may be one you just created above) or an updated understanding (then set "supersedes" to the id(s) of the prior summary version(s), listed in the prior state). If a chapter adds nothing new about that entity, do not emit a summary for it.
+- summary_updates: write a readable prose PARAGRAPH describing an entity, in natural English, suitable for a reader. Emit one when a chapter meaningfully changes or adds to an entity's description — either a brand-new entity (entity id may be one you just created above) or an updated understanding (then set "supersedes" to the id(s) of the prior summary version(s), listed in the prior state). A changed understanding is as important as a new entity: if a chapter tells you something new about an entity that already has a summary (for example, learning that the Evernight Goddess is one of the seven orthodox gods), you MUST emit a summary_update that supersedes the old version. If a chapter adds nothing new about that entity, do not emit a summary for it.
 - summary text must be chapter-accurate: it may only state what is knowable by chapter N.
 
 Write entity names, quotes, and claims exactly as the chapter states them. Do not editorialize beyond what the text says."""
