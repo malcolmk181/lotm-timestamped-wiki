@@ -215,3 +215,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Extraction harness drafts (generated, review-then-apply)
+_draft/

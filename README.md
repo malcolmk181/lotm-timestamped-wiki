@@ -66,7 +66,33 @@ in [`TRACKING.md`](TRACKING.md) and becomes a `supersedes` of
 uv run python build.py            # validate + compile JSON into site/data/
 uv run python build.py --selfcheck  # exercise supersede/refine resolution
 uv run python -m http.server -d site 8000   # preview locally
+
+# extraction harness (needs OPENROUTER_API_KEY in .env)
+uv run python harness/extract.py --chapters 1 25          # draft mode (no data change)
+uv run python harness/extract.py --chapters 1 3 --mock    # offline plumbing test
 ```
+
+## Extraction harness
+
+[`harness/extract.py`](harness/extract.py) turns novel chapters into the data
+schema one chapter at a time, in strict reading order. It feeds an LLM (via
+OpenRouter) only the current chapter's text plus a compact "prior state" (what
+`data/` currently believes) and asks for a *delta*: new entities, new facts,
+and summary revisions — so it cannot leak later chapters, and it has to link
+`refines`/`supersedes` to existing ids.
+
+- **Model:** `deepseek/deepseek-v4-flash` (cheap, low refusal). Override with
+  `LOTM_MODEL` for higher prose quality (`deepseek/deepseek-v4-pro`) once locked.
+- **Source:** the `webnovel` translation (not `oldtl`).
+- **Draft-first:** it writes proposed additions to `_draft/` and never touches
+  `data/` unless you `--apply` (merge step still to come). Review the
+  `.report.md` per chapter, then merge by hand or via apply.
+- **Bringing it up:** run it on ch 1–3 and diff against the hand-authored
+  `data/`; tune the prompt until entity recall, fact recall, and
+  refine/supersede linkage match, then let it run 4 → 1435.
+
+This is a plain script, not an agent loop: one deterministic pass per chapter,
+validated against the schema, output committed to git.
 
 ## Status
 
@@ -74,6 +100,7 @@ uv run python -m http.server -d site 8000   # preview locally
 - [x] Build pipeline (validation + resolution)
 - [x] Static site with chapter slider, entity browser, changes view
 - [x] `data/` authored for chapters 1–3 (33 entities, 29 facts, 36 summaries)
-- [ ] Extract chapters 4–25
-- [ ] Automated/LLM-assisted extraction pipeline (spoiler-bounded, per-chapter)
+- [x] Extraction harness (spoiler-bounded, per-chapter, draft-first)
+- [ ] Match harness output to hand-authored ch 1–3; then extract ch 4–25
+- [ ] `--apply` merge step (currently manual review-and-merge)
 - [ ] GitHub Pages deployment
