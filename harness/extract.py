@@ -170,6 +170,8 @@ def call_openrouter(api_key: str, model: str, messages: list[dict], max_retries:
     ]
     last_err = None
     for rf in response_formats:
+        print(f"    [response_format] {('none' if rf is None else rf.get('type', '?'))}",
+              flush=True)
         body = {
             "model": model,
             "messages": messages,
@@ -348,13 +350,14 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
 # ---------------------------------------------------------------------------
 # Draft writing (and optional apply)
 # ---------------------------------------------------------------------------
-def write_draft(chapter_num: int, normalized: dict, title: str, model: str, report: str) -> Path:
+def write_draft(chapter_num: int, normalized: dict, title: str, model: str, report: str, warnings: list[str]) -> Path:
     DRAFT.mkdir(exist_ok=True)
     payload = {
         "chapter": chapter_num,
         "title": title,
         "model": model,
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "warnings": warnings,
         **normalized,
     }
     path = DRAFT / f"ch-{chapter_num:04d}.json"
@@ -363,7 +366,7 @@ def write_draft(chapter_num: int, normalized: dict, title: str, model: str, repo
     return path
 
 
-def render_report(chapter_num: int, title: str, normalized: dict) -> str:
+def render_report(chapter_num: int, title: str, normalized: dict, warnings: list[str]) -> str:
     lines = [f"# Chapter {chapter_num}: {title} — draft", ""]
     ne = normalized["new_entities"]
     nf = normalized["new_facts"]
@@ -390,6 +393,9 @@ def render_report(chapter_num: int, title: str, normalized: dict) -> str:
             over = ", ".join(s["supersedes"]) or "(new)"
             lines.append(f"- **{s['entity']}** → `{s['id']}` (replaces {over})")
             lines.append(f"    - {s['text']}")
+    if warnings:
+        lines += ["", "## Dropped / warnings", ""]
+        lines += [f"- {w}" for w in warnings]
     lines += ["", "Review, then `uv run python harness/extract.py --chapters "
               f"{chapter_num} --apply` to merge (or edit data/*.toml by hand)."]
     return "\n".join(lines)
@@ -488,8 +494,8 @@ def main() -> int:
         for w in warnings:
             print(f"  chapter {n}: note: {w}")
 
-        report = render_report(n, title, normalized)
-        path = write_draft(n, normalized, title, model, report)
+        report = render_report(n, title, normalized, warnings)
+        path = write_draft(n, normalized, title, model, report, warnings)
         # accumulate so the next chapter sees this chapter's output as known
         prior["entities"].extend(normalized["new_entities"])
         prior["facts"].extend(normalized["new_facts"])
