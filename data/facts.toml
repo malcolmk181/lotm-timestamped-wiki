@@ -1,0 +1,317 @@
+# =============================================================================
+# FACTS — timestamped claims about the world. This is the heart of the wiki.
+#
+# A fact is "believed/known" during [established_at, revoked_at). It is MISSING
+# from the wiki before established_at, and treated as a *previous understanding*
+# after revoked_at.
+#
+# Fields:
+#   id            slug, unique (prefix "f-" by convention)
+#   statement     the claim, written as the understanding held at established_at
+#   entities      ids of entities this fact is "about" (links the graph)
+#   established_at  chapter (1-based) where this understanding first holds
+#   certainty     epistemic status: fact | inference | hypothesis | speculation
+#   sources       list of { chapter, quote } — always cite; chapter is required
+#   refines       [optional] ids of facts this fact *extends/clarifies* without
+#                 contradicting. The older fact stays true and gains a
+#                 "refined by" pointer.
+#   supersedes    [optional] ids of facts this fact *overturns/replaces*. The
+#                 older fact becomes a past understanding, with revoked_at set
+#                 to this fact's established_at.
+#
+# Rule: author only the FORWARD pointer (refines / supersedes) on the newer
+# fact. build.py resolves the reverse direction (refined_by / superseded_by /
+# revoked_at). Never set revoked_at by hand.
+#
+# Spoiler discipline: never write a fact that mentions knowledge from a later
+# chapter than established_at. The reveal on the transmigration (same-world /
+# future) is deliberately NOT in scope here — it lands far later and will be
+# authored as a supersedes of f-transmigration when we reach it.
+# =============================================================================
+
+# ---- Chapter 1 ---------------------------------------------------------------
+
+[[facts]]
+id = "f-transmigration"
+statement = """Zhou Mingrui, a modern Chinese Earthling, has transmigrated into the body of Klein Moretti in the Loen Kingdom."""
+entities = ["zhou-mingrui", "klein-moretti"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "'C-could I have transmigrated?'" },
+]
+
+[[facts]]
+id = "f-crimson-moon"
+statement = """This world's moon glows crimson, clearly different from Earth's moon."""
+entities = ["crimson-moon"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "a crimson moon hung high above the backdrop of a 'black velvet curtain'" },
+]
+
+[[facts]]
+id = "f-klein-history-grad"
+statement = """Klein Moretti is a recent graduate of the Department of History at Khoy University."""
+entities = ["klein-moretti", "khoy-university"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "a recent graduate from the Department of History at Khoy University" },
+]
+
+[[facts]]
+id = "f-klein-father"
+statement = """Klein's father was an Imperial Army sergeant who died in a colonial conflict on the Southern Continent."""
+entities = ["klein-moretti", "southern-continent"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "a sergeant of the Imperial Army who had sacrificed himself during a colonial conflict with the Southern Continent" },
+]
+
+[[facts]]
+id = "f-klein-mother"
+statement = """Klein's mother was a devotee of the Evernight Goddess; she died the year Klein passed his university entrance exams."""
+entities = ["klein-moretti", "evernight-goddess"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "His mother was a devotee of the Evernight Goddess." },
+]
+
+[[facts]]
+id = "f-klein-siblings"
+statement = """Klein has an elder brother (Benson) and a younger sister (Melissa); the family lives together in a two-bedroom apartment."""
+entities = ["klein-moretti", "benson-moretti", "melissa-moretti"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "He also had an elder brother and a younger sister. They stayed in a two bedroom apartment together." },
+]
+
+[[facts]]
+id = "f-klein-languages"
+statement = """As a history graduate, Klein knows Ancient Feysac (deemed the origin of all Northern Continent languages) and the Hermes language."""
+entities = ["klein-moretti", "feysac-language", "hermes-language"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "Klein grasped knowledge of the ancient Feysac language... as well as the Hermes language" },
+]
+
+[[facts]]
+id = "f-hermes-note"
+statement = """The notebook on Klein's desk bears a message in the Hermes language: 'Everyone will die, including me.'"""
+entities = ["hermes-notebook", "hermes-language"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "\"Everyone will die, including me.\"" },
+]
+
+[[facts]]
+id = "f-revolver-poverty"
+statement = """A brass revolver sits on Klein's desk; Zhou is puzzled how the poor family could afford one."""
+entities = ["brass-revolver", "klein-moretti"]
+established_at = 1
+certainty = "inference"
+sources = [
+  { chapter = 1, quote = "With Klein's family situation, how can they have the money or means to buy a revolver?" },
+]
+
+[[facts]]
+id = "f-bloody-handprint"
+statement = """There is a bloody handprint by the desk, and Zhou's hands and temple are covered in blood."""
+entities = ["klein-moretti"]
+established_at = 1
+certainty = "fact"
+sources = [
+  { chapter = 1, quote = "a red handprint to the side of the table... his palm and fingers were covered in blood" },
+]
+
+# ---- Chapter 2 ---------------------------------------------------------------
+
+[[facts]]
+id = "f-head-wound"
+statement = """Zhou's temple bears a grotesque, self-closing gunshot wound; the flesh visibly regenerates, which he attributes to 'the restorative effects of transmigration.'"""
+entities = ["klein-moretti"]
+established_at = 2
+certainty = "inference"
+sources = [
+  { chapter = 2, quote = "the wound might take thirty to forty minutes... before it would only leave a light scar" },
+]
+
+[[facts]]
+id = "f-klein-suicide"
+statement = """Klein apparently died from a self-inflicted revolver shot to the temple (provisionally treated as suicide)."""
+entities = ["klein-moretti", "brass-revolver"]
+established_at = 2
+certainty = "inference"
+sources = [
+  { chapter = 2, quote = "Well, I'll consider it as suicide for now." },
+]
+
+[[facts]]
+id = "f-ritual-no-effect"
+statement = """The night before his transmigration, Zhou performed a 'luck enhancement ritual' from 'Quintessential Divination and Arcane Arts of the Qin and Han Dynasty'; at the time it appeared to have no effect."""
+entities = ["luck-enhancement-ritual", "quintessential-divination"]
+established_at = 2
+certainty = "fact"
+sources = [
+  { chapter = 2, quote = "nothing happened back then" },
+]
+
+[[facts]]
+id = "f-ritual-cause"
+statement = """Zhou hypothesizes the luck enhancement ritual actually caused his transmigration, and plans to repeat it in this world hoping to return home."""
+entities = ["luck-enhancement-ritual"]
+established_at = 2
+certainty = "hypothesis"
+refines = ["f-ritual-no-effect"]
+sources = [
+  { chapter = 2, quote = "There is a distinct possibility that it's due to that luck enhancement ritual..." },
+]
+
+[[facts]]
+id = "f-gas-meter"
+statement = """The family's apartment uses a coin-operated gas meter feeding a wall-mounted gas lamp — a relative luxury Benson persuaded the landlord to install."""
+entities = ["benson-moretti"]
+established_at = 2
+certainty = "fact"
+sources = [
+  { chapter = 2, quote = "he reasoned with the landlord to 'raise the apartment's standards by installing gas pipes'" },
+]
+
+[[facts]]
+id = "f-copper-penny"
+statement = """The basic Loen currency is the copper penny (one penny buying power about three to four yuan of Zhou's original world); other denominations include fivepence, halfpence and quarterpence."""
+entities = ["copper-penny", "loen-kingdom"]
+established_at = 2
+certainty = "fact"
+sources = [
+  { chapter = 2, quote = "One penny's purchasing power was roughly three to four yuan before his transmigration." },
+]
+
+[[facts]]
+id = "f-george-iii"
+statement = """The copper penny has been minted and circulated since King George III ascended the Loen throne."""
+entities = ["george-iii", "copper-penny"]
+established_at = 2
+certainty = "inference"
+sources = [
+  { chapter = 2, quote = "which was only minted and circulated after King George III ascended to the throne" },
+]
+
+[[facts]]
+id = "f-mr-franky"
+statement = """The family's landlord is Mr. Franky, a short, thrifty man who polices water use closely because rent includes water."""
+entities = ["mr-franky"]
+established_at = 2
+certainty = "fact"
+sources = [
+  { chapter = 2, quote = "he suddenly recalled his landlord, Mr. Franky" },
+]
+
+# ---- Chapter 3 ---------------------------------------------------------------
+
+[[facts]]
+id = "f-seven-gods"
+statement = """The Northern Continent has seven orthodox gods: the Eternal Blazing Sun, the Lord of Storms, the God of Knowledge and Wisdom, the Evernight Goddess, Earth Mother, the God of Combat, and the God of Steam and Machinery."""
+entities = ["seven-orthodox-gods", "eternal-blazing-sun", "lord-of-storms", "god-of-knowledge-and-wisdom", "evernight-goddess", "earth-mother", "god-of-combat", "god-of-steam-and-machinery"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "the Northern Continent had seven orthodox gods" },
+]
+
+[[facts]]
+id = "f-week-religion"
+statement = """The seven-day week derives from religion (the seven orthodox gods), while the twelve-month year derives from astronomical observation."""
+entities = ["seven-orthodox-gods", "northern-continent"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "The splitting of months was a result of astronomical observations... as for the splitting of days, it was a result of religion." },
+]
+
+[[facts]]
+id = "f-parallel-world"
+statement = """Zhou suspects he may be in a parallel world, noting the unusual split of time (months from astronomy, days from religion)."""
+entities = ["northern-continent"]
+established_at = 3
+certainty = "speculation"
+sources = [
+  { chapter = 3, quote = "It made Zhou Mingrui suspect whether he was in a parallel world." },
+]
+
+[[facts]]
+id = "f-interview"
+statement = """Klein has a History department interview at Tingen University in two days, backed by recommendation letters for Tingen and Backlund universities."""
+entities = ["klein-moretti", "tingen-university", "backlund-university"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "He needs to participate in the Tingen University's History department interview two days later" },
+]
+
+[[facts]]
+id = "f-melissa-mechanic"
+statement = """Melissa aspires to be a steam mechanic and is a student in the Steam and Machinery department of Tingen Technical School."""
+entities = ["melissa-moretti", "tingen-technical-school"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "Her ambition was to be a steam mechanic." },
+]
+
+[[facts]]
+id = "f-melissa-age"
+statement = """Fifteen-year-old Melissa passed her Tingen Technical School entrance exams in July last year."""
+entities = ["melissa-moretti"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "fifteen-year-old Melissa passed her entrance examinations" },
+]
+
+[[facts]]
+id = "f-benson-clerk"
+statement = """Benson is a clerk at an import-export company whose business has slumped due to Southern Continent troubles; he works overtime to keep the family afloat."""
+entities = ["benson-moretti", "southern-continent"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "Benson's company was affected by the situation in the Southern Continent" },
+]
+
+[[facts]]
+id = "f-pocket-watch"
+statement = """The siblings keep a silver vine-leaf pocket watch bearing their father's photo; it malfunctions, and the mechanically gifted Melissa fixes it."""
+entities = ["silver-pocket-watch", "melissa-moretti"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "It was a picture of the siblings' father. It was the most valuable item the Imperial Army sergeant left behind" },
+]
+
+[[facts]]
+id = "f-pound-weight"
+statement = """The Loen 'pound' (a weight unit) is roughly half a kilogram."""
+entities = ["loen-kingdom"]
+established_at = 3
+certainty = "inference"
+sources = [
+  { chapter = 3, quote = "it was close to half a kilogram of what he was accustomed to" },
+]
+
+[[facts]]
+id = "f-klein-memory-loss"
+statement = """The bullet passing through the head left Klein's memories fragmented, with notable gaps around the revolver's origin and the circumstances of his death."""
+entities = ["klein-moretti"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "Klein's memories were like shattered glass... there were many spots which were clearly missing" },
+]

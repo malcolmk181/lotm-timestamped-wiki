@@ -164,8 +164,7 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
-/site
+# mkdocs documentation (note: this project's static site lives in site/ and IS committed)
 
 # mypy
 .mypy_cache/

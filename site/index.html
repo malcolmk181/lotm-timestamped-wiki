@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lord of the Mysteries — World Wiki</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Lord of the Mysteries</h1>
+      <span class="subtitle">World wiki, as understood chapter-by-chapter</span>
+    </div>
+    <div class="chapter-control">
+      <span class="chapter-label">Chapter</span>
+      <input type="range" id="chapter-slider" min="1" max="1" value="1" />
+      <span class="chapter-value" id="chapter-value">1 / 1</span>
+    </div>
+  </header>
+
+  <nav class="view-tabs">
+    <button class="view-tab active" data-view="entities">Entities</button>
+    <button class="view-tab" data-view="changes">Temporal changes</button>
+  </nav>
+
+  <main class="layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <section class="content" id="content"></section>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
