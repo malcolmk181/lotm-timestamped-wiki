@@ -195,9 +195,9 @@ sources = [
 ]
 
 [[facts]]
-id = "f-copper-penny"
-statement = """The basic Loen currency is the copper penny (one penny buying power about three to four yuan of Zhou's original world); other denominations include fivepence, halfpence and quarterpence."""
-entities = ["copper-penny", "loen-kingdom"]
+id = "f-loen-currency"
+statement = """The Loen Kingdom's money is built on the copper penny, its most basic coin, worth roughly three to four yuan of Zhou's original world; other denominations include fivepence, halfpence and quarterpence."""
+entities = ["loen-currency", "loen-kingdom"]
 established_at = 2
 certainty = "fact"
 sources = [
@@ -207,7 +207,7 @@ sources = [
 [[facts]]
 id = "f-george-iii"
 statement = """The copper penny has been minted and circulated since King George III ascended the Loen throne."""
-entities = ["george-iii", "copper-penny"]
+entities = ["george-iii", "loen-currency"]
 established_at = 2
 certainty = "inference"
 sources = [
@@ -244,6 +244,26 @@ established_at = 3
 certainty = "fact"
 sources = [
   { chapter = 3, quote = "The splitting of months was a result of astronomical observations... as for the splitting of days, it was a result of religion." },
+]
+
+[[facts]]
+id = "f-church-evernight-sunday-school"
+statement = """The Church of the Evernight Goddess historically ran Sunday school classes for rudimentary education, costing only a copper penny a week."""
+entities = ["church-of-evernight"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "the Sunday school classes offered by the Church of Evernight" },
+]
+
+[[facts]]
+id = "f-education-law-neutrality"
+statement = """The Loen Kingdom's Basic Education Law established religiously neutral public primary schools, in part to keep education out of the conflicts between the churches of the Lord of Storms, the Evernight Goddess, and the God of Steam and Machinery."""
+entities = ["loen-kingdom", "church-of-evernight", "lord-of-storms", "evernight-goddess", "god-of-steam-and-machinery"]
+established_at = 3
+certainty = "fact"
+sources = [
+  { chapter = 3, quote = "many public primary schools were established to strictly maintain the principle of religious neutrality" },
 ]
 
 [[facts]]

@@ -198,9 +198,9 @@
     "first_seen": 1
   },
   {
-    "id": "copper-penny",
-    "name": "Copper Penny",
-    "type": "currency",
+    "id": "loen-currency",
+    "name": "Loen Currency",
+    "type": "concept",
     "first_seen": 2
   },
   {

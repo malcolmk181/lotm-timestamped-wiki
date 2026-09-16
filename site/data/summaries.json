@@ -467,10 +467,10 @@
     "refined_by": []
   },
   {
-    "id": "s-copper-penny-1",
-    "entity": "copper-penny",
+    "id": "s-loen-currency-1",
+    "entity": "loen-currency",
     "established_at": 2,
-    "text": "The copper penny is the basic coin of the Loen Kingdom, minted since the ascension of King George III; a penny buys roughly what three or four yuan would have bought Zhou Mingrui in his old life, with fivepence, halfpence, and quarterpence as the other common denominations.",
+    "text": "The Loen Kingdom's money is built on the copper penny, its basic coin, minted since the ascension of King George III. A penny buys roughly what three or four yuan would have bought Zhou Mingrui in his old life, with fivepence, halfpence, and quarterpence as the other common denominations.",
     "sources": [
       {
         "chapter": 2
