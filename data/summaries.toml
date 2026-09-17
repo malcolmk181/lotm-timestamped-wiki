@@ -21,11 +21,1230 @@
 
 # ---- Klein Moretti -----------------------------------------------------------
 
+# ---- age-of-gods ------------------------------------------------------------
+
+[[summaries]]
+id = "s-age-of-gods-1"
+entity = "age-of-gods"
+established_at = 9
+text = """The Age of the Gods is an alternative name for the Fourth Epoch."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- alger-wilson ------------------------------------------------------------
+
+[[summaries]]
+id = "s-alger-wilson-1"
+entity = "alger-wilson"
+established_at = 5
+text = """Alger Wilson is a figure wearing a robe with lightning patterns who navigates a three-masted relic sailboat through a storm in the Sonia Sea. He is preparing a ritual using a glass bottle containing weather phenomena, though he is currently short on Ghost Shark's blood. A crimson burst appeared between his palm and the bottle, and he subsequently found himself in a gray fog space alongside Zhou Mingrui and Audrey Hall."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- amantha-essence ------------------------------------------------------------
+
+[[summaries]]
+id = "s-amantha-essence-1"
+entity = "amantha-essence"
+established_at = 14
+text = """Amantha is a floral essence distilled from night vanilla, slumber flower, and chamomile, with a name that signifies tranquility in the Hermes language. When used in conjunction with the Eye of the Spirit, it induces a state of calm, enhances visual clarity, and allows the user to hear murmurs from unseen individuals while creating a sensation of spiritual exposure."""
+sources = [
+  { chapter = 14 },
+]
+
+# ---- ancient-elf-dance ------------------------------------------------------------
+
+[[summaries]]
+id = "s-ancient-elf-dance-1"
+entity = "ancient-elf-dance"
+established_at = 8
+text = """The Ancient Elf Dance is currently the most popular dance among royalty. It was performed by Audrey Hall during a recent event."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- ancient-feysac ------------------------------------------------------------
+
+[[summaries]]
+id = "s-ancient-feysac-1"
+entity = "ancient-feysac"
+established_at = 9
+text = """Ancient Feysac is a branch of the Jotun language from which the common language of the Balam Empire in the Southern Continent developed. It is also the modified form of script used in the Fourth Epoch notebook, a text that changed constantly over its thousand-year history."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- annie ------------------------------------------------------------
+
+[[summaries]]
+id = "s-annie-1"
+entity = "annie"
+established_at = 8
+text = """Annie serves as the maidservant to Audrey Hall."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- antigonus-family ------------------------------------------------------------
+
+[[summaries]]
+id = "s-antigonus-family-1"
+entity = "antigonus-family"
+established_at = 9
+text = """The Antigonus family held a very high standing in the Solomon Empire. A member of this family is identified as the author of the Fourth Epoch notebook."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- archbishop-chanis ------------------------------------------------------------
+
+[[summaries]]
+id = "s-archbishop-chanis-1"
+entity = "archbishop-chanis"
+established_at = 18
+text = """Archbishop Chanis is the founder of the Nighthawks. He described the organization's members as guardians who are also miserable wretches constantly battling against threats and madness."""
+sources = [
+  { chapter = 18 },
+]
+
+# ---- audrey-hall ------------------------------------------------------------
+
+[[summaries]]
+id = "s-audrey-hall-1"
+entity = "audrey-hall"
+established_at = 5
+text = """Audrey Hall is a member of the Hall family residing in a luxurious villa in the royal district of Backlund. She attempted to awaken a cracked bronze mirror on her dresser by chanting a command in the name of her family. After her initial efforts failed, the mirror glowed with crimson light and shrouded her, transporting her to a gray fog space where she discovered the presence of Zhou Mingrui and Alger Wilson."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- augustus-family ------------------------------------------------------------
+
+[[summaries]]
+id = "s-augustus-family-1"
+entity = "augustus-family"
+established_at = 8
+text = """The Augustus family is symbolized by the 'Sword of Judgment' emblem, which features two swords with ruby crowns at the handles and has been passed down from the previous epoch. The King's family, representing this lineage, arrived at a ceremony on a gigantic flying machine equipped with machine guns and projectile launchers."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- awwa-county ------------------------------------------------------------
+
+[[summaries]]
+id = "s-awwa-county-1"
+entity = "awwa-county"
+established_at = 1
+text = """Awwa County is a location within the Loen Kingdom on the Northern Continent. It is the administrative region that contains the City of Tingen, where Klein Moretti is a citizen."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- backlund ------------------------------------------------------------
+
+[[summaries]]
+id = "s-backlund-1"
+entity = "backlund"
+established_at = 5
+text = """Backlund is the capital city of the Loen Kingdom. It is home to the Hall family, who reside in a luxurious villa within the city's royal district."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- backlund-cannon-academy ------------------------------------------------------------
+
+[[summaries]]
+id = "s-backlund-cannon-academy-1"
+entity = "backlund-cannon-academy"
+established_at = 8
+text = """The Backlund Cannon Academy provided sixty scientists and senior engineers for the construction of an ironclad warship. This project also required significant industrial resources, including multiple steel factories and amalgamators, to support the nation's annual steel production of twelve million tonnes."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- backlund-daily-tribune ------------------------------------------------------------
+
+[[summaries]]
+id = "s-backlund-daily-tribune-1"
+entity = "backlund-daily-tribune"
+established_at = 25
+text = """The Backlund Daily Tribune is one of several newspapers and magazines published in Tingen. It is part of a broader media landscape that includes titles like the Morning Post and the Tussock Times, with some publications distributed via steam locomotives from other regions."""
+sources = [
+  { chapter = 25 },
+]
+
+# ---- backlund-university ------------------------------------------------------------
+
+[[summaries]]
+id = "s-backlund-university-1"
+entity = "backlund-university"
+established_at = 3
+text = """Backlund University is an institution for which Klein Moretti received a recommendation letter from his mentor. It is one of two universities, alongside Tingen University, for which Klein secured these endorsements."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- balam-empire ------------------------------------------------------------
+
+[[summaries]]
+id = "s-balam-empire-1"
+entity = "balam-empire"
+established_at = 9
+text = """The Balam Empire is a nation located in the Southern Continent. Its common language developed from Ancient Feysac, a branch of the Jotun language."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- basic-education-law ------------------------------------------------------------
+
+[[summaries]]
+id = "s-basic-education-law-1"
+entity = "basic-education-law"
+established_at = 3
+text = """The Basic Education Law is a statute enacted by the Loen Kingdom that established the Primary and Secondary Education Committee. Its primary aim is to fund public primary schools while maintaining religious neutrality in the education system."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- benson-moretti ------------------------------------------------------------
+
+[[summaries]]
+id = "s-benson-moretti-1"
+entity = "benson-moretti"
+established_at = 2
+text = """Benson is Klein Moretti's literate elder brother who works as a clerk at an import and export company. He supports the family financially and recently convinced their landlord to install gas pipes in the apartment to improve rental prospects. Using his professional connections, he purchased a gas lamp at cost price, paying for it with his own savings."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- besik-street ------------------------------------------------------------
+
+[[summaries]]
+id = "s-besik-street-1"
+entity = "besik-street"
+established_at = 15
+text = """Besik Street is a location in Tingen that houses the Hound Pub. It serves as a specific point of contact for Klein, who must visit the pub there to arrange mercenary services through the establishment's boss."""
+sources = [
+  { chapter = 15 },
+]
+
+# ---- beyonder ------------------------------------------------------------
+
+[[summaries]]
+id = "s-beyonder-1"
+entity = "beyonder"
+established_at = 6
+text = """Beyonders are rare individuals who can only achieve their status through the consumption of potions, with numbers lower than in the early Iron Age. They can be found in courts, tribunals, and execution agencies, or discovered by joining specific churches, seeking ancient noble families, or finding clandestine evil organizations. Most people never encounter a Beyonder in their lifetime."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- bitsch-mountbatten ------------------------------------------------------------
+
+[[summaries]]
+id = "s-bitsch-mountbatten-1"
+entity = "bitsch-mountbatten"
+established_at = 10
+text = """Bitsch Mountbatten is a senior sergeant and the policeman in charge of the street where Klein resides, distinguished by three chevrons on his uniform. He is characterized as a rude, brutal, and hands-on officer who serves as a deterrent to local criminals and hooligans. Following a police investigation, Klein was advised to remain in Tingen and notify Mountbatten of any travel to avoid becoming a fugitive."""
+sources = [
+  { chapter = 10 },
+]
+
+# ---- black-emperor ------------------------------------------------------------
+
+[[summaries]]
+id = "s-black-emperor-1"
+entity = "black-emperor"
+established_at = 5
+text = """The Black Emperor is a historical figure associated with the Solomon Empire. He is claimed to be the original owner of a specific bronze mirror, which is considered an extraordinary item."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- blackthorn-security-company ------------------------------------------------------------
+
+[[summaries]]
+id = "s-blackthorn-security-company-1"
+entity = "blackthorn-security-company"
+established_at = 16
+text = """The Blackthorn Security Company is the current name for the small mercenary squad that Dunn Smith had instructed Klein to seek out. Located on the second floor of No. 36 Zouteland Street, the organization was rebranded from its previous identity, a fact confirmed by Wright, the boss of the Hound Pub."""
+sources = [
+  { chapter = 16 },
+]
+
+# ---- blasphemy-slate ------------------------------------------------------------
+
+[[summaries]]
+id = "s-blasphemy-slate-1"
+entity = "blasphemy-slate"
+established_at = 6
+text = """The Blasphemy Slate is the source of the names for Beyonding potions. These names have been translated into various languages, including Jotun, Elvish, ancient and modern Hermes, and ancient Feysac, adapting to different eras while retaining their core characteristics."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- bloody-butcher ------------------------------------------------------------
+
+[[summaries]]
+id = "s-bloody-butcher-1"
+entity = "bloody-butcher"
+established_at = 20
+text = """The Bloody Butcher was a serial killer who murdered five girls in Tingen City sixteen years ago, removing their hearts and stomachs. As a Beyonder, he had killed more than five victims before his capture, which occurred while he was preparing a ritual for a devil."""
+sources = [
+  { chapter = 20 },
+]
+
+# ---- brass-revolver ------------------------------------------------------------
+
+[[summaries]]
+id = "s-brass-revolver-1"
+entity = "brass-revolver"
+established_at = 1
+text = """A brass revolver is one of several items found in the room where Klein Moretti wakes up. It sits alongside a wooden desk, a notebook, and other household objects."""
+sources = [
+  { chapter = 1 },
+]
+
+[[summaries]]
+id = "s-brass-revolver-2"
+entity = "brass-revolver"
+established_at = 11
+supersedes = ["s-brass-revolver-1"]
+text = """The brass revolver is a semi-regulated item found in Klein Moretti's room, containing five rounds and one empty cartridge shell. It is deduced to be the weapon used in Klein's apparent suicide, evidenced by the wound on his temple and a yellow bullet on the wall. To conceal it from a police search, Klein initially hid the gun in the coal stove under a kettle before moving it behind the board under his double-decked bed."""
+sources = [
+  { chapter = 11 },
+]
+
+[[summaries]]
+id = "s-brass-revolver-3"
+entity = "brass-revolver"
+established_at = 12
+supersedes = ["s-brass-revolver-2"]
+text = """The brass revolver is a semi-regulated item found in Klein Moretti's room, containing five rounds and one empty cartridge shell. It is central to the investigation into Klein's apparent suicide, as he deduced he died by firing it at his temple, though the bullet failed to kill him. Klein initially hid the weapon in the coal stove to conceal it from police, but later revealed to Inspector Dunn Smith that it was actually hidden behind the bed board on the bottom deck of his bunk."""
+sources = [
+  { chapter = 12 },
+]
+
+# ---- breidt ------------------------------------------------------------
+
+[[summaries]]
+id = "s-breidt-1"
+entity = "breidt"
+established_at = 19
+text = """Bredt is one of three civilian staff members on the Nighthawks team, alongside Rozanne and Old Neil. These staff handle duties such as visitors, cleaning, case files, inventory, and guarding the armory, storeroom, and archives. Bredt and the other two civilian staff negotiate among themselves for night shifts and rest days, taking one day off per week excluding Sundays."""
+sources = [
+  { chapter = 19 },
+]
+
+# ---- brindisi-bay ------------------------------------------------------------
+
+[[summaries]]
+id = "s-brindisi-bay-1"
+entity = "brindisi-bay"
+established_at = 17
+text = """Brindisi Bay is a location that lacks direct steam train service, requiring travelers to arrive by ship. This mode of transport is described by Rozanne as awful."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- bronze-mirror ------------------------------------------------------------
+
+[[summaries]]
+id = "s-bronze-mirror-1"
+entity = "bronze-mirror"
+established_at = 5
+text = """The Bronze Mirror is a cracked item kept on Audrey Hall's dresser, claimed by her father to be a treasure of the Solomon Empire's Black Emperor and an extraordinary item. Audrey attempted to awaken it by chanting a specific incantation, and after she gave up, the mirror suddenly glowed with crimson light and shrouded her completely."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- captain-code ------------------------------------------------------------
+
+[[summaries]]
+id = "s-captain-code-1"
+entity = "captain-code"
+established_at = 7
+text = """The Captain is the individual who requested the delivery of Ghost Shark blood. This request was communicated through Williams, the boss of the Warrior & Sea Bar, who serves as the contact person for the transaction."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- cataclysm-epoch ------------------------------------------------------------
+
+[[summaries]]
+id = "s-cataclysm-epoch-1"
+entity = "cataclysm-epoch"
+established_at = 18
+text = """The Cataclysm Epoch is the Third Epoch in history. During this period, the Evernight Goddess, Lord of Storms, Eternal Blazing Sun, Earth Mother, and God of Combat blessed and assisted humanity in surviving the Cataclysm."""
+sources = [
+  { chapter = 18 },
+]
+
+# ---- champagne-street ------------------------------------------------------------
+
+[[summaries]]
+id = "s-champagne-street-1"
+entity = "champagne-street"
+established_at = 16
+text = """Champagne Street is a destination in the city accessible via track-based public horse carriages. The fare for a ride from Iron Cross Street to this location is four pence, covering a distance of more than four kilometers."""
+sources = [
+  { chapter = 16 },
+]
+
+# ---- chanis-gate ------------------------------------------------------------
+
+[[summaries]]
+id = "s-chanis-gate-1"
+entity = "chanis-gate"
+established_at = 17
+text = """The Chanis Gate is a black iron split gate carved with seven sacred emblems, situated underground beneath the Blackthorn Security Company office. It serves as a barrier to the deeper levels and is located straight ahead from the main intersection of the facility's long, gas-lit aisle. Dunn Smith's office, where he is often found reading the newspaper, is positioned just in front of the gate."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- chaos-epoch ------------------------------------------------------------
+
+[[summaries]]
+id = "s-chaos-epoch-1"
+entity = "chaos-epoch"
+established_at = 18
+text = """The Chaos Epoch is the First Epoch in the creation myth. It is the period during which the Creator's wisdom gave birth to humanity."""
+sources = [
+  { chapter = 18 },
+]
+
+# ---- chinese-language ------------------------------------------------------------
+
+[[summaries]]
+id = "s-chinese-language-1"
+entity = "chinese-language"
+established_at = 20
+text = """The symbols found in Roselle Gustav's diary are actually written in Simplified Chinese."""
+sources = [
+  { chapter = 20 },
+]
+
+[[summaries]]
+id = "s-chinese-language-2"
+entity = "chinese-language"
+established_at = 21
+supersedes = ["s-chinese-language-1"]
+text = """The symbols found in Roselle Gustav's diary are identified as Simplified Chinese. This discovery led Klein Moretti to confirm that Emperor Roselle Gustav was a transmigrator from his original world."""
+sources = [
+  { chapter = 21 },
+]
+
+# ---- chris-selena ------------------------------------------------------------
+
+[[summaries]]
+id = "s-chris-selena-1"
+entity = "chris-selena"
+established_at = 24
+text = """Chris is a lawyer who earns close to three pounds a week and serves as Selena's elder brother. He has been engaged for more than four years to a part-time typist, and the couple is currently saving money to ensure a stable life, planning to wait at least another year before their wedding."""
+sources = [
+  { chapter = 24 },
+]
+
+# ---- church-of-craftsmanship ------------------------------------------------------------
+
+[[summaries]]
+id = "s-church-of-craftsmanship-1"
+entity = "church-of-craftsmanship"
+established_at = 4
+text = """The Church of Craftsmanship received its first public holy revelation since the Fifth Epoch during the rule of Roselle Gustav. This event resulted in the deity being redefined from the God of Craftsmanship to the God of Steam and Machinery."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- church-of-evernight ------------------------------------------------------------
+
+[[summaries]]
+id = "s-church-of-evernight-1"
+entity = "church-of-evernight"
+established_at = 3
+text = """The Church of Evernight offers Sunday school classes that cost one copper penny per week. These classes provide education exclusively on Sundays."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- conservative-party ------------------------------------------------------------
+
+[[summaries]]
+id = "s-conservative-party-1"
+entity = "conservative-party"
+established_at = 8
+text = """The Conservative Party is the political faction to which the incumbent Prime Minister, Lord Aguesid Negan, belongs. Its main supporter is Pallas Negan, the Duke of Negan and the Prime Minister's brother."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- constant-city ------------------------------------------------------------
+
+[[summaries]]
+id = "s-constant-city-1"
+entity = "constant-city"
+established_at = 9
+text = """Constant City is a location in Midseashire, within the Loen Kingdom. It is the hometown of Welch McGovern’s father, a banker."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- copper-penny ------------------------------------------------------------
+
+[[summaries]]
+id = "s-copper-penny-1"
+entity = "copper-penny"
+established_at = 2
+text = """The copper penny is the most basic currency of the Loen Kingdom, characterized by its dark yellow color and bronze shimmer. It features a portrait of a crown-wearing man on the front and a '1' on a clump of wheat on the back. Minted and circulated after King George III ascended to the throne, it is part of a currency system that also includes denominations such as the five pence, halfpence, and quarter-pence."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- countess-hall ------------------------------------------------------------
+
+[[summaries]]
+id = "s-countess-hall-1"
+entity = "countess-hall"
+established_at = 8
+text = """Countess Hall is the mother of Audrey Hall."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- creation-myth ------------------------------------------------------------
+
+[[summaries]]
+id = "s-creation-myth-1"
+entity = "creation-myth"
+established_at = 18
+text = """The creation myth describes the Creator awakening from Chaos, shattering darkness, and fusing into the universe to form all existence, with His body parts becoming various races and celestial bodies. His spirit became the Eternal Blazing Sun, Lord of the Storms, and God of Knowledge and Wisdom, while His wisdom birthed humanity during the Chaos Epoch, granting them clever brains but lacking other magical powers. This myth is canon for the Evernight Goddess, the Church of the Lord of Storms, and the Church of the God of Steam and Machinery, with the Evernight Goddess identified as the Crimson Moon originating from one of the Creator's eyes."""
+sources = [
+  { chapter = 18 },
+]
+
+# ---- crimson-moon ------------------------------------------------------------
+
+[[summaries]]
+id = "s-crimson-moon-1"
+entity = "crimson-moon"
+established_at = 1
+text = """The crimson moon is a celestial phenomenon illuminating the room where Klein Moretti awakens. It casts a crimson veil over the objects in the space."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- daffodil-street ------------------------------------------------------------
+
+[[summaries]]
+id = "s-daffodil-street-1"
+entity = "daffodil-street"
+established_at = 4
+text = """Daffodil Street is a location in Tingen where it intersects with Iron Cross Street. A municipal square is situated at this intersection."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- daly ------------------------------------------------------------
+
+[[summaries]]
+id = "s-daly-1"
+entity = "daly"
+established_at = 14
+text = """Daly is a Spirit Medium of uncanny beauty, characterized by emerald eyes and a hooded black robe adorned with a silver bracelet and white crystal pendant. Brought by Dunn Smith to investigate Klein, she employs theories from the Psychology Alchemists to probe the mind, comparing it to an ocean where deep secrets persist despite wiped superficial memories. Although she confirmed that Welch and Naya committed suicide due to an untraceable force, her mediumship attempt on Klein failed as he successfully resisted by maintaining rationality and feigning memory loss."""
+sources = [
+  { chapter = 14 },
+]
+
+# ---- dark-sacred-emblem ------------------------------------------------------------
+
+[[summaries]]
+id = "s-dark-sacred-emblem-1"
+entity = "dark-sacred-emblem"
+established_at = 17
+text = """The Dark Sacred Emblem is the symbol of the Evernight Goddess. It is depicted as a deep black background dotted with sparkling embellishments clustered precisely half the crimson moon."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- demon-hunting-bullets ------------------------------------------------------------
+
+[[summaries]]
+id = "s-demon-hunting-bullets-1"
+entity = "demon-hunting-bullets"
+established_at = 21
+text = """Demon hunting bullets are silver in color and feature complicated patterns with tiny Sacred Emblems engraved at the bottom, depicting a black background dotted with stars and a half crimson moon. Old Neil provided Klein Moretti with ten of these bullets alongside other equipment."""
+sources = [
+  { chapter = 21 },
+]
+
+# ---- desi-bay ------------------------------------------------------------
+
+[[summaries]]
+id = "s-desi-bay-1"
+entity = "desi-bay"
+established_at = 15
+text = """Desi Bay is a destination for civilian staff members seeking vacation time. Employees wishing to travel there or to the South are required to coordinate their leave with their colleagues."""
+sources = [
+  { chapter = 15 },
+]
+
+# ---- disciplinary-paladins ------------------------------------------------------------
+
+[[summaries]]
+id = "s-disciplinary-paladins-1"
+entity = "disciplinary-paladins"
+established_at = 8
+text = """Two black-armored cavalry flanked King George III, leading Audrey Hall to speculate that they might be higher-order Disciplinary Paladins."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- doug ------------------------------------------------------------
+
+[[summaries]]
+id = "s-doug-1"
+entity = "doug"
+established_at = 16
+text = """Doug is a black dog with shiny fur who serves as one of the two dogs used for rat-baiting at the Hound Pub. Although he had won eight consecutive games prior to the current round, he was defeated during the specific match observed by Klein."""
+sources = [
+  { chapter = 16 },
+]
+
+# ---- dunn-smith ------------------------------------------------------------
+
+[[summaries]]
+id = "s-dunn-smith-1"
+entity = "dunn-smith"
+established_at = 12
+text = """Dunn Smith is a stern police inspector with gray eyes who investigates the deaths of Welch and Naya, identifying Klein Moretti as the prime suspect. He suspects the missing revolver belonging to Mr. Welch will be found in Klein's room and informs Klein that he must be cleared by an 'expert' before being released. After Klein attempts to escape, Dunn Smith appears outside Klein's window in a black trench coat, suggesting he is closely monitoring the suspect."""
+sources = [
+  { chapter = 12 },
+]
+
+[[summaries]]
+id = "s-dunn-smith-2"
+entity = "dunn-smith"
+established_at = 13
+supersedes = ["s-dunn-smith-1"]
+text = """Dunn Smith is a stern police inspector with gray eyes who investigates the deaths of Welch and Naya, identifying Klein as the prime suspect. Operating under the codename 'Nighthawk' for the Church of Evernight, he possesses the ability to enter dreams and believes the dream self is more truthful than the conscious one. He has confirmed that Klein suffered memory loss related to the incident and warns that supernatural threats can resurface in terrifying ways, noting his team's past success in suppressing a fake cult."""
+sources = [
+  { chapter = 13 },
+]
+
+# ---- earl-hall ------------------------------------------------------------
+
+[[summaries]]
+id = "s-earl-hall-1"
+entity = "earl-hall"
+established_at = 8
+text = """Earl Hall is Audrey Hall's father, a nobleman characterized by a mustache, blue eyes, a loosening waist, and wrinkles. He owns a non-purebred golden retriever named Susie, which was given to him as a gift when he purchased a foxhound."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- earth-mother ------------------------------------------------------------
+
+[[summaries]]
+id = "s-earth-mother-1"
+entity = "earth-mother"
+established_at = 3
+text = """Earth Mother is one of the seven orthodox gods recognized on the Northern Continent. She is listed alongside deities such as the Eternal Blazing Sun and the Evernight Goddess."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- ebony-wood-cane ------------------------------------------------------------
+
+[[summaries]]
+id = "s-ebony-wood-cane-1"
+entity = "ebony-wood-cane"
+established_at = 23
+text = """This ebony wood cane, inlaid with silver, was purchased by Klein Moretti for seven soli six pence. It is one of several cane options available at Wilker Clothing and Hats."""
+sources = [
+  { chapter = 23 },
+]
+
+# ---- elvish-language ------------------------------------------------------------
+
+[[summaries]]
+id = "s-elvish-language-1"
+entity = "elvish-language"
+established_at = 6
+text = """Elvish is one of the languages into which the names of Beyonding potions have been translated from the Blasphemy Slate. The translations change to match the era while retaining the core characteristics of the original names."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- empress-borough ------------------------------------------------------------
+
+[[summaries]]
+id = "s-empress-borough-1"
+entity = "empress-borough"
+established_at = 8
+text = """No specific details regarding Empress Borough are currently known."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- enmat-harbor ------------------------------------------------------------
+
+[[summaries]]
+id = "s-enmat-harbor-1"
+entity = "enmat-harbor"
+established_at = 12
+text = """Enmat Harbor is a city that serves as a potential transit point for Klein Moretti's planned escape from Tingen. He intends to travel there by steam train from his current location, after which he plans to continue his journey by sea to Pritz on his way to the capital, Backlund."""
+sources = [
+  { chapter = 12 },
+]
+
+# ---- eternal-blazing-sun ------------------------------------------------------------
+
+[[summaries]]
+id = "s-eternal-blazing-sun-1"
+entity = "eternal-blazing-sun"
+established_at = 3
+text = """The Eternal Blazing Sun is one of the seven orthodox gods of the Northern Continent. This deity is part of the pantheon that includes the Lord of Storms and the God of Knowledge and Wisdom."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- evernight-goddess ------------------------------------------------------------
+
+[[summaries]]
+id = "s-evernight-goddess-1"
+entity = "evernight-goddess"
+established_at = 1
+text = """The Evernight Goddess is a deity to whom Klein Moretti's mother was a devoted follower. She passed away the year Klein passed his entrance examinations to Khoy University."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- evil-cult-case ------------------------------------------------------------
+
+[[summaries]]
+id = "s-evil-cult-case-1"
+entity = "evil-cult-case"
+established_at = 13
+text = """A few years ago, Dunn Smith's team suppressed a cult that performed live sacrifices to a fabricated deity, a group that contained no Beyonders. A whistleblower who reported the cult was cleared of demonic influence and lived a successful life with a family. However, in March of the current year, this whistleblower strangled himself in his office despite having no apparent financial or personal reasons for suicide."""
+sources = [
+  { chapter = 13 },
+]
+
+# ---- eye-of-the-spirit ------------------------------------------------------------
+
+[[summaries]]
+id = "s-eye-of-the-spirit-1"
+entity = "eye-of-the-spirit"
+established_at = 14
+text = """The Eye of the Spirit is a liquid prepared by decocting sun-dried barks and leaves from drago and poplar trees three times, immersing them in Lanti Wine, and treating the mixture with incantations. Its use, particularly alongside Amantha, results in heightened sensory perception, including clearer color definition and the ability to hear unseen voices, while making the user feel as though their spirit is exposed like an ocean."""
+sources = [
+  { chapter = 14 },
+]
+
+# ---- fermo-coffee ------------------------------------------------------------
+
+[[summaries]]
+id = "s-fermo-coffee-1"
+entity = "fermo-coffee"
+established_at = 18
+text = """Fermo coffee is a beverage originating from the Paz River Valley. It is characterized by a bitter taste, strong fragrance, and a splendid aftertaste."""
+sources = [
+  { chapter = 18 },
+]
+
+# ---- feynapotter ------------------------------------------------------------
+
+[[summaries]]
+id = "s-feynapotter-1"
+entity = "feynapotter"
+established_at = 4
+text = """Feynapotter is a Southern nation that was targeted by the Grain Act, which aimed to protect domestic agricultural prices by halting grain imports from such countries. It was also forced to bow down to Roselle Gustav during her expansionist campaigns."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- feynapotter-plateau ------------------------------------------------------------
+
+[[summaries]]
+id = "s-feynapotter-plateau-1"
+entity = "feynapotter-plateau"
+established_at = 18
+text = """The Feynapotter plateau is a location known for its coffee, which Klein prefers. He has only had the opportunity to drink this specific coffee a few times at Welch's place."""
+sources = [
+  { chapter = 18 },
+]
+
+# ---- feysac-empire ------------------------------------------------------------
+
+[[summaries]]
+id = "s-feysac-empire-1"
+entity = "feysac-empire"
+established_at = 4
+text = """The Feysac Empire was one of the nations forced to submit to Roselle Gustav during her period of invasion and consolidation of power. This occurred as she transformed the Republic into an Empire and declared herself 'Emperor Caesar'."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- feysac-language ------------------------------------------------------------
+
+[[summaries]]
+id = "s-feysac-language-1"
+entity = "feysac-language"
+established_at = 1
+text = """The Feysac language is an ancient tongue that Klein Moretti studied during his academic career. It is considered the source of all languages in the Northern Continent."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- foodaholic-empire ------------------------------------------------------------
+
+[[summaries]]
+id = "s-foodaholic-empire-1"
+entity = "foodaholic-empire"
+established_at = 11
+text = """No facts are currently known about the Foodaholic Empire."""
+sources = [
+  { chapter = 11 },
+]
+
+# ---- forsaken-land-of-god ------------------------------------------------------------
+
+[[summaries]]
+id = "s-forsaken-land-of-god-1"
+entity = "forsaken-land-of-god"
+established_at = 21
+text = """The Forsaken Land of God is a location that was the subject of a search by a ship during Emperor Roselle Gustav's reign. In a diary entry dated the 23rd of September, Gustav noted that he lost communications with this ship and considered inventing wireless telegraphs to maintain contact."""
+sources = [
+  { chapter = 21 },
+]
+
+# ---- fourth-epoch ------------------------------------------------------------
+
+[[summaries]]
+id = "s-fourth-epoch-1"
+entity = "fourth-epoch"
+established_at = 9
+text = """The Fourth Epoch, also known as the Age of the Gods, is the historical period preceding the current Iron Age. Its history is mysterious and incomplete due to a scarcity of tombs, ancient cities, and records, relying instead on ambiguous accounts from the seven major Churches. The epoch is known to have included the Solomon Empire, the Tudor Dynasty, and the Trunsoest Empire."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- fourth-epoch-notebook ------------------------------------------------------------
+
+[[summaries]]
+id = "s-fourth-epoch-notebook-1"
+entity = "fourth-epoch-notebook"
+established_at = 9
+text = """The Fourth Epoch notebook is an ancient text written in a modified form of Ancient Feysac by a member of the Antigonus family. It contains anachronistic references, such as the title 'Black Emperor' and a secret transaction with a person named Tudor, and mentions a mission to the 'Nation of the Evernight' atop the Hornacis mountain range. Klein deduces that an entry stating 'Everyone will die, including me' likely led to the original owner's suicide, prompting him to investigate the item despite potential dangers."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- gas-lamp ------------------------------------------------------------
+
+[[summaries]]
+id = "s-gas-lamp-1"
+entity = "gas-lamp"
+established_at = 2
+text = """A gas lamp was purchased by Benson Moretti at cost price through his employment at an import and export company. He paid for the item using his personal savings after successfully convincing the landlord to install gas pipes in the apartment to enhance its rental value."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- gas-meter ------------------------------------------------------------
+
+[[summaries]]
+id = "s-gas-meter-1"
+entity = "gas-meter"
+established_at = 2
+text = """No specific details regarding the gas meter are currently known."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- ghost-shark ------------------------------------------------------------
+
+[[summaries]]
+id = "s-ghost-shark-1"
+entity = "ghost-shark"
+established_at = 5
+text = """The Ghost Shark is a creature whose blood is required for a ritual being prepared by Alger Wilson. Wilson is currently short on this specific ingredient while holding a glass bottle containing weather phenomena."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- god-of-combat ------------------------------------------------------------
+
+[[summaries]]
+id = "s-god-of-combat-1"
+entity = "god-of-combat"
+established_at = 3
+text = """The God of Combat is one of the seven orthodox gods recognized on the Northern Continent. He is included in the list of deities that defines the region's religious structure."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- god-of-knowledge-and-wisdom ------------------------------------------------------------
+
+[[summaries]]
+id = "s-god-of-knowledge-and-wisdom-1"
+entity = "god-of-knowledge-and-wisdom"
+established_at = 3
+text = """The God of Knowledge and Wisdom is one of the seven orthodox gods of the Northern Continent. This deity is part of the established pantheon that includes the Eternal Blazing Sun and Earth Mother."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- god-of-steam-and-machinery ------------------------------------------------------------
+
+[[summaries]]
+id = "s-god-of-steam-and-machinery-1"
+entity = "god-of-steam-and-machinery"
+established_at = 3
+text = """The God of Steam and Machinery is one of the seven orthodox gods on the Northern Continent. Conflicts involving this deity, along with the Lord of Storms and the Evernight Goddess, motivated the establishment of public primary schools to ensure religious neutrality in education."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- gold-pound ------------------------------------------------------------
+
+[[summaries]]
+id = "s-gold-pound-1"
+entity = "gold-pound"
+established_at = 4
+text = """The gold pound is the highest denomination in the Loen Kingdom's currency system, existing as paper-based notes guaranteed by gold. It is equivalent to twenty soli and comes in denominations of one, five, and ten gold pounds, serving as a benchmark for wages and rent in Tingen."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- golden-indus-region ------------------------------------------------------------
+
+[[summaries]]
+id = "s-golden-indus-region-1"
+entity = "golden-indus-region"
+established_at = 17
+text = """The Golden Indus region is an area within Tingen that falls under the jurisdiction of the Seventh Unit, also known as the Nighthawks. This unit is responsible for handling supernatural incidents related to followers of the Evernight Goddess in this specific district."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- grain-act ------------------------------------------------------------
+
+[[summaries]]
+id = "s-grain-act-1"
+entity = "grain-act"
+established_at = 4
+text = """The Grain Act was legislation designed to protect domestic agricultural product prices by stopping grain imports from Southern nations like Feynapotter, Masin, and Lenburg when prices rose. Protests for its repeal led to a drop in the price of rye bread at Smyrin Bakery."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- gray-fog-space ------------------------------------------------------------
+
+[[summaries]]
+id = "s-gray-fog-space-1"
+entity = "gray-fog-space"
+established_at = 5
+text = """The Gray Fog Space is a dimension of endless gray fog dotted with crimson stars, where Zhou Mingrui found himself after experiencing intense pain and hallucinations during a ritual. Touching the crimson stars causes them to burst with light and agitate the surrounding fog. It is a shared location where Zhou Mingrui, Audrey Hall, and Alger Wilson have all discovered each other's presence."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- hall-family ------------------------------------------------------------
+
+[[summaries]]
+id = "s-hall-family-1"
+entity = "hall-family"
+established_at = 5
+text = """The Hall Family is a noble or wealthy family in the Loen Kingdom. They reside in a luxurious villa in the royal district of Backlund, and their name is invoked in rituals to command the awakening of a bronze mirror."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- hanged-man-card ------------------------------------------------------------
+
+[[summaries]]
+id = "s-hanged-man-card-1"
+entity = "hanged-man-card"
+established_at = 7
+text = """The Hanged Man is the code name selected by Alger Wilson for his participation in the Tarot Club. This designation is derived from the Major Arcana tarot cards."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- harvin-stone ------------------------------------------------------------
+
+[[summaries]]
+id = "s-harvin-stone-1"
+entity = "harvin-stone"
+established_at = 24
+text = """Harvin Stone is a middle-aged instructor at Tingen University known for his black beard. He handled Klein Moretti's recommendation letter, though Klein later visited the university to inform him that he would not be participating in the interview because he had already secured a job."""
+sources = [
+  { chapter = 24 },
+]
+
+# ---- heart-of-the-wild-bar ------------------------------------------------------------
+
+[[summaries]]
+id = "s-heart-of-the-wild-bar-1"
+entity = "heart-of-the-wild-bar"
+established_at = 11
+text = """No facts are currently known about the Heart of the Wild Bar."""
+sources = [
+  { chapter = 11 },
+]
+
+# ---- henry-augustus-i ------------------------------------------------------------
+
+[[summaries]]
+id = "s-henry-augustus-i-1"
+entity = "henry-augustus-i"
+established_at = 20
+text = """Henry Augustus I is the direct ancestor of King George III and features a portrait on the five gold pound note."""
+sources = [
+  { chapter = 20 },
+]
+
+# ---- hermes-language ------------------------------------------------------------
+
+[[summaries]]
+id = "s-hermes-language-1"
+entity = "hermes-language"
+established_at = 1
+text = """The Hermes language is an ancient script often found in mausoleums associated with rituals and prayers, which Klein Moretti learned during his studies. An open notebook in his room contains the phrase 'Everyone will die, including me' written in this language."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- higher-education-commission ------------------------------------------------------------
+
+[[summaries]]
+id = "s-higher-education-commission-1"
+entity = "higher-education-commission"
+established_at = 10
+text = """The Higher Education Commission introduced the title of 'senior associate professor' into the academic hierarchy. This addition was made to the existing three-level system of lecturers, associate professors, and professors to retain individuals who possessed high academic achievements or seniority but had not yet attained the rank of professor."""
+sources = [
+  { chapter = 10 },
+]
+
+# ---- holy-cathedral ------------------------------------------------------------
+
+[[summaries]]
+id = "s-holy-cathedral-1"
+entity = "holy-cathedral"
+established_at = 19
+text = """The Holy Cathedral, also known as the Cathedral of Serenity, serves as the headquarters of the Church of Evernight in the Winter County to the north of the kingdom. It is the sole location where Grade 0 Sealed Artifacts can be sealed, as these items are of the highest importance and confidentiality and cannot be stored elsewhere."""
+sources = [
+  { chapter = 19 },
+]
+
+# ---- holy-numerics-cathedral ------------------------------------------------------------
+
+[[summaries]]
+id = "s-holy-numerics-cathedral-1"
+entity = "holy-numerics-cathedral"
+established_at = 17
+text = """The Holy Numerics Cathedral is one of the three major cathedrals that sustain the religious circles in Tingen City. It serves as the headquarters for the Church of the God of Steam and Machinery."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- hornacis-mountain-range ------------------------------------------------------------
+
+[[summaries]]
+id = "s-hornacis-mountain-range-1"
+entity = "hornacis-mountain-range"
+established_at = 9
+text = """The Hornacis mountain range features a highest peak that rises over 6,000 meters above sea level. At the summit of this peak is located the 'Nation of the Evernight,' which the author of the Fourth Epoch notebook was tasked to visit."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- hound-pub ------------------------------------------------------------
+
+[[summaries]]
+id = "s-hound-pub-1"
+entity = "hound-pub"
+established_at = 15
+text = """The Hound Pub is an establishment located on Besik Street that functions as a front for hiring mercenaries. Klein is instructed to visit the pub and speak with its boss, Wright, to secure a small squad for a mission."""
+sources = [
+  { chapter = 15 },
+]
+
+# ---- imperial-army ------------------------------------------------------------
+
+[[summaries]]
+id = "s-imperial-army-1"
+entity = "imperial-army"
+established_at = 1
+text = """The Imperial Army is a military organization in which Klein Moretti's father served as a sergeant. He died while participating in a colonial conflict on the Southern Continent."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- imperial-naval-base ------------------------------------------------------------
+
+[[summaries]]
+id = "s-imperial-naval-base-1"
+entity = "imperial-naval-base"
+established_at = 8
+text = """The Imperial Naval Base is situated at Pritz Harbor on Oak Island."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- ince-zangwill ------------------------------------------------------------
+
+[[summaries]]
+id = "s-ince-zangwill-1"
+entity = "ince-zangwill"
+established_at = 19
+text = """Ince Zangwill is a 40-year-old former archbishop and Gatekeeper who was corrupted by the devil after failing a promotion and escaped three years ago with Sealed Artifact 0-08. He is depicted in photographs as a blind man in one eye with dark blonde hair, wearing an all-black clergyman robe. If discovered, he must not be alerted or disturbed; observers must report immediately, as engaging him carries a thousand percent chance of death."""
+sources = [
+  { chapter = 19 },
+]
+
+# ---- intis-republic ------------------------------------------------------------
+
+[[summaries]]
+id = "s-intis-republic-1"
+entity = "intis-republic"
+established_at = 4
+text = """The Intis Republic was established after Roselle Gustav overthrew the Intis Kingdom's imperial rule and became its first Consul. Under her leadership, the state expanded its influence, placing nations like Lenburg under its protection before eventually being transformed into an Empire."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- introductory-ceremony ------------------------------------------------------------
+
+[[summaries]]
+id = "s-introductory-ceremony-1"
+entity = "introductory-ceremony"
+established_at = 8
+text = """The introductory ceremony is an event led by the Queen that marks an individual's debut into the Backlund social scene and announces their adult status."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- iron-age ------------------------------------------------------------
+
+[[summaries]]
+id = "s-iron-age-1"
+entity = "iron-age"
+established_at = 9
+text = """The Iron Age is the current historical epoch, succeeding the Fourth Epoch. The history of the preceding Fourth Epoch is noted to be mysterious and incomplete, with few surviving records."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- iron-cross-street ------------------------------------------------------------
+
+[[summaries]]
+id = "s-iron-cross-street-1"
+entity = "iron-cross-street"
+established_at = 4
+text = """Iron Cross Street is a street in Tingen that intersects with Daffodil Street. A municipal square is located at this specific intersection."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- ironheart-wood-cane ------------------------------------------------------------
+
+[[summaries]]
+id = "s-ironheart-wood-cane-1"
+entity = "ironheart-wood-cane"
+established_at = 23
+text = """This Ironheart wood cane is sold at Wilker Clothing and Hats for eleven soli seven pence. It is listed among the shop's available cane materials."""
+sources = [
+  { chapter = 23 },
+]
+
+# ---- jenny ------------------------------------------------------------
+
+[[summaries]]
+id = "s-jenny-1"
+entity = "jenny"
+established_at = 23
+text = """Jenny is a neighbor of Melissa Moretti whose family of five recently moved to Lower Street. Following her father's injury and subsequent job loss, the family now shares a single room where three members sleep in a bunk bed and two on the ground."""
+sources = [
+  { chapter = 23 },
+]
+
+# ---- john-browning ------------------------------------------------------------
+
+[[summaries]]
+id = "s-john-browning-1"
+entity = "john-browning"
+established_at = 25
+text = """John Browning is a reporter for the Tingen Morning Post. He is credited with writing the report on the Welch and Naya case."""
+sources = [
+  { chapter = 25 },
+]
+
+# ---- jotun-language ------------------------------------------------------------
+
+[[summaries]]
+id = "s-jotun-language-1"
+entity = "jotun-language"
+established_at = 6
+text = """Jotun is a language used for translating the names of Beyonding potions from the Blasphemy Slate. Like other translations, the Jotun versions change to match the era while retaining the core characteristics of the potion names."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- justice-card ------------------------------------------------------------
+
+[[summaries]]
+id = "s-justice-card-1"
+entity = "justice-card"
+established_at = 7
+text = """Justice is the code name chosen by Audrey Hall for her role in the Tarot Club. The name is derived from the Major Arcana tarot cards."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- khoy-river ------------------------------------------------------------
+
+[[summaries]]
+id = "s-khoy-river-1"
+entity = "khoy-river"
+established_at = 24
+text = """The Khoy River is a body of water that flows between Tingen University and Khoy University."""
+sources = [
+  { chapter = 24 },
+]
+
+# ---- khoy-university ------------------------------------------------------------
+
+[[summaries]]
+id = "s-khoy-university-1"
+entity = "khoy-university"
+established_at = 1
+text = """Khoy University is an institution where Klein Moretti recently graduated from the Department of History. His mother passed away the year he passed the entrance examinations for this university."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- king-george-iii ------------------------------------------------------------
+
+[[summaries]]
+id = "s-king-george-iii-1"
+entity = "king-george-iii"
+established_at = 2
+text = """King George III is the monarch of the Loen Kingdom whose ascension to the throne marked the beginning of the minting and circulation of the copper penny. His portrait, depicted as a crown-wearing man, appears on the front of this basic currency unit."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- klein-moretti ------------------------------------------------------------
+
 [[summaries]]
 id = "s-klein-moretti-1"
 entity = "klein-moretti"
 established_at = 1
-text = """Klein Moretti was a history graduate of Khoy University, a poor young man of the Loen Kingdom living in a two-bedroom apartment in Tingen, Awwa County, with his elder brother Benson and younger sister Melissa. His father, an Imperial Army sergeant, had died in a colonial conflict on the Southern Continent; his mother, a devotee of the Evernight Goddess, died the year he passed his university entrance exams. It is his body that the transmigrator Zhou Mingrui awakens inside — Klein himself is dead, his temple bearing a gruesome wound and a bloody handprint beside his desk."""
+text = """Klein Moretti is a recent graduate from the Department of History at Khoy University and a citizen of the City of Tingen, who has been inhabited by the transmigrated soul of Zhou Mingrui. He wakes up in a room illuminated by a crimson moon, suffering from a grotesque wound on his temple and blood on his right hand, with a notebook on his desk containing a grim message in Hermes language."""
 sources = [
   { chapter = 1 },
 ]
@@ -35,368 +1254,1321 @@ id = "s-klein-moretti-2"
 entity = "klein-moretti"
 established_at = 2
 supersedes = ["s-klein-moretti-1"]
-text = """Klein Moretti was a history graduate of Khoy University, a poor young man of the Loen Kingdom living in a two-bedroom apartment in Tingen, Awwa County, with his elder brother Benson and younger sister Melissa. His father, an Imperial Army sergeant, had died in a colonial conflict on the Southern Continent; his mother, a devotee of the Evernight Goddess, died the year he passed his university entrance exams. He apparently shot himself in the temple with a brass revolver whose presence remains unexplained, and his flesh healed with unnatural speed — a restoration the transmigrator Zhou Mingrui, now waking in his body, credits to the effects of transmigration."""
-sources = [
-  { chapter = 2, quote = "Releasing a round with a revolver pointed at the temple?" },
-]
-
-# ---- Zhou Mingrui ------------------------------------------------------------
-
-[[summaries]]
-id = "s-zhou-mingrui-1"
-entity = "zhou-mingrui"
-established_at = 1
-text = """Zhou Mingrui is a modern Chinese Earthling who, after cataloguing a run of bad luck and trying an arcane 'luck enhancement ritual' from an old divination book, awakes in the body of a recently dead young man named Klein Moretti in a world under a crimson moon. Torn between terror and the dreamlike thrill of a web-novel fan living out a transmigration fantasy, his first concern is to understand what happened to him — and whether he can get home."""
-sources = [
-  { chapter = 1, quote = "C-could I have transmigrated?" },
-]
-
-# ---- Melissa Moretti ---------------------------------------------------------
-
-[[summaries]]
-id = "s-melissa-moretti-1"
-entity = "melissa-moretti"
-established_at = 3
-text = """Melissa Moretti is Klein's fifteen-year-old younger sister. Unlike her brothers she was schooled under the Loen Kingdom's new Basic Education Law rather than the Evernight Church's Sunday school, and she is a natural with machinery — her ambition is to become a steam mechanic, and she studies in the Steam and Machinery department of Tingen Technical School. Sharp-eyed and a little exasperated by her 'dull' brother, she fixes the family's heirloom pocket watch with ease while chivvying him over the household groceries."""
-sources = [
-  { chapter = 3 },
-]
-
-# ---- Benson Moretti ----------------------------------------------------------
-
-[[summaries]]
-id = "s-benson-moretti-1"
-entity = "benson-moretti"
-established_at = 2
-text = """Benson Moretti is Klein's elder brother, a literate clerk at an import-export company who has kept the family afloat since their father's death, even talking the landlord into installing a gas lamp for Klein's studies. As the Southern Continent's troubles squeeze his company's profits, he shoulders longer hours and harsher postings rather than risk his job."""
+text = """Klein Moretti is a recent history graduate from Khoy University and a citizen of Tingen City in the Loen Kingdom, whose body has been inhabited by the transmigrator Zhou Mingrui. He is the son of a deceased Imperial Army sergeant and a mother who was a devotee of the Evernight Goddess, and he lives with his elder brother Benson and younger sister Melissa in a modest two-bedroom apartment. Upon waking, Klein is found with a severe, rapidly healing wound on his temple and blood on his hand, leading Zhou Mingrui to deduce that the original Klein died by suicide with a revolver."""
 sources = [
   { chapter = 2 },
 ]
 
-# ---- Loen Kingdom ------------------------------------------------------------
+[[summaries]]
+id = "s-klein-moretti-3"
+entity = "klein-moretti"
+established_at = 3
+supersedes = ["s-klein-moretti-2"]
+text = """Klein Moretti is a recent graduate from the Department of History at Khoy University and a citizen of the Loen Kingdom, who has been transmigrated into by Zhou Mingrui. He is the son of a deceased Imperial Army sergeant and a devotee of the Evernight Goddess, living with his elder brother Benson and younger sister Melissa in a modest household. Klein recently survived a self-inflicted gunshot wound to the temple, which has since healed completely, and he is scheduled to interview for a position at Tingen University."""
+sources = [
+  { chapter = 3 },
+]
+
+[[summaries]]
+id = "s-klein-moretti-4"
+entity = "klein-moretti"
+established_at = 11
+supersedes = ["s-klein-moretti-3"]
+text = """Klein Moretti is a recent history graduate from Khoy University and a citizen of Tingen, who has been transmigrated into the body of his deceased self, who died by suicide with a revolver. His memories are fragmented, leaving gaps regarding the cause of death and recent events, though he recalls his family, his studies in ancient Feysac, and his mentor's recommendation letters. He has recently undergone a ritual that left four black dots on his hand and has been questioned by police, who believe he suffered amnesia and have restricted his movement."""
+sources = [
+  { chapter = 11 },
+]
+
+[[summaries]]
+id = "s-klein-moretti-5"
+entity = "klein-moretti"
+established_at = 12
+supersedes = ["s-klein-moretti-4"]
+text = """Klein Moretti is a recent history graduate from Khoy University who has transmigrated into the body of his namesake, a citizen of Tingen in the Loen Kingdom. He is currently the prime suspect in the deaths of Welch McGovern and Naya, having woken up with a healed temple wound and fragmented memories of a suicide attempt involving a brass revolver. Klein is now navigating police scrutiny while attempting to uncover the truth behind the mysterious events and his own altered state, including the appearance of four black dots on his hand."""
+sources = [
+  { chapter = 12 },
+]
+
+[[summaries]]
+id = "s-klein-moretti-6"
+entity = "klein-moretti"
+established_at = 21
+supersedes = ["s-klein-moretti-5"]
+text = """Klein Moretti is a citizen of the Loen Kingdom and a recent graduate of Khoy University's History department who has been transmigrated into the body of his namesake. He is currently employed as a civilian staff member for the Nighthawks, a role he accepted to gain access to mystical resources and cover his secret activities as 'The Fool'. His duties include investigating the hidden Antigonus diary and studying ancient texts, while he navigates the aftermath of the Welch incident and his own mysterious survival."""
+sources = [
+  { chapter = 21 },
+]
+
+# ---- klein-moretti-family ------------------------------------------------------------
+
+[[summaries]]
+id = "s-klein-moretti-family-1"
+entity = "klein-moretti-family"
+established_at = 1
+text = """The Klein family consists of Klein Moretti, his elder brother, and his younger sister, who reside together in a two-bedroom apartment. The family is not wealthy and is currently supported by the elder brother, who works as a clerk at an import and export company."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- lady-florena ------------------------------------------------------------
+
+[[summaries]]
+id = "s-lady-florena-1"
+entity = "lady-florena"
+established_at = 21
+text = """Lady Florena is a figure mentioned in the diary of Emperor Roselle Gustav, who noted that she was splendid at the grand New Year Gala in the year 1184. In a later entry, Gustav compared her to Miss Ithaca, finding the latter more mesmerizing due to nostalgia for his youth."""
+sources = [
+  { chapter = 21 },
+]
+
+# ---- lenburg ------------------------------------------------------------
+
+[[summaries]]
+id = "s-lenburg-1"
+entity = "lenburg"
+established_at = 4
+text = """Lenburg is a Southern nation subject to the Grain Act's import restrictions, which aimed to shield domestic agricultural prices. It was also placed under the protection of Intis following Roselle Gustav's invasions and subsequent consolidation of power."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- leonard-mitchell ------------------------------------------------------------
+
+[[summaries]]
+id = "s-leonard-mitchell-1"
+entity = "leonard-mitchell"
+established_at = 21
+text = """Leonard Mitchell is a Sequence 8 Beyonder with the title 'Midnight Poet' and a member of the Nighthawks. He is a young man with a romantic temperament who introduced himself to Klein Moretti, noting that Klein's survival after an accident without immediate protection marked him as having a special disposition. Mitchell is scheduled to replace Dunn Smith as the Captain of the Nighthawks."""
+sources = [
+  { chapter = 21 },
+]
+
+# ---- lettuce-and-meat-market ------------------------------------------------------------
+
+[[summaries]]
+id = "s-lettuce-and-meat-market-1"
+entity = "lettuce-and-meat-market"
+established_at = 5
+text = """No specific details are currently known about the Lettuce and Meat Market."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- loen-kingdom ------------------------------------------------------------
 
 [[summaries]]
 id = "s-loen-kingdom-1"
 entity = "loen-kingdom"
 established_at = 1
-text = """The Loen Kingdom is a nation of the Northern Continent — the home of Klein Moretti's family and of the city of Tingen — where gas meters, horse carriages, and a copper-penny currency coexist with a different, crimson moon. It is a place at war, its Imperial Army having fought a colonial conflict against the Southern Continent that cost Klein's father his life."""
+text = """The Loen Kingdom is a country located on the Northern Continent. It is the sovereign state of which Klein Moretti is a citizen, specifically within Awwa County."""
 sources = [
   { chapter = 1 },
 ]
 
-# ---- Tingen ------------------------------------------------------------------
+# ---- loen-language ------------------------------------------------------------
 
 [[summaries]]
-id = "s-tingen-city-1"
-entity = "tingen-city"
-established_at = 1
-text = """Tingen is a city in Awwa County, in the Loen Kingdom, where the Moretti family rents a two-bedroom apartment from a watchful landlord. It is the setting of Zhou Mingrui's awakening."""
+id = "s-loen-language-1"
+entity = "loen-language"
+established_at = 5
+text = """The Loen language is one of the languages into which Zhou Mingrui translated ritual incantations before performing a ceremony. He successfully translated the incantations into this language, as well as the ancient Feysac language, though he struggled with the Hermes language."""
 sources = [
-  { chapter = 1 },
+  { chapter = 5 },
 ]
 
-# ---- Awwa County -------------------------------------------------------------
+# ---- loen-police ------------------------------------------------------------
 
 [[summaries]]
-id = "s-awwa-county-1"
-entity = "awwa-county"
-established_at = 1
-text = """Awwa County is a county of the Loen Kingdom that contains the city of Tingen, home of the Moretti family."""
+id = "s-loen-police-1"
+entity = "loen-police"
+established_at = 10
+text = """The Loen Police, established only fifteen or sixteen years ago, wear black-and-white checkered uniforms with peak caps, a force that was previously known as Public Security Officers. Inspectors are identified by silver hexagons on their shoulder badges, a rank superior to the chevrons worn by sergeants. The force recently conducted a warrantless search of Klein's room, a procedure described by one of the involved inspectors as necessary."""
 sources = [
-  { chapter = 1 },
+  { chapter = 10 },
 ]
 
-# ---- Northern Continent ------------------------------------------------------
+# ---- lord-aguesid-negan ------------------------------------------------------------
 
 [[summaries]]
-id = "s-northern-continent-1"
-entity = "northern-continent"
-established_at = 1
-text = """The Northern Continent is the landmass that holds the Loen Kingdom (and Klein Moretti's hometown of Tingen), whose ancient Feysac language is held to be the root of all the continent's tongues. Its weeks are — as Zhou soon learns — divided into seven days for reasons of religion rather than astronomy."""
+id = "s-lord-aguesid-negan-1"
+entity = "lord-aguesid-negan"
+established_at = 8
+text = """Lord Aguesid Negan is the incumbent Prime Minister and a member of the Conservative Party, notable for being the second non-aristocrat to hold the position. He was granted the title of Lord for his contributions and has declared that the era of cannons and warships has dawned, ending the era of pirates."""
 sources = [
-  { chapter = 1 },
-  { chapter = 3 },
+  { chapter = 8 },
 ]
 
-# ---- Southern Continent ------------------------------------------------------
-
-[[summaries]]
-id = "s-southern-continent-1"
-entity = "southern-continent"
-established_at = 1
-text = """The Southern Continent is the other landmass of this world, against which the Loen Kingdom has fought a colonial conflict — the war in which Klein Moretti's father, an Imperial Army sergeant, was killed."""
-sources = [
-  { chapter = 1 },
-]
-
-# ---- Khoy University ---------------------------------------------------------
-
-[[summaries]]
-id = "s-khoy-university-1"
-entity = "khoy-university"
-established_at = 1
-text = """Khoy University is the institution where Klein Moretti graduated from the Department of History, having scraped through evening study with the help of his brother Benson."""
-sources = [
-  { chapter = 1 },
-]
-
-# ---- Evernight Goddess (timestamped demo: v1 -> v2 at ch 3) ------------------
-
-[[summaries]]
-id = "s-evernight-goddess-1"
-entity = "evernight-goddess"
-established_at = 1
-text = """The Evernight Goddess is a deity worshiped in the Loen Kingdom — Klein Moretti's late mother was one of her devotees."""
-sources = [
-  { chapter = 1 },
-]
-
-[[summaries]]
-id = "s-evernight-goddess-2"
-entity = "evernight-goddess"
-established_at = 3
-supersedes = ["s-evernight-goddess-1"]
-text = """The Evernight Goddess is one of the seven orthodox gods of the Northern Continent, whose churches — alongside those of the Lord of Storms and the God of Steam and Machinery — once ran the region's Sunday schools before the Loen Kingdom's Basic Education Law founded religiously neutral public schools. Klein Moretti's late mother was one of her devotees."""
-sources = [
-  { chapter = 3, quote = "the Northern Continent had seven orthodox gods" },
-]
-
-# ---- Seven Orthodox Gods -----------------------------------------------------
-
-[[summaries]]
-id = "s-seven-orthodox-gods-1"
-entity = "seven-orthodox-gods"
-established_at = 3
-text = """The Northern Continent's religion is organized around seven orthodox gods: the Eternal Blazing Sun, the Lord of Storms, the God of Knowledge and Wisdom, the Evernight Goddess, Earth Mother, the God of Combat, and the God of Steam and Machinery. The seven-day week is a product of this faith, the twelve-month year one of astronomical observation."""
-sources = [
-  { chapter = 3 },
-]
-
-# ---- The six named deities (first named together in ch 3) --------------------
+# ---- lord-of-storms ------------------------------------------------------------
 
 [[summaries]]
 id = "s-lord-of-storms-1"
 entity = "lord-of-storms"
 established_at = 3
-text = """The Lord of Storms is one of the seven orthodox gods of the Northern Continent."""
+text = """The Lord of Storms is one of the seven orthodox gods of the Northern Continent. Conflicts involving this deity, the Evernight Goddess, and the God of Steam and Machinery were a factor in the creation of public primary schools to maintain religious neutrality."""
 sources = [
   { chapter = 3 },
 ]
 
-[[summaries]]
-id = "s-god-of-steam-and-machinery-1"
-entity = "god-of-steam-and-machinery"
-established_at = 3
-text = """The God of Steam and Machinery is one of the seven orthodox gods of the Northern Continent."""
-sources = [
-  { chapter = 3 },
-]
+# ---- lower-street ------------------------------------------------------------
 
 [[summaries]]
-id = "s-eternal-blazing-sun-1"
-entity = "eternal-blazing-sun"
-established_at = 3
-text = """The Eternal Blazing Sun is one of the seven orthodox gods of the Northern Continent."""
+id = "s-lower-street-1"
+entity = "lower-street"
+established_at = 23
+text = """This location is home to Jenny, a neighbor of Melissa Moretti. Jenny's family of five moved here after her father was injured and lost his job."""
 sources = [
-  { chapter = 3 },
+  { chapter = 23 },
 ]
 
-[[summaries]]
-id = "s-god-of-knowledge-and-wisdom-1"
-entity = "god-of-knowledge-and-wisdom"
-established_at = 3
-text = """The God of Knowledge and Wisdom is one of the seven orthodox gods of the Northern Continent."""
-sources = [
-  { chapter = 3 },
-]
-
-[[summaries]]
-id = "s-earth-mother-1"
-entity = "earth-mother"
-established_at = 3
-text = """Earth Mother is one of the seven orthodox gods of the Northern Continent."""
-sources = [
-  { chapter = 3 },
-]
-
-[[summaries]]
-id = "s-god-of-combat-1"
-entity = "god-of-combat"
-established_at = 3
-text = """The God of Combat is one of the seven orthodox gods of the Northern Continent."""
-sources = [
-  { chapter = 3 },
-]
-
-# ---- Languages ---------------------------------------------------------------
-
-[[summaries]]
-id = "s-feysac-language-1"
-entity = "feysac-language"
-established_at = 1
-text = """Ancient Feysac is the language held to be the origin of all the languages of the Northern Continent — something Klein Moretti, as a history student, had to learn late, well behind the noble and wealthy children taught it from infancy."""
-sources = [
-  { chapter = 1 },
-]
-
-[[summaries]]
-id = "s-hermes-language-1"
-entity = "hermes-language"
-established_at = 1
-text = """Hermes is a language that appears in ancient mausoleums and in texts of sacrificial and prayer rituals — and it is the language of the ominous note Klein finds on his desk: 'Everyone will die, including me.'"""
-sources = [
-  { chapter = 1 },
-]
-
-# ---- Crimson Moon ------------------------------------------------------------
-
-[[summaries]]
-id = "s-crimson-moon-1"
-entity = "crimson-moon"
-established_at = 1
-text = """The crimson moon is this world's moon, hanging red where Earth's would hang silver — one of the first things that tells Zhou Mingrui he is no longer home."""
-sources = [
-  { chapter = 1 },
-]
-
-# ---- Luck Enhancement Ritual -------------------------------------------------
+# ---- luck-enhancement-ritual ------------------------------------------------------------
 
 [[summaries]]
 id = "s-luck-enhancement-ritual-1"
 entity = "luck-enhancement-ritual"
 established_at = 2
-text = """The luck enhancement ritual is a folk charm described at the front of an old divination book Zhou Mingrui once picked up: set four portions of staple food at the four corners of a room, walk a counter-clockwise square chanting blessings to four heavenly worthies, then stand still and wait. It appeared to do nothing when Zhou tried it — until he transmigrated, at which point he begins to suspect the ritual is the cause."""
+text = """The Luck Enhancement Ritual is a procedure from the book 'Quintessential Divination and Arcane Arts of the Qin and Han Dynasty' that involves placing food in the corners of a room, taking specific steps, and chanting invocations to celestial deities. Zhou Mingrui performed this ritual before dinner on the day of his transmigration and now hypothesizes that it caused his soul to transfer to Klein Moretti's body. He plans to attempt the ritual again in the new world in an effort to return to his original body."""
 sources = [
   { chapter = 2 },
 ]
 
-# ---- Quintessential Divination ----------------------------------------------
+# ---- machinery-hivemind ------------------------------------------------------------
 
 [[summaries]]
-id = "s-quintessential-divination-1"
-entity = "quintessential-divination"
+id = "s-machinery-hivemind-1"
+entity = "machinery-hivemind"
+established_at = 6
+text = """The Machinery Hivemind is an organization associated with Beyonders or their activities. It is grouped alongside the Nighthawks and Mandated Punishers in this context."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- mandated-punishers ------------------------------------------------------------
+
+[[summaries]]
+id = "s-mandated-punishers-1"
+entity = "mandated-punishers"
+established_at = 6
+text = """The Mandated Punishers are an organization associated with Beyonders or their activities. They are mentioned alongside the Nighthawks and Machinery Hivemind as entities linked to the Beyonder world."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- masin ------------------------------------------------------------
+
+[[summaries]]
+id = "s-masin-1"
+entity = "masin"
+established_at = 4
+text = """Masin is a Southern nation from which grain imports were halted under the Grain Act. This legislation sought to protect the prices of domestic agricultural products by restricting trade with countries like Masin, Feynapotter, and Lenburg."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- melissa-moretti ------------------------------------------------------------
+
+[[summaries]]
+id = "s-melissa-moretti-1"
+entity = "melissa-moretti"
 established_at = 2
-text = """'Quintessential Divination and Arcane Arts of the Qin and Han Dynasty' is a thread-bound Chinese book Zhou Mingrui bought at an old bookstore for idle curiosity; its opening pages contain the luck enhancement ritual he later performed."""
+text = """Melissa is the younger sister of Klein Moretti. She resides with Klein and their elder brother Benson in their family apartment."""
 sources = [
   { chapter = 2 },
 ]
 
-# ---- Brass Revolver ----------------------------------------------------------
+# ---- melissa-puppet ------------------------------------------------------------
 
 [[summaries]]
-id = "s-brass-revolver-1"
-entity = "brass-revolver"
-established_at = 1
-text = """A brass revolver, aged and unexplained, sits on Klein Moretti's desk beside his notebook — its cylinder holds five live rounds and one spent cartridge, and its presence in so poor a household is a puzzle Zhou Mingrui cannot immediately solve."""
+id = "s-melissa-puppet-1"
+entity = "melissa-puppet"
+established_at = 16
+text = """Melissa's Puppet is a mechanical device resembling a tortoise that Melissa Moretti constructed from unwanted school materials and street items. She insists on calling it a 'puppet' rather than a tortoise, a distinction that caused a moment of graveness in the room."""
 sources = [
-  { chapter = 1 },
+  { chapter = 16 },
 ]
+
+# ---- midnight-poet ------------------------------------------------------------
 
 [[summaries]]
-id = "s-brass-revolver-2"
-entity = "brass-revolver"
-established_at = 2
-supersedes = ["s-brass-revolver-1"]
-text = """A brass revolver, aged and unexplained, sits on Klein Moretti's desk — it is, Zhou reasons, the weapon with which Klein apparently shot himself in the temple, though where a poor household got it, and why its report drew no one's attention, remain open questions."""
+id = "s-midnight-poet-1"
+entity = "midnight-poet"
+established_at = 21
+text = """Midnight Poet is the title held by Leonard Mitchell, a Sequence 8 Beyonder. He is a member of the Nighthawks and is known for his poetic temperament and role in the organization's leadership."""
 sources = [
-  { chapter = 2, quote = "Well, I'll consider it as suicide for now." },
+  { chapter = 21 },
 ]
 
-# ---- Hermes-language Notebook ------------------------------------------------
+# ---- midseashire ------------------------------------------------------------
 
 [[summaries]]
-id = "s-hermes-notebook-1"
-entity = "hermes-notebook"
-established_at = 1
-text = """The notebook left open on Klein Moretti's desk is written in the Hermes language and bears a single chilling sentence: 'Everyone will die, including me.'"""
+id = "s-midseashire-1"
+entity = "midseashire"
+established_at = 9
+text = """Midseashire is a region within the Loen Kingdom that contains the city of Constant City. It is the origin of Welch McGovern’s father, a banker."""
 sources = [
-  { chapter = 1 },
+  { chapter = 9 },
 ]
 
-# ---- Loen Currency -----------------------------------------------------------
+# ---- miss-ithaca ------------------------------------------------------------
 
 [[summaries]]
-id = "s-loen-currency-1"
-entity = "loen-currency"
-established_at = 2
-text = """The Loen Kingdom's money is built on the copper penny, its basic coin, minted since the ascension of King George III. A penny buys roughly what three or four yuan would have bought Zhou Mingrui in his old life, with fivepence, halfpence, and quarterpence as the other common denominations."""
+id = "s-miss-ithaca-1"
+entity = "miss-ithaca"
+established_at = 21
+text = """Miss Ithaca is a character referenced in the diary of Emperor Roselle Gustav. In an entry dated the 24th of September, Gustav noted that she was more mesmerizing than Lady Florena, attributing this perception to his nostalgia for his youth."""
 sources = [
-  { chapter = 2 },
+  { chapter = 21 },
 ]
 
-# ---- Silver Pocket Watch -----------------------------------------------------
+# ---- mr-azik ------------------------------------------------------------
 
 [[summaries]]
-id = "s-silver-pocket-watch-1"
-entity = "silver-pocket-watch"
-established_at = 3
-text = """A silver vine-leaf pocket watch, the most valuable thing the Moretti siblings' father ever left them, bears his photograph inside its case and has a habit of breaking — until Melissa, with her knack for machinery, sets it ticking again."""
+id = "s-mr-azik-1"
+entity = "mr-azik"
+established_at = 9
+text = """Mr. Azik is a character who debated the inevitability of the Age of Steam with Senior Associate Professor Cohen. In this discussion, Azik attributed the arrival of the Age of Steam to Emperor Roselle."""
 sources = [
-  { chapter = 3 },
+  { chapter = 9 },
 ]
 
-# ---- King George III ---------------------------------------------------------
-
-[[summaries]]
-id = "s-george-iii-1"
-entity = "george-iii"
-established_at = 2
-text = """King George III is the reigning monarch of the Loen Kingdom, whose portrait graces the copper penny; the coinage dates from his ascension to the throne."""
-sources = [
-  { chapter = 2 },
-]
-
-# ---- Mr. Franky --------------------------------------------------------------
+# ---- mr-franky ------------------------------------------------------------
 
 [[summaries]]
 id = "s-mr-franky-1"
 entity = "mr-franky"
 established_at = 2
-text = """Mr. Franky is the Morettis' landlord — a short, thin gentleman in top hat and waistcoat whose courtliness vanishes the moment he hears the bathroom water running, since water is included in the rent."""
+text = """Mr. Franky is the landlord of the Klein family's apartment, described as a short and thin gentleman who wears a top hat, vest, and black suit. He is known for actively inspecting the bathroom to monitor water usage and threatening tenants with eviction if they waste resources."""
 sources = [
   { chapter = 2 },
 ]
 
-# ---- Tingen Technical School -------------------------------------------------
+# ---- mr-hayes ------------------------------------------------------------
+
+[[summaries]]
+id = "s-mr-hayes-1"
+entity = "mr-hayes"
+established_at = 23
+text = """Mr. Hayes is Tingen's most famous cane artisan. He is credited with creating the walnut wood cane sold at Wilker Clothing and Hats."""
+sources = [
+  { chapter = 23 },
+]
+
+# ---- mrs-orianna ------------------------------------------------------------
+
+[[summaries]]
+id = "s-mrs-orianna-1"
+entity = "mrs-orianna"
+established_at = 20
+text = """Mrs. Orianna is a black-haired woman in her thirties with green eyes who serves as the accountant for the Blackthorn Security Company. Her father was a skilled watchsmith, and she was a victim of the serial killer known as the Bloody Butcher sixteen years ago, surviving only because the Nighthawks intervened."""
+sources = [
+  { chapter = 20 },
+]
+
+# ---- municipal-square ------------------------------------------------------------
+
+[[summaries]]
+id = "s-municipal-square-1"
+entity = "municipal-square"
+established_at = 4
+text = """The Municipal Square is located in Tingen at the intersection of Iron Cross Street and Daffodil Street. It serves as a hub for public activity, including circus advertisements and a tarot divination tent operated by a woman in distinctive attire."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- mystery-pryer ------------------------------------------------------------
+
+[[summaries]]
+id = "s-mystery-pryer-1"
+entity = "mystery-pryer"
+established_at = 22
+text = """Mystery Pryer is the title of Sequence 9 in the Church of Evernight's pathway. It is also the name of the corresponding potion formula, which Old Neil has consumed to attain this rank."""
+sources = [
+  { chapter = 22 },
+]
+
+# ---- nation-of-the-evernight ------------------------------------------------------------
+
+[[summaries]]
+id = "s-nation-of-the-evernight-1"
+entity = "nation-of-the-evernight"
+established_at = 9
+text = """The Nation of the Evernight is a location situated at the summit of the highest peak of the Hornacis mountain range, which stands over 6,000 meters above sea level. The author of the Fourth Epoch notebook accepted a mission to visit this place."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- naya ------------------------------------------------------------
+
+[[summaries]]
+id = "s-naya-1"
+entity = "naya"
+established_at = 9
+text = """Naya is a character who was asked by Welch McGovern to help decode the contents of a notebook from the Fourth Epoch after his graduation defense."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- nighthawks ------------------------------------------------------------
+
+[[summaries]]
+id = "s-nighthawks-1"
+entity = "nighthawks"
+established_at = 6
+text = """The Nighthawks are an organization associated with Beyonders or their activities. They are listed together with the Mandated Punishers and Machinery Hivemind as groups connected to the Beyonder sphere."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- nightmare ------------------------------------------------------------
+
+[[summaries]]
+id = "s-nightmare-1"
+entity = "nightmare"
+established_at = 22
+text = """Nightmare is the title of Sequence 7 in the Church of Evernight's complete Sequence, following the Sequence 8 rank of Midnight Poet. Dunn Smith is likely a Sequence 7 Beyonder, as he is one of only two individuals in Tingen City's Church to hold this rank."""
+sources = [
+  { chapter = 22 },
+]
+
+# ---- northern-continent ------------------------------------------------------------
+
+[[summaries]]
+id = "s-northern-continent-1"
+entity = "northern-continent"
+established_at = 1
+text = """The Northern Continent is a major landmass that includes the Loen Kingdom. The Feysac language is considered the source of all languages spoken in this region."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- oak-island ------------------------------------------------------------
+
+[[summaries]]
+id = "s-oak-island-1"
+entity = "oak-island"
+established_at = 8
+text = """Oak Island is the location of Pritz Harbor, where the Imperial Naval Base is situated."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- old-neil ------------------------------------------------------------
+
+[[summaries]]
+id = "s-old-neil-1"
+entity = "old-neil"
+established_at = 19
+text = """Old Neil is a civilian clerk on the Nighthawks team who was formerly a formal member but failed to be promoted due to advanced age. He handles duties including visitors, cleaning, case files, inventory, and guarding facilities, and negotiates night shifts and rest days with Rozanne and Bredt. His health is ailing, and he prefers working with documents and records rather than handling cases or becoming a Keeper."""
+sources = [
+  { chapter = 19 },
+]
+
+# ---- orbital-carriage-company ------------------------------------------------------------
+
+[[summaries]]
+id = "s-orbital-carriage-company-1"
+entity = "orbital-carriage-company"
+established_at = 16
+text = """The Orbital Carriage Company operates track-based public horse carriages throughout the Loen Kingdom. The service utilizes a rail-like device on main streets to pull double-decker carriages capable of seating nearly fifty passengers."""
+sources = [
+  { chapter = 16 },
+]
+
+# ---- ox-hide-underarm-holster ------------------------------------------------------------
+
+[[summaries]]
+id = "s-ox-hide-underarm-holster-1"
+entity = "ox-hide-underarm-holster"
+established_at = 21
+text = """The ox-hide underarm holster is a piece of equipment provided to Klein Moretti by Old Neil. It is designed to hang close to the left armpit and was judged to suit Klein well after he successfully fitted it."""
+sources = [
+  { chapter = 21 },
+]
+
+# ---- pallas-negan ------------------------------------------------------------
+
+[[summaries]]
+id = "s-pallas-negan-1"
+entity = "pallas-negan"
+established_at = 8
+text = """Pallas Negan is the Duke of Negan and the brother of Prime Minister Aguesid Negan. He serves as the main supporter of the Conservative Party."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- paz-river-valley ------------------------------------------------------------
+
+[[summaries]]
+id = "s-paz-river-valley-1"
+entity = "paz-river-valley"
+established_at = 18
+text = """The Paz River Valley is the region of origin for Fermo coffee. This coffee is noted for being bitter yet very fragrant with a splendid aftertaste."""
+sources = [
+  { chapter = 18 },
+]
+
+# ---- pelican-street ------------------------------------------------------------
+
+[[summaries]]
+id = "s-pelican-street-1"
+entity = "pelican-street"
+established_at = 7
+text = """Pelican Street is the location of the Warrior & Sea Bar, which serves as the delivery address for Ghost Shark blood. The street is situated within the White Rose Borough of Pritz Harbor."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- primary-and-secondary-education-committee ------------------------------------------------------------
+
+[[summaries]]
+id = "s-primary-and-secondary-education-committee-1"
+entity = "primary-and-secondary-education-committee"
+established_at = 3
+text = """The Primary and Secondary Education Committee was established by the Loen Kingdom under the Basic Education Law. Its role is to fund public primary schools with the goal of maintaining religious neutrality in education."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- pritz ------------------------------------------------------------
+
+[[summaries]]
+id = "s-pritz-1"
+entity = "pritz"
+established_at = 12
+text = """Pritz is a destination city in Klein Moretti's escape plan from Tingen. He intends to reach it by sea after traveling by steam train to Enmat Harbor, using it as an intermediate step on his route to the capital, Backlund."""
+sources = [
+  { chapter = 12 },
+]
+
+# ---- pritz-harbor ------------------------------------------------------------
+
+[[summaries]]
+id = "s-pritz-harbor-1"
+entity = "pritz-harbor"
+established_at = 7
+text = """Pritz Harbor is the city containing the White Rose Borough, where the Warrior & Sea Bar is located. The bar on Pelican Street in this borough is the designated delivery address for Ghost Shark blood."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- pritz-nautical-academy ------------------------------------------------------------
+
+[[summaries]]
+id = "s-pritz-nautical-academy-1"
+entity = "pritz-nautical-academy"
+established_at = 8
+text = """The Pritz Nautical Academy contributed sixty scientists and senior engineers to the construction of an ironclad warship. This effort was part of a larger industrial undertaking involving multiple factories and a national steel production capacity of twelve million tonnes."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- psychology-alchemists ------------------------------------------------------------
+
+[[summaries]]
+id = "s-psychology-alchemists-1"
+entity = "psychology-alchemists"
+established_at = 14
+text = """The Psychology Alchemists are an organization whose theoretical framework Daly utilized during her investigation. Their approach involves guiding subjects by comparing the human mind to an ocean, positing that deep secrets remain intact even if superficial memories are erased."""
+sources = [
+  { chapter = 14 },
+]
+
+# ---- public-horse-carriage ------------------------------------------------------------
+
+[[summaries]]
+id = "s-public-horse-carriage-1"
+entity = "public-horse-carriage"
+established_at = 3
+text = """Public horse carriages charge a fare of one penny per kilometer, with limits of four pence within the city and six pence on the outskirts. Due to these costs, Melissa Moretti chooses to walk to school, a journey that takes approximately fifty minutes."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- public-primary-school ------------------------------------------------------------
+
+[[summaries]]
+id = "s-public-primary-school-1"
+entity = "public-primary-school"
+established_at = 3
+text = """Public primary schools in the Loen Kingdom are funded by the Primary and Secondary Education Committee to ensure religious neutrality in education. They charge three pence per week and provide classes six days a week, serving as an alternative to religiously affiliated institutions."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- quentin-cohen ------------------------------------------------------------
+
+[[summaries]]
+id = "s-quentin-cohen-1"
+entity = "quentin-cohen"
+established_at = 24
+text = """No specific details regarding Quentin Cohen are currently established."""
+sources = [
+  { chapter = 24 },
+]
+
+# ---- quintessential-divination-arcane-arts ------------------------------------------------------------
+
+[[summaries]]
+id = "s-quintessential-divination-arcane-arts-1"
+entity = "quintessential-divination-arcane-arts"
+established_at = 2
+text = """The 'Quintessential Divination and Arcane Arts of the Qin and Han Dynasty' is a book containing the instructions for the Luck Enhancement Ritual. Zhou Mingrui used this text to perform a ritual involving food offerings and specific chants, which he now believes was the catalyst for his transmigration into the body of Klein Moretti."""
+sources = [
+  { chapter = 2 },
+]
+
+# ---- rat-baiting ------------------------------------------------------------
+
+[[summaries]]
+id = "s-rat-baiting-1"
+entity = "rat-baiting"
+established_at = 16
+text = """Rat-baiting is a legal blood sport in the Loen Kingdom, distinct from banned activities like dog-fighting. The game involves releasing two dogs into a cage with hundreds of rats, with patrons betting on which dog catches more, as seen when Doug was defeated during a round at the Hound Pub."""
+sources = [
+  { chapter = 16 },
+]
+
+# ---- red-moonlight-street ------------------------------------------------------------
+
+[[summaries]]
+id = "s-red-moonlight-street-1"
+entity = "red-moonlight-street"
+established_at = 25
+text = """No specific details about Red Moonlight Street are currently known."""
+sources = [
+  { chapter = 25 },
+]
+
+# ---- river-and-sea-cathedral ------------------------------------------------------------
+
+[[summaries]]
+id = "s-river-and-sea-cathedral-1"
+entity = "river-and-sea-cathedral"
+established_at = 17
+text = """The River and Sea Cathedral is one of the three major cathedrals sustaining the religious circles in Tingen City. It functions as the headquarters for the Church of Storms."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- roselle-diary ------------------------------------------------------------
+
+[[summaries]]
+id = "s-roselle-diary-1"
+entity = "roselle-diary"
+established_at = 20
+text = """Roselle Gustav's diary is a historical document written in strange, self-invented symbols that were previously undecipherable. The Holy Cathedral permitted the Nighthawks to keep copies for research, and Old Neil has begun deciphering the symbols, which are actually written in Simplified Chinese, by comparing them with historical events revolving around the emperor."""
+sources = [
+  { chapter = 20 },
+]
+
+# ---- roselle-gustav ------------------------------------------------------------
+
+[[summaries]]
+id = "s-roselle-gustav-1"
+entity = "roselle-gustav"
+established_at = 4
+text = """Roselle Gustav was the first Consul of the Intis Republic who invented the steam engine, created tarot divination, and established modern card games. She expanded Intis's power by forcing other nations to submit, changed the Republic into an Empire, and was eventually assassinated in the White Maple Palace by aristocratic and religious forces."""
+sources = [
+  { chapter = 4 },
+]
+
+[[summaries]]
+id = "s-roselle-gustav-2"
+entity = "roselle-gustav"
+established_at = 21
+supersedes = ["s-roselle-gustav-1"]
+text = """Roselle Gustav was the first Consul of the Intis Republic who later became the self-proclaimed 'Emperor Caesar,' credited with inventing the steam engine, establishing modern card games, and initiating the era of colonialism. He was assassinated in 1198, though many believe he became a hidden god, and his diary reveals he was a transmigrator who understood the mechanics of potion digestion and created the Major Arcana tarot cards."""
+sources = [
+  { chapter = 21 },
+]
+
+# ---- rowing-club ------------------------------------------------------------
+
+[[summaries]]
+id = "s-rowing-club-1"
+entity = "rowing-club"
+established_at = 24
+text = """The Khoy University Rowing Club is an organization at Khoy University. Klein Moretti, Welch McGovern, and others were members of the club and were noted to be pretty good at rowing."""
+sources = [
+  { chapter = 24 },
+]
+
+# ---- rozanne ------------------------------------------------------------
+
+[[summaries]]
+id = "s-rozanne-1"
+entity = "rozanne"
+established_at = 17
+text = """Rozanne is a civilian staff member of the Nighthawks in her early twenties, characterized by her brown hair and light-brown eyes. She has been with the team for five years, having joined at age seventeen after her father, a Nighthawk member, sacrificed himself in an accident. Unlike the formal members of the team, she is not a Beyonder."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- sailor-potion ------------------------------------------------------------
+
+[[summaries]]
+id = "s-sailor-potion-1"
+entity = "sailor-potion"
+established_at = 6
+text = """The Sequence 9 'Sailor' potion grants users excellent balancing, immense strength, illusory scales for swimming, agile underwater movement, and the ability to submerge for at least ten minutes without equipment. It was previously known as 'Keepers of the Seas' under the Lord of Storms."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- saint-selena-cathedral ------------------------------------------------------------
+
+[[summaries]]
+id = "s-saint-selena-cathedral-1"
+entity = "saint-selena-cathedral"
+established_at = 17
+text = """The Saint Selena Cathedral is located on Red Moonlight Street and serves as the headquarters of the Church of Evernight in Tingen. It is one of the three major cathedrals sustaining the city's religious circles and is accessible via a path to the left from the intersection in the underground facility beneath the Blackthorn Security Company."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- sauron-family ------------------------------------------------------------
+
+[[summaries]]
+id = "s-sauron-family-1"
+entity = "sauron-family"
+established_at = 4
+text = """The Sauron family, formerly the Intis royal family, participated in the assassination of Roselle Gustav in the year 1198 of the Fifth Epoch. They acted in conjunction with the Church of the Eternal Blazing Sun and other aristocrats to end her rule."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- sealed-artifact-0-08 ------------------------------------------------------------
+
+[[summaries]]
+id = "s-sealed-artifact-0-08-1"
+entity = "sealed-artifact-0-08"
+established_at = 19
+text = """Sealed Artifact 0-08 is a Grade 0 item that appears to be a common quill capable of writing without ink. It was taken by Ince Zangwill when he escaped three years ago. Due to its highest security clearance, its search is described only verbally and never in written words."""
+sources = [
+  { chapter = 19 },
+]
+
+# ---- sealed-artifacts ------------------------------------------------------------
+
+[[summaries]]
+id = "s-sealed-artifacts-1"
+entity = "sealed-artifacts"
+established_at = 19
+text = """Sealed Artifacts are extraordinary, magical items that are too important for normal storage and are strictly confidential, with some exhibiting 'living' characteristics that can entice Keepers or cause catastrophic outcomes. They are categorized by grade, with Grade 0 being the most dangerous and restricted to the Holy Cathedral basement, while lower grades have varying levels of danger, usage restrictions, and storage locations. Each artifact is identified by a number where the first digit indicates the grade and the subsequent numbers are the specific ID."""
+sources = [
+  { chapter = 19 },
+]
+
+# ---- selena ------------------------------------------------------------
+
+[[summaries]]
+id = "s-selena-1"
+entity = "selena"
+established_at = 24
+text = """Selena is a girl with wine-red hair and deep brown eyes who is not yet sixteen and is half a year younger than Melissa Moretti, of whom she is a classmate and good friend. Her parents are believers of the Evernight Goddess and named her after St. Selena as a blessing. She has an elder brother named Chris, who is a lawyer."""
+sources = [
+  { chapter = 24 },
+]
+
+# ---- senior-associate-professor-cohen ------------------------------------------------------------
+
+[[summaries]]
+id = "s-senior-associate-professor-cohen-1"
+entity = "senior-associate-professor-cohen"
+established_at = 9
+text = """Senior Associate Professor Cohen is a character who debated the inevitability of the Age of Steam with Mr. Azik. Cohen argued that progress would have led to the Age of Steam regardless of any single individual, contrasting with Azik's attribution of it to Emperor Roselle."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- sequence-system ------------------------------------------------------------
+
+[[summaries]]
+id = "s-sequence-system-1"
+entity = "sequence-system"
+established_at = 18
+text = """The Sequence system is a tiered progression path for Beyonders, where lower numbers indicate higher grades, and the seven major churches each control at least one complete path. The system was perfected with the help of the Blasphemy Slate, and natural Beyonders are limited to a fixed pathway, as consuming potions from other paths leads to mental disorders or death. As Beyonders advance, their enhanced spiritual perception increases, exposing them to mysterious enticements that can cause loss of control if they rush to consume higher-ranked potions without eliminating remnant spiritual powers."""
+sources = [
+  { chapter = 18 },
+]
+
+# ---- seven-orthodox-gods ------------------------------------------------------------
+
+[[summaries]]
+id = "s-seven-orthodox-gods-1"
+entity = "seven-orthodox-gods"
+established_at = 3
+text = """The Seven Orthodox Gods are the recognized deities of the Northern Continent, including the Eternal Blazing Sun, the Lord of Storms, and the Evernight Goddess. The division of the week into seven days in the Northern Continent is a direct result of this religious framework."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- seventh-unit ------------------------------------------------------------
+
+[[summaries]]
+id = "s-seventh-unit-1"
+entity = "seventh-unit"
+established_at = 17
+text = """The Seventh Unit, officially designated as part of the Special Operations Department of the Awwa County Police in the Loen Kingdom, operates as the Nighthawks team. It is responsible for supernatural incidents related to followers of the Evernight Goddess in Tingen, specifically covering the north, west, and Golden Indus regions."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- seventh-unit-badge ------------------------------------------------------------
+
+[[summaries]]
+id = "s-seventh-unit-badge-1"
+entity = "seventh-unit-badge"
+established_at = 21
+text = """The Seventh Unit, Special Operations Department badge is a metallic item half the size of a palm, inscribed with silver text identifying the Awwa County Police Department and the Seventh Unit. It features a police emblem consisting of two crossed swords and a crown, and was provided to Klein Moretti by Old Neil."""
+sources = [
+  { chapter = 21 },
+]
+
+# ---- silver-crown-restaurant ------------------------------------------------------------
+
+[[summaries]]
+id = "s-silver-crown-restaurant-1"
+entity = "silver-crown-restaurant"
+established_at = 23
+text = """Located on Daffodil Street, this restaurant is known for its delicious food. Klein Moretti invited Melissa to dine here to celebrate his new job."""
+sources = [
+  { chapter = 23 },
+]
+
+# ---- silver-vine-leaf-pocket-watch ------------------------------------------------------------
+
+[[summaries]]
+id = "s-silver-vine-leaf-pocket-watch-1"
+entity = "silver-vine-leaf-pocket-watch"
+established_at = 3
+text = """The silver vine-leaf pocket watch was the most valuable item left by Klein Moretti's father, though it was a second-hand item that frequently malfunctioned. Melissa Moretti repaired the watch using tools from her Technical School, fixing the second hand by adjusting the top button to synchronize the time."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- sleepless ------------------------------------------------------------
+
+[[summaries]]
+id = "s-sleepless-1"
+entity = "sleepless"
+established_at = 22
+text = """Sleepless is the starting Sequence 9 title of the Church of Evernight's pathway. Practitioners do not require nighttime sleep, needing only three to four hours of daytime rest, and possess the ability to see in darkness while gaining increased physical strength, intuition, and mental capabilities as the night deepens. Although they can detect dangers in the dark, they still rely on specialized items like demon hunting bullets to combat monsters that cannot be handled through normal means, a role previously held by Rozanne's father."""
+sources = [
+  { chapter = 22 },
+]
+
+# ---- smyrin-bakery ------------------------------------------------------------
+
+[[summaries]]
+id = "s-smyrin-bakery-1"
+entity = "smyrin-bakery"
+established_at = 4
+text = """Smyrin Bakery is a long-standing establishment in Tingen owned by Wendy Smyrin, who has sold bread and pastries there for decades. The price of its rye bread decreased following protests against the Grain Act."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- soaring-express ------------------------------------------------------------
+
+[[summaries]]
+id = "s-soaring-express-1"
+entity = "soaring-express"
+established_at = 17
+text = """The Soaring Express is a steam train service that provides direct access to Constant City. It began operations on the same day that Klein visited the Blackthorn Security Company."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- soli ------------------------------------------------------------
+
+[[summaries]]
+id = "s-soli-1"
+entity = "soli"
+established_at = 4
+text = """The soli is the second-ranked currency in the Loen Kingdom, originating from ancient silver coins and equivalent to twelve copper pence. It is used in daily transactions, with denominations of one and five soli, and is a component of wages and rent in Tingen."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- solomon-empire ------------------------------------------------------------
+
+[[summaries]]
+id = "s-solomon-empire-1"
+entity = "solomon-empire"
+established_at = 5
+text = """The Solomon Empire is a historical entity associated with the Black Emperor. It is the origin of a bronze mirror that is considered an extraordinary item and a treasure of the empire."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- sonia-sea ------------------------------------------------------------
+
+[[summaries]]
+id = "s-sonia-sea-1"
+entity = "sonia-sea"
+established_at = 5
+text = """The Sonia Sea is a body of water where Alger Wilson is navigating a three-masted relic sailboat. He is currently dealing with a storm in this location while preparing a ritual."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- southern-continent ------------------------------------------------------------
+
+[[summaries]]
+id = "s-southern-continent-1"
+entity = "southern-continent"
+established_at = 1
+text = """The Southern Continent is a location where a colonial conflict took place. Klein Moretti's father died in this conflict while serving as a sergeant in the Imperial Army."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- special-operations-department ------------------------------------------------------------
+
+[[summaries]]
+id = "s-special-operations-department-1"
+entity = "special-operations-department"
+established_at = 17
+text = """The Special Operations Department is a division of the Awwa County Police in the Loen Kingdom that oversees the Nighthawks team. While its first four units handle general security as regular police, units five and onwards are tasked with dealing with supernatural incidents."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- spectator-potion ------------------------------------------------------------
+
+[[summaries]]
+id = "s-spectator-potion-1"
+entity = "spectator-potion"
+established_at = 6
+text = """The Sequence 9 'Spectator' potion provides an exceptionally sharp mind, acute observational abilities, and the capacity to judge 'actors' by perceiving their real thoughts through emotions, conduct, and mantras. Users are bound to remain spectators forever, regardless of the setting. Alger Wilson agreed to trade the formula for this potion in exchange for at least 100 milliliters of Ghost Shark blood, a transaction witnessed by Zhou Mingrui."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- spirit-medium ------------------------------------------------------------
+
+[[summaries]]
+id = "s-spirit-medium-1"
+entity = "spirit-medium"
+established_at = 13
+text = """The 'expert' required to clear Klein of suspicion is actually a true Spirit Medium. This individual operates under the public disguise of being the most renowned spirit medium in Awwa County and is currently waiting at Welch's apartment rather than the police station."""
+sources = [
+  { chapter = 13 },
+]
+
+# ---- steam-and-machinery-department ------------------------------------------------------------
+
+[[summaries]]
+id = "s-steam-and-machinery-department-1"
+entity = "steam-and-machinery-department"
+established_at = 3
+text = """The Steam and Machinery Department is a field of study at Tingen Technical School. Melissa Moretti became a student in this department after passing her entrance examinations at the age of fifteen."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- stewed-mutton-with-tender-peas ------------------------------------------------------------
+
+[[summaries]]
+id = "s-stewed-mutton-with-tender-peas-1"
+entity = "stewed-mutton-with-tender-peas"
+established_at = 11
+text = """Stewed Mutton with Tender Peas is a dish prepared by Klein using lard, carrots, onions, mutton, peas, potatoes, and salt. The meal was highly praised by his sister Melissa, who ate most of it with delight, prompting Klein to promise future restaurant outings for the family."""
+sources = [
+  { chapter = 11 },
+]
+
+# ---- sunday-school ------------------------------------------------------------
+
+[[summaries]]
+id = "s-sunday-school-1"
+entity = "sunday-school"
+established_at = 3
+text = """Sunday School is an educational program offered by the Church of Evernight. Classes are held only on Sundays and cost one copper penny per week."""
+sources = [
+  { chapter = 3 },
+]
+
+# ---- susie ------------------------------------------------------------
+
+[[summaries]]
+id = "s-susie-1"
+entity = "susie"
+established_at = 8
+text = """Susie is a non-purebred golden retriever that was given as a gift to Earl Hall when he purchased a foxhound."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- sword-of-judgment ------------------------------------------------------------
+
+[[summaries]]
+id = "s-sword-of-judgment-1"
+entity = "sword-of-judgment"
+established_at = 8
+text = """The Sword of Judgment is an emblem consisting of two swords with ruby crowns at the handles. It symbolizes the Augustus family and has been passed down from the previous epoch."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- tarot-club ------------------------------------------------------------
+
+[[summaries]]
+id = "s-tarot-club-1"
+entity = "tarot-club"
+established_at = 7
+text = """The Tarot Club is a secretive organization founded by Zhou Mingrui, Audrey Hall, and Alger Wilson, with members adopting code names based on tarot card designations. Its gatherings are scheduled to take place every Monday at three in the afternoon."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- tarot-divination ------------------------------------------------------------
+
+[[summaries]]
+id = "s-tarot-divination-1"
+entity = "tarot-divination"
+established_at = 4
+text = """Tarot divination in this world was created by Roselle Gustav more than 170 years ago, rather than originating from orthodox gods or ancient legacy. It is currently practiced by a woman in a tent near the Municipal Square, who claims her readings are highly accurate."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- the-book-of-storms ------------------------------------------------------------
+
+[[summaries]]
+id = "s-the-book-of-storms-1"
+entity = "the-book-of-storms"
+established_at = 9
+text = """The Book of Storms is a text that, alongside 'The Revelation of Evernight', states that giants were not the only hegemons of the world in primordial times. It notes that elves, mutants, and dragons also held hegemonic power during that era."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- the-fool-card ------------------------------------------------------------
+
+[[summaries]]
+id = "s-the-fool-card-1"
+entity = "the-fool-card"
+established_at = 5
+text = """The Fool is a tarot card numbered '0' that depicts a colorfully dressed character with splendid headgear, a stick with a bindle, and a puppy. It was the card drawn for Zhou Mingrui's 'present' during a tarot reading."""
+sources = [
+  { chapter = 5 },
+]
+
+# ---- the-fool-title ------------------------------------------------------------
+
+[[summaries]]
+id = "s-the-fool-title-1"
+entity = "the-fool-title"
+established_at = 6
+text = """The Fool is a mysterious identity chosen by Zhou Mingrui to maintain anonymity. Audrey Hall and Alger Wilson agreed to address him by this title."""
+sources = [
+  { chapter = 6 },
+]
+
+# ---- the-pritz ------------------------------------------------------------
+
+[[summaries]]
+id = "s-the-pritz-1"
+entity = "the-pritz"
+established_at = 8
+text = """The Pritz is an ironclad warship named by King George III after Pritz Harbor, from which it is set to sail. Measuring 101 by 21 meters with a displacement of 10,060 tonnes, it features a 457-millimeter armor belt, four 305-millimeter main cannons, and a speed of 16 knots. Its construction required extensive industrial resources, including sixty scientists and engineers from the Backlund Cannon Academy and Pritz Nautical Academy."""
+sources = [
+  { chapter = 8 },
+]
+
+# ---- the-revelation-of-evernight ------------------------------------------------------------
+
+[[summaries]]
+id = "s-the-revelation-of-evernight-1"
+entity = "the-revelation-of-evernight"
+established_at = 9
+text = """The Revelation of Evernight is a text that, together with 'The Book of Storms', asserts that giants were not the sole hegemons of the world in primordial times. It indicates that elves, mutants, and dragons were also dominant powers during that period."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- tingen-city ------------------------------------------------------------
+
+[[summaries]]
+id = "s-tingen-city-1"
+entity = "tingen-city"
+established_at = 1
+text = """The City of Tingen is a city located in Awwa County, within the Loen Kingdom. It is the place of citizenship for Klein Moretti."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- tingen-honest-paper ------------------------------------------------------------
+
+[[summaries]]
+id = "s-tingen-honest-paper-1"
+entity = "tingen-honest-paper"
+established_at = 17
+text = """No specific details regarding the Tingen City Honest Paper are currently known."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- tingen-morning-post ------------------------------------------------------------
+
+[[summaries]]
+id = "s-tingen-morning-post-1"
+entity = "tingen-morning-post"
+established_at = 25
+text = """The Tingen Morning Post is a newspaper in Tingen that has covered the Welch and Naya case extensively. Its reporting detailed the theft of valuables from Welch's home, the police theory that a group of criminals killed the victims upon seeing their faces, and the subsequent capture of the main culprit. The case report was written by reporter John Browning."""
+sources = [
+  { chapter = 25 },
+]
+
+# ---- tingen-technical-school ------------------------------------------------------------
 
 [[summaries]]
 id = "s-tingen-technical-school-1"
 entity = "tingen-technical-school"
 established_at = 3
-text = """Tingen Technical School is a secondary school in Tingen teaching practical trades; it is where Melissa Moretti passed her entrance exams last July to study in the Steam and Machinery department."""
+text = """Tingen Technical School is an institution where Melissa Moretti studies in the Steam and Machinery department, paying nine pence in weekly fees. The school is located about a fifty-minute walk from the Moretti residence, and its tools were used by Melissa to repair a family pocket watch."""
 sources = [
   { chapter = 3 },
 ]
 
-# ---- Church of the Evernight Goddess ----------------------------------------
-
-[[summaries]]
-id = "s-church-of-evernight-1"
-entity = "church-of-evernight"
-established_at = 3
-text = """The Church of the Evernight Goddess is one of the orthodox churches of the Northern Continent; before the Loen Kingdom's Basic Education Law it ran the Sunday schools that taught poorer children like the Morettis, at a copper penny a week."""
-sources = [
-  { chapter = 3 },
-]
-
-# ---- Tingen University -------------------------------------------------------
+# ---- tingen-university ------------------------------------------------------------
 
 [[summaries]]
 id = "s-tingen-university-1"
 entity = "tingen-university"
 established_at = 3
-text = """Tingen University is where Klein Moretti had been recommended for a History department interview, two days after his awakening — a post he is expected to attend in his newly fragile memory state."""
+text = """Tingen University is an institution where Klein Moretti is scheduled to participate in an interview for the History department. He received a recommendation letter for this university from his mentor, alongside one for Backlund University."""
 sources = [
   { chapter = 3 },
 ]
 
-# ---- Backlund University -----------------------------------------------------
+# ---- trunsoest-empire ------------------------------------------------------------
 
 [[summaries]]
-id = "s-backlund-university-1"
-entity = "backlund-university"
-established_at = 3
-text = """Backlund University is one of the universities to which Klein Moretti's mentor wrote him a recommendation letter, alongside Tingen University."""
+id = "s-trunsoest-empire-1"
+entity = "trunsoest-empire"
+established_at = 9
+text = """The Trunsoest Empire is one of the major political entities known to have existed during the Fourth Epoch, alongside the Solomon Empire and the Tudor Dynasty."""
 sources = [
-  { chapter = 3 },
+  { chapter = 9 },
+]
+
+# ---- tudor-dynasty ------------------------------------------------------------
+
+[[summaries]]
+id = "s-tudor-dynasty-1"
+entity = "tudor-dynasty"
+established_at = 9
+text = """The Tudor Dynasty is a political entity that existed during the Fourth Epoch. The author of the Fourth Epoch notebook mentions a secret transaction with a person named Tudor, leading Klein to wonder if this individual is related to the dynasty."""
+sources = [
+  { chapter = 9 },
+]
+
+# ---- tussock-river ------------------------------------------------------------
+
+[[summaries]]
+id = "s-tussock-river-1"
+entity = "tussock-river"
+established_at = 12
+text = """The Tussock River is a waterway that Klein Moretti considers using for his escape from Tingen. He plans to take a boat down the river from the pier outside the city as one of two primary routes to reach the capital, Backlund."""
+sources = [
+  { chapter = 12 },
+]
+
+# ---- tussock-times ------------------------------------------------------------
+
+[[summaries]]
+id = "s-tussock-times-1"
+entity = "tussock-times"
+established_at = 25
+text = """The Tussock Times is a newspaper published in Tingen. It is one of many local publications, including the Morning Post and the Backlund Daily Tribune, some of which are distributed via steam locomotives from other regions."""
+sources = [
+  { chapter = 25 },
+]
+
+# ---- twenty-two-paths ------------------------------------------------------------
+
+[[summaries]]
+id = "s-twenty-two-paths-1"
+entity = "twenty-two-paths"
+established_at = 7
+text = """The Twenty-two Paths of the Divine are profound mysteries contained within a secret set of twenty-two paper cards. These cards were created by Emperor Roselle Gustav."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- underground-shooting-range ------------------------------------------------------------
+
+[[summaries]]
+id = "s-underground-shooting-range-1"
+entity = "underground-shooting-range"
+established_at = 20
+text = """Located at No. 3 Zouteland Street, the underground shooting range requires a badge from Old Neil for entry. Klein Moretti is instructed to visit this location daily to practice shooting with thirty normal bullets."""
+sources = [
+  { chapter = 20 },
+]
+
+# ---- unit-five ------------------------------------------------------------
+
+[[summaries]]
+id = "s-unit-five-1"
+entity = "unit-five"
+established_at = 17
+text = """Unit Five, known as the Machinery Hivemind squad, is a police unit in Tingen responsible for maintaining order in the university area and the suburbs."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- unit-six ------------------------------------------------------------
+
+[[summaries]]
+id = "s-unit-six-1"
+entity = "unit-six"
+established_at = 17
+text = """Unit Six, the Mandated Punisher squad, operates under the Church of Storms. It is in charge of the pier region, as well as the east and south districts of Tingen."""
+sources = [
+  { chapter = 17 },
+]
+
+# ---- warrior-sea-bar ------------------------------------------------------------
+
+[[summaries]]
+id = "s-warrior-sea-bar-1"
+entity = "warrior-sea-bar"
+established_at = 7
+text = """The Warrior & Sea Bar is an establishment located on Pelican Street in the White Rose Borough of Pritz Harbor. It serves as the delivery address for Ghost Shark blood, with its boss, Williams, acting as the contact person for the transaction."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- welch-mcgovern ------------------------------------------------------------
+
+[[summaries]]
+id = "s-welch-mcgovern-1"
+entity = "welch-mcgovern"
+established_at = 9
+text = """Welch McGovern is the son of a banker from Constant City, Midseashire, and is described as very generous. He acquired a notebook from the Fourth Epoch and asked Naya and Klein to help decode its contents after his graduation defense, a visit Klein undertook to investigate the mystery of the original owner's suicide."""
+sources = [
+  { chapter = 9 },
+]
+
+[[summaries]]
+id = "s-welch-mcgovern-2"
+entity = "welch-mcgovern"
+established_at = 13
+supersedes = ["s-welch-mcgovern-1"]
+text = """Welch McGovern, the generous son of a banker from Constant City, died in his home alongside Naya after acquiring a notebook from the Fourth Epoch. His death involved repeatedly hitting his head against a wall, and police initially ruled the incident a suicide, though Klein remains the prime suspect. As the only surviving lead regarding the notebook's whereabouts, Klein is now the primary focus of the investigation."""
+sources = [
+  { chapter = 13 },
+]
+
+# ---- wendy-smyrin ------------------------------------------------------------
+
+[[summaries]]
+id = "s-wendy-smyrin-1"
+entity = "wendy-smyrin"
+established_at = 4
+text = """Wendy Smyrin is a woman in her seventies with grayish-white hair who owns the Smyrin Bakery in Tingen. She has been selling bread and pastries at the shop since the beginning of the protagonist's memories."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- white-maple-palace ------------------------------------------------------------
+
+[[summaries]]
+id = "s-white-maple-palace-1"
+entity = "white-maple-palace"
+established_at = 4
+text = """The White Maple Palace is the location where Roselle Gustav was assassinated in the year 1198 of the Fifth Epoch. She died there at the hands of the Church of the Eternal Blazing Sun, the Sauron family, and other aristocrats."""
+sources = [
+  { chapter = 4 },
+]
+
+# ---- white-rose-borough ------------------------------------------------------------
+
+[[summaries]]
+id = "s-white-rose-borough-1"
+entity = "white-rose-borough"
+established_at = 7
+text = """The White Rose Borough is a district within Pritz Harbor that contains Pelican Street. It is the location of the Warrior & Sea Bar, which is the delivery address for Ghost Shark blood."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- wilker-clothing-and-hats ------------------------------------------------------------
+
+[[summaries]]
+id = "s-wilker-clothing-and-hats-1"
+entity = "wilker-clothing-and-hats"
+established_at = 23
+text = """This shop sells canes made from various woods, including Ironheart, walnut, ebony, and white boli tree core, at prices ranging from seven soli six pence to eleven soli seven pence. Klein Moretti purchased an ebony wood cane inlaid with silver from the store."""
+sources = [
+  { chapter = 23 },
+]
+
+# ---- william-augustus-vi ------------------------------------------------------------
+
+[[summaries]]
+id = "s-william-augustus-vi-1"
+entity = "william-augustus-vi"
+established_at = 20
+text = """William Augustus VI, the father of King George III, features a portrait on the one gold pound note. He is credited with freeing the Loen Kingdom from the old order and allowing the nation to regain its pinnacle status."""
+sources = [
+  { chapter = 20 },
+]
+
+# ---- williams ------------------------------------------------------------
+
+[[summaries]]
+id = "s-williams-1"
+entity = "williams"
+established_at = 7
+text = """Williams is the boss of the Warrior & Sea Bar and serves as the contact person for the delivery of Ghost Shark blood. He is the individual who received the request for the item from 'The Captain'."""
+sources = [
+  { chapter = 7 },
+]
+
+# ---- winter-county ------------------------------------------------------------
+
+[[summaries]]
+id = "s-winter-county-1"
+entity = "winter-county"
+established_at = 19
+text = """Winter County is a region located to the north of the kingdom. It is home to the Holy Cathedral, which serves as the headquarters of the Church of Evernight."""
+sources = [
+  { chapter = 19 },
+]
+
+# ---- wright ------------------------------------------------------------
+
+[[summaries]]
+id = "s-wright-1"
+entity = "wright"
+established_at = 15
+text = """Wright is the boss of the Hound Pub on Besik Street. He is the designated contact person for Klein, who must approach him to request the hiring of a small mercenary squad."""
+sources = [
+  { chapter = 15 },
+]
+
+# ---- zhou-mingrui ------------------------------------------------------------
+
+[[summaries]]
+id = "s-zhou-mingrui-1"
+entity = "zhou-mingrui"
+established_at = 1
+text = """Zhou Mingrui is a character who has transmigrated into the body of Klein Moretti. He is the current consciousness inhabiting Klein's physical form."""
+sources = [
+  { chapter = 1 },
+]
+
+# ---- zouteland-street ------------------------------------------------------------
+
+[[summaries]]
+id = "s-zouteland-street-1"
+entity = "zouteland-street"
+established_at = 16
+text = """Zouteland Street is a location in the city where the Blackthorn Security Company is situated. Specifically, the company occupies the second floor of No. 36 on this street, serving as the new address for the former small mercenary squad."""
+sources = [
+  { chapter = 16 },
 ]

@@ -143,8 +143,9 @@ validated against the schema, output committed to git.
 - [x] Schema: entities + timestamped facts + timestamped prose summaries
 - [x] Build pipeline (validation + resolution)
 - [x] Static site with chapter slider, entity browser, changes view
-- [x] `data/` authored for chapters 1–3 (33 entities, 29 facts, 36 summaries)
+- [x] `data/` authored for chapters 1–25 (222 entities, 502 facts, 233 summaries)
 - [x] Extraction harness (spoiler-bounded, per-chapter, draft-first)
-- [ ] Match harness output to hand-authored ch 1–3; then extract ch 4–25
-- [ ] `--apply` merge step (currently manual review-and-merge)
+- [x] Deterministic summary pass (separate, parallelizable)
+- [x] `--apply` merge (promote `_draft/` → `data/`)
 - [x] GitHub Pages deployment
+- [ ] Prior-state compaction (prompt currently grows ~1K tokens/chapter)

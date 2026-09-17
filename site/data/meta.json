@@ -1,9 +1,9 @@
 {
-  "max_chapter": 3,
+  "max_chapter": 25,
   "title": "Lord of the Mysteries \u2014 World Wiki",
-  "fact_count": 31,
-  "entity_count": 33,
-  "summary_count": 36,
+  "fact_count": 502,
+  "entity_count": 222,
+  "summary_count": 233,
   "chapters": {
     "1": "Crimson",
     "2": "Situation",

@@ -1,5 +1,11 @@
 [
   {
+    "id": "zhou-mingrui",
+    "name": "Zhou Mingrui",
+    "type": "character",
+    "first_seen": 1
+  },
+  {
     "id": "klein-moretti",
     "name": "Klein Moretti",
     "type": "character",
@@ -9,59 +15,38 @@
     ]
   },
   {
-    "id": "zhou-mingrui",
-    "name": "Zhou Mingrui",
-    "type": "character",
-    "first_seen": 1,
-    "aliases": [
-      "Zhou"
-    ]
-  },
-  {
-    "id": "melissa-moretti",
-    "name": "Melissa Moretti",
-    "type": "character",
-    "first_seen": 3,
-    "aliases": [
-      "Melissa"
-    ]
-  },
-  {
-    "id": "benson-moretti",
-    "name": "Benson Moretti",
-    "type": "character",
-    "first_seen": 2,
-    "aliases": [
-      "Benson"
-    ]
-  },
-  {
-    "id": "george-iii",
-    "name": "King George III",
-    "type": "character",
-    "first_seen": 2
-  },
-  {
-    "id": "mr-franky",
-    "name": "Mr. Franky",
-    "type": "character",
-    "first_seen": 2
-  },
-  {
     "id": "loen-kingdom",
     "name": "Loen Kingdom",
-    "type": "location",
-    "first_seen": 1
-  },
-  {
-    "id": "tingen-city",
-    "name": "Tingen",
-    "type": "location",
+    "type": "country",
     "first_seen": 1
   },
   {
     "id": "awwa-county",
     "name": "Awwa County",
+    "type": "location",
+    "first_seen": 1
+  },
+  {
+    "id": "tingen-city",
+    "name": "City of Tingen",
+    "type": "city",
+    "first_seen": 1
+  },
+  {
+    "id": "khoy-university",
+    "name": "Khoy University",
+    "type": "organization",
+    "first_seen": 1
+  },
+  {
+    "id": "imperial-army",
+    "name": "Imperial Army",
+    "type": "organization",
+    "first_seen": 1
+  },
+  {
+    "id": "southern-continent",
+    "name": "Southern Continent",
     "type": "location",
     "first_seen": 1
   },
@@ -72,16 +57,100 @@
     "first_seen": 1
   },
   {
-    "id": "southern-continent",
-    "name": "Southern Continent",
-    "type": "location",
+    "id": "evernight-goddess",
+    "name": "Evernight Goddess",
+    "type": "deity",
     "first_seen": 1
   },
   {
-    "id": "khoy-university",
-    "name": "Khoy University",
-    "type": "organization",
+    "id": "feysac-language",
+    "name": "Feysac language",
+    "type": "language",
     "first_seen": 1
+  },
+  {
+    "id": "hermes-language",
+    "name": "Hermes language",
+    "type": "language",
+    "first_seen": 1
+  },
+  {
+    "id": "crimson-moon",
+    "name": "Crimson Moon",
+    "type": "concept",
+    "first_seen": 1
+  },
+  {
+    "id": "brass-revolver",
+    "name": "Brass Revolver",
+    "type": "item",
+    "first_seen": 1
+  },
+  {
+    "id": "klein-moretti-family",
+    "name": "Klein Moretti Family",
+    "type": "family",
+    "first_seen": 1
+  },
+  {
+    "id": "benson-moretti",
+    "name": "Benson",
+    "type": "character",
+    "first_seen": 2,
+    "aliases": [
+      "Benson Moretti"
+    ]
+  },
+  {
+    "id": "melissa-moretti",
+    "name": "Melissa",
+    "type": "character",
+    "first_seen": 2,
+    "aliases": [
+      "Melissa Moretti"
+    ]
+  },
+  {
+    "id": "mr-franky",
+    "name": "Mr. Franky",
+    "type": "character",
+    "first_seen": 2
+  },
+  {
+    "id": "gas-lamp",
+    "name": "Gas Lamp",
+    "type": "item",
+    "first_seen": 2
+  },
+  {
+    "id": "gas-meter",
+    "name": "Gas Meter",
+    "type": "item",
+    "first_seen": 2
+  },
+  {
+    "id": "copper-penny",
+    "name": "Copper Penny",
+    "type": "item",
+    "first_seen": 2
+  },
+  {
+    "id": "king-george-iii",
+    "name": "King George III",
+    "type": "character",
+    "first_seen": 2
+  },
+  {
+    "id": "quintessential-divination-arcane-arts",
+    "name": "Quintessential Divination and Arcane Arts of the Qin and Han Dynasty",
+    "type": "item",
+    "first_seen": 2
+  },
+  {
+    "id": "luck-enhancement-ritual",
+    "name": "Luck Enhancement Ritual",
+    "type": "ritual",
+    "first_seen": 2
   },
   {
     "id": "tingen-university",
@@ -96,22 +165,46 @@
     "first_seen": 3
   },
   {
+    "id": "basic-education-law",
+    "name": "Basic Education Law",
+    "type": "concept",
+    "first_seen": 3
+  },
+  {
+    "id": "primary-and-secondary-education-committee",
+    "name": "Primary and Secondary Education Committee",
+    "type": "organization",
+    "first_seen": 3
+  },
+  {
+    "id": "church-of-evernight",
+    "name": "Church of Evernight",
+    "type": "organization",
+    "first_seen": 3
+  },
+  {
+    "id": "sunday-school",
+    "name": "Sunday School",
+    "type": "organization",
+    "first_seen": 3
+  },
+  {
+    "id": "public-primary-school",
+    "name": "Public Primary School",
+    "type": "organization",
+    "first_seen": 3
+  },
+  {
     "id": "tingen-technical-school",
     "name": "Tingen Technical School",
     "type": "organization",
     "first_seen": 3
   },
   {
-    "id": "church-of-evernight",
-    "name": "Church of the Evernight Goddess",
+    "id": "steam-and-machinery-department",
+    "name": "Steam and Machinery Department",
     "type": "organization",
     "first_seen": 3
-  },
-  {
-    "id": "evernight-goddess",
-    "name": "Evernight Goddess",
-    "type": "deity",
-    "first_seen": 1
   },
   {
     "id": "lord-of-storms",
@@ -156,57 +249,1137 @@
     "first_seen": 3
   },
   {
-    "id": "feysac-language",
-    "name": "Ancient Feysac",
-    "type": "language",
-    "first_seen": 1
-  },
-  {
-    "id": "hermes-language",
-    "name": "Hermes Language",
-    "type": "language",
-    "first_seen": 1
-  },
-  {
-    "id": "crimson-moon",
-    "name": "Crimson Moon",
-    "type": "concept",
-    "first_seen": 1
-  },
-  {
-    "id": "luck-enhancement-ritual",
-    "name": "Luck Enhancement Ritual",
-    "type": "ritual",
-    "first_seen": 2
-  },
-  {
-    "id": "quintessential-divination",
-    "name": "Quintessential Divination and Arcane Arts of the Qin and Han Dynasty",
-    "type": "item",
-    "first_seen": 2
-  },
-  {
-    "id": "brass-revolver",
-    "name": "Brass Revolver",
-    "type": "item",
-    "first_seen": 1
-  },
-  {
-    "id": "hermes-notebook",
-    "name": "Hermes-language Notebook",
-    "type": "item",
-    "first_seen": 1
-  },
-  {
-    "id": "loen-currency",
-    "name": "Loen Currency",
-    "type": "concept",
-    "first_seen": 2
-  },
-  {
-    "id": "silver-pocket-watch",
+    "id": "silver-vine-leaf-pocket-watch",
     "name": "Silver Vine-Leaf Pocket Watch",
     "type": "item",
     "first_seen": 3
+  },
+  {
+    "id": "public-horse-carriage",
+    "name": "Public Horse Carriage",
+    "type": "item",
+    "first_seen": 3
+  },
+  {
+    "id": "soli",
+    "name": "Soli",
+    "type": "currency",
+    "first_seen": 4
+  },
+  {
+    "id": "gold-pound",
+    "name": "Gold Pound",
+    "type": "currency",
+    "first_seen": 4
+  },
+  {
+    "id": "smyrin-bakery",
+    "name": "Smyrin Bakery",
+    "type": "organization",
+    "first_seen": 4
+  },
+  {
+    "id": "wendy-smyrin",
+    "name": "Wendy Smyrin",
+    "type": "character",
+    "first_seen": 4,
+    "aliases": [
+      "Mrs. Smyrin"
+    ]
+  },
+  {
+    "id": "grain-act",
+    "name": "Grain Act",
+    "type": "concept",
+    "first_seen": 4
+  },
+  {
+    "id": "feynapotter",
+    "name": "Feynapotter",
+    "type": "country",
+    "first_seen": 4
+  },
+  {
+    "id": "masin",
+    "name": "Masin",
+    "type": "country",
+    "first_seen": 4
+  },
+  {
+    "id": "lenburg",
+    "name": "Lenburg",
+    "type": "country",
+    "first_seen": 4
+  },
+  {
+    "id": "feysac-empire",
+    "name": "Feysac Empire",
+    "type": "country",
+    "first_seen": 4
+  },
+  {
+    "id": "intis-republic",
+    "name": "Intis Republic",
+    "type": "country",
+    "first_seen": 4
+  },
+  {
+    "id": "roselle-gustav",
+    "name": "Roselle Gustav",
+    "type": "character",
+    "first_seen": 4,
+    "aliases": [
+      "Emperor Caesar"
+    ]
+  },
+  {
+    "id": "church-of-craftsmanship",
+    "name": "Church of Craftsmanship",
+    "type": "organization",
+    "first_seen": 4
+  },
+  {
+    "id": "sauron-family",
+    "name": "Sauron Family",
+    "type": "family",
+    "first_seen": 4
+  },
+  {
+    "id": "white-maple-palace",
+    "name": "White Maple Palace",
+    "type": "location",
+    "first_seen": 4
+  },
+  {
+    "id": "tarot-divination",
+    "name": "Tarot Divination",
+    "type": "ritual",
+    "first_seen": 4
+  },
+  {
+    "id": "iron-cross-street",
+    "name": "Iron Cross Street",
+    "type": "location",
+    "first_seen": 4
+  },
+  {
+    "id": "daffodil-street",
+    "name": "Daffodil Street",
+    "type": "location",
+    "first_seen": 4
+  },
+  {
+    "id": "municipal-square",
+    "name": "Municipal Square",
+    "type": "location",
+    "first_seen": 4
+  },
+  {
+    "id": "audrey-hall",
+    "name": "Audrey Hall",
+    "type": "character",
+    "first_seen": 5
+  },
+  {
+    "id": "alger-wilson",
+    "name": "Alger Wilson",
+    "type": "character",
+    "first_seen": 5
+  },
+  {
+    "id": "backlund",
+    "name": "Backlund",
+    "type": "city",
+    "first_seen": 5
+  },
+  {
+    "id": "hall-family",
+    "name": "Hall Family",
+    "type": "family",
+    "first_seen": 5
+  },
+  {
+    "id": "solomon-empire",
+    "name": "Solomon Empire",
+    "type": "country",
+    "first_seen": 5
+  },
+  {
+    "id": "black-emperor",
+    "name": "Black Emperor",
+    "type": "character",
+    "first_seen": 5
+  },
+  {
+    "id": "bronze-mirror",
+    "name": "Bronze Mirror",
+    "type": "item",
+    "first_seen": 5
+  },
+  {
+    "id": "sonia-sea",
+    "name": "Sonia Sea",
+    "type": "location",
+    "first_seen": 5
+  },
+  {
+    "id": "ghost-shark",
+    "name": "Ghost Shark",
+    "type": "creature",
+    "first_seen": 5
+  },
+  {
+    "id": "gray-fog-space",
+    "name": "Gray Fog Space",
+    "type": "location",
+    "first_seen": 5
+  },
+  {
+    "id": "the-fool-card",
+    "name": "The Fool",
+    "type": "item",
+    "first_seen": 5
+  },
+  {
+    "id": "loen-language",
+    "name": "Loen language",
+    "type": "language",
+    "first_seen": 5
+  },
+  {
+    "id": "lettuce-and-meat-market",
+    "name": "Lettuce and Meat Market",
+    "type": "location",
+    "first_seen": 5
+  },
+  {
+    "id": "beyonder",
+    "name": "Beyonder",
+    "type": "concept",
+    "first_seen": 6
+  },
+  {
+    "id": "blasphemy-slate",
+    "name": "Blasphemy Slate",
+    "type": "artifact",
+    "first_seen": 6
+  },
+  {
+    "id": "jotun-language",
+    "name": "Jotun",
+    "type": "language",
+    "first_seen": 6,
+    "aliases": [
+      "Language of Giants"
+    ]
+  },
+  {
+    "id": "elvish-language",
+    "name": "Elvish",
+    "type": "language",
+    "first_seen": 6
+  },
+  {
+    "id": "nighthawks",
+    "name": "Nighthawks",
+    "type": "organization",
+    "first_seen": 6
+  },
+  {
+    "id": "mandated-punishers",
+    "name": "Mandated Punishers",
+    "type": "organization",
+    "first_seen": 6
+  },
+  {
+    "id": "machinery-hivemind",
+    "name": "Machinery Hivemind",
+    "type": "organization",
+    "first_seen": 6
+  },
+  {
+    "id": "sailor-potion",
+    "name": "Sailor",
+    "type": "item",
+    "first_seen": 6,
+    "aliases": [
+      "Sequence 9 Sailor Potion"
+    ]
+  },
+  {
+    "id": "spectator-potion",
+    "name": "Spectator",
+    "type": "item",
+    "first_seen": 6,
+    "aliases": [
+      "Sequence 9 Spectator Potion"
+    ]
+  },
+  {
+    "id": "the-fool-title",
+    "name": "The Fool",
+    "type": "concept",
+    "first_seen": 6
+  },
+  {
+    "id": "tarot-club",
+    "name": "Tarot Club",
+    "type": "organization",
+    "first_seen": 7
+  },
+  {
+    "id": "justice-card",
+    "name": "Justice",
+    "type": "item",
+    "first_seen": 7
+  },
+  {
+    "id": "hanged-man-card",
+    "name": "The Hanged Man",
+    "type": "item",
+    "first_seen": 7
+  },
+  {
+    "id": "warrior-sea-bar",
+    "name": "Warrior & Sea Bar",
+    "type": "organization",
+    "first_seen": 7
+  },
+  {
+    "id": "pelican-street",
+    "name": "Pelican Street",
+    "type": "location",
+    "first_seen": 7
+  },
+  {
+    "id": "white-rose-borough",
+    "name": "White Rose Borough",
+    "type": "location",
+    "first_seen": 7
+  },
+  {
+    "id": "pritz-harbor",
+    "name": "Pritz Harbor",
+    "type": "city",
+    "first_seen": 7
+  },
+  {
+    "id": "williams",
+    "name": "Williams",
+    "type": "character",
+    "first_seen": 7
+  },
+  {
+    "id": "captain-code",
+    "name": "The Captain",
+    "type": "concept",
+    "first_seen": 7
+  },
+  {
+    "id": "twenty-two-paths",
+    "name": "Twenty-two Paths of the Divine",
+    "type": "concept",
+    "first_seen": 7
+  },
+  {
+    "id": "empress-borough",
+    "name": "Empress Borough",
+    "type": "location",
+    "first_seen": 8
+  },
+  {
+    "id": "oak-island",
+    "name": "Oak Island",
+    "type": "location",
+    "first_seen": 8
+  },
+  {
+    "id": "imperial-naval-base",
+    "name": "Imperial Naval Base",
+    "type": "organization",
+    "first_seen": 8
+  },
+  {
+    "id": "the-pritz",
+    "name": "The Pritz",
+    "type": "item",
+    "first_seen": 8
+  },
+  {
+    "id": "augustus-family",
+    "name": "Augustus Family",
+    "type": "family",
+    "first_seen": 8
+  },
+  {
+    "id": "sword-of-judgment",
+    "name": "Sword of Judgment",
+    "type": "concept",
+    "first_seen": 8
+  },
+  {
+    "id": "lord-aguesid-negan",
+    "name": "Lord Aguesid Negan",
+    "type": "character",
+    "first_seen": 8
+  },
+  {
+    "id": "conservative-party",
+    "name": "Conservative Party",
+    "type": "organization",
+    "first_seen": 8
+  },
+  {
+    "id": "pallas-negan",
+    "name": "Pallas Negan",
+    "type": "character",
+    "first_seen": 8
+  },
+  {
+    "id": "backlund-cannon-academy",
+    "name": "Backlund Cannon Academy",
+    "type": "organization",
+    "first_seen": 8
+  },
+  {
+    "id": "pritz-nautical-academy",
+    "name": "Pritz Nautical Academy",
+    "type": "organization",
+    "first_seen": 8
+  },
+  {
+    "id": "susie",
+    "name": "Susie",
+    "type": "creature",
+    "first_seen": 8
+  },
+  {
+    "id": "annie",
+    "name": "Annie",
+    "type": "character",
+    "first_seen": 8
+  },
+  {
+    "id": "earl-hall",
+    "name": "Earl Hall",
+    "type": "character",
+    "first_seen": 8
+  },
+  {
+    "id": "countess-hall",
+    "name": "Countess Hall",
+    "type": "character",
+    "first_seen": 8
+  },
+  {
+    "id": "ancient-elf-dance",
+    "name": "Ancient Elf Dance",
+    "type": "concept",
+    "first_seen": 8
+  },
+  {
+    "id": "introductory-ceremony",
+    "name": "Introductory Ceremony",
+    "type": "ritual",
+    "first_seen": 8
+  },
+  {
+    "id": "disciplinary-paladins",
+    "name": "Disciplinary Paladins",
+    "type": "organization",
+    "first_seen": 8
+  },
+  {
+    "id": "welch-mcgovern",
+    "name": "Welch McGovern",
+    "type": "character",
+    "first_seen": 9
+  },
+  {
+    "id": "naya",
+    "name": "Naya",
+    "type": "character",
+    "first_seen": 9
+  },
+  {
+    "id": "mr-azik",
+    "name": "Mr. Azik",
+    "type": "character",
+    "first_seen": 9
+  },
+  {
+    "id": "senior-associate-professor-cohen",
+    "name": "Senior Associate Professor Cohen",
+    "type": "character",
+    "first_seen": 9
+  },
+  {
+    "id": "fourth-epoch",
+    "name": "Fourth Epoch",
+    "type": "concept",
+    "first_seen": 9
+  },
+  {
+    "id": "iron-age",
+    "name": "Iron Age",
+    "type": "concept",
+    "first_seen": 9
+  },
+  {
+    "id": "age-of-gods",
+    "name": "Age of the Gods",
+    "type": "concept",
+    "first_seen": 9
+  },
+  {
+    "id": "tudor-dynasty",
+    "name": "Tudor Dynasty",
+    "type": "country",
+    "first_seen": 9
+  },
+  {
+    "id": "trunsoest-empire",
+    "name": "Trunsoest Empire",
+    "type": "country",
+    "first_seen": 9
+  },
+  {
+    "id": "antigonus-family",
+    "name": "Antigonus Family",
+    "type": "family",
+    "first_seen": 9
+  },
+  {
+    "id": "nation-of-the-evernight",
+    "name": "Nation of the Evernight",
+    "type": "location",
+    "first_seen": 9
+  },
+  {
+    "id": "hornacis-mountain-range",
+    "name": "Hornacis Mountain Range",
+    "type": "location",
+    "first_seen": 9
+  },
+  {
+    "id": "ancient-feysac",
+    "name": "Ancient Feysac",
+    "type": "language",
+    "first_seen": 9
+  },
+  {
+    "id": "balam-empire",
+    "name": "Balam Empire",
+    "type": "country",
+    "first_seen": 9
+  },
+  {
+    "id": "the-revelation-of-evernight",
+    "name": "The Revelation of Evernight",
+    "type": "item",
+    "first_seen": 9
+  },
+  {
+    "id": "the-book-of-storms",
+    "name": "The Book of Storms",
+    "type": "item",
+    "first_seen": 9
+  },
+  {
+    "id": "fourth-epoch-notebook",
+    "name": "Fourth Epoch Notebook",
+    "type": "item",
+    "first_seen": 9
+  },
+  {
+    "id": "constant-city",
+    "name": "Constant City",
+    "type": "city",
+    "first_seen": 9
+  },
+  {
+    "id": "midseashire",
+    "name": "Midseashire",
+    "type": "location",
+    "first_seen": 9
+  },
+  {
+    "id": "bitsch-mountbatten",
+    "name": "Bitsch Mountbatten",
+    "type": "character",
+    "first_seen": 10,
+    "aliases": [
+      "Mountbatten"
+    ]
+  },
+  {
+    "id": "loen-police",
+    "name": "Loen Police",
+    "type": "organization",
+    "first_seen": 10,
+    "aliases": [
+      "Police"
+    ]
+  },
+  {
+    "id": "higher-education-commission",
+    "name": "Higher Education Commission",
+    "type": "organization",
+    "first_seen": 10
+  },
+  {
+    "id": "foodaholic-empire",
+    "name": "Foodaholic Empire",
+    "type": "country",
+    "first_seen": 11,
+    "aliases": [
+      "China"
+    ]
+  },
+  {
+    "id": "heart-of-the-wild-bar",
+    "name": "Heart of the Wild Bar",
+    "type": "organization",
+    "first_seen": 11
+  },
+  {
+    "id": "stewed-mutton-with-tender-peas",
+    "name": "Stewed Mutton with Tender Peas",
+    "type": "concept",
+    "first_seen": 11
+  },
+  {
+    "id": "dunn-smith",
+    "name": "Dunn Smith",
+    "type": "character",
+    "first_seen": 12
+  },
+  {
+    "id": "tussock-river",
+    "name": "Tussock River",
+    "type": "location",
+    "first_seen": 12
+  },
+  {
+    "id": "enmat-harbor",
+    "name": "Enmat Harbor",
+    "type": "city",
+    "first_seen": 12
+  },
+  {
+    "id": "pritz",
+    "name": "Pritz",
+    "type": "city",
+    "first_seen": 12
+  },
+  {
+    "id": "spirit-medium",
+    "name": "Spirit Medium",
+    "type": "concept",
+    "first_seen": 13
+  },
+  {
+    "id": "evil-cult-case",
+    "name": "Evil Cult Case",
+    "type": "event",
+    "first_seen": 13
+  },
+  {
+    "id": "daly",
+    "name": "Daly",
+    "type": "character",
+    "first_seen": 14
+  },
+  {
+    "id": "amantha-essence",
+    "name": "Amantha",
+    "type": "item",
+    "first_seen": 14
+  },
+  {
+    "id": "eye-of-the-spirit",
+    "name": "Eye of the Spirit",
+    "type": "item",
+    "first_seen": 14
+  },
+  {
+    "id": "psychology-alchemists",
+    "name": "Psychology Alchemists",
+    "type": "organization",
+    "first_seen": 14
+  },
+  {
+    "id": "hound-pub",
+    "name": "Hound Pub",
+    "type": "organization",
+    "first_seen": 15
+  },
+  {
+    "id": "besik-street",
+    "name": "Besik Street",
+    "type": "location",
+    "first_seen": 15
+  },
+  {
+    "id": "wright",
+    "name": "Wright",
+    "type": "character",
+    "first_seen": 15
+  },
+  {
+    "id": "desi-bay",
+    "name": "Desi Bay",
+    "type": "location",
+    "first_seen": 15
+  },
+  {
+    "id": "melissa-puppet",
+    "name": "Melissa's Puppet",
+    "type": "item",
+    "first_seen": 16,
+    "aliases": [
+      "tortoise"
+    ]
+  },
+  {
+    "id": "orbital-carriage-company",
+    "name": "Orbital Carriage Company",
+    "type": "organization",
+    "first_seen": 16
+  },
+  {
+    "id": "champagne-street",
+    "name": "Champagne Street",
+    "type": "location",
+    "first_seen": 16
+  },
+  {
+    "id": "rat-baiting",
+    "name": "Rat-Baiting",
+    "type": "concept",
+    "first_seen": 16
+  },
+  {
+    "id": "doug",
+    "name": "Doug",
+    "type": "creature",
+    "first_seen": 16
+  },
+  {
+    "id": "blackthorn-security-company",
+    "name": "Blackthorn Security Company",
+    "type": "organization",
+    "first_seen": 16
+  },
+  {
+    "id": "zouteland-street",
+    "name": "Zouteland Street",
+    "type": "location",
+    "first_seen": 16
+  },
+  {
+    "id": "rozanne",
+    "name": "Rozanne",
+    "type": "character",
+    "first_seen": 17
+  },
+  {
+    "id": "chanis-gate",
+    "name": "Chanis Gate",
+    "type": "location",
+    "first_seen": 17
+  },
+  {
+    "id": "saint-selena-cathedral",
+    "name": "Saint Selena Cathedral",
+    "type": "location",
+    "first_seen": 17
+  },
+  {
+    "id": "holy-numerics-cathedral",
+    "name": "Holy Numerics Cathedral",
+    "type": "location",
+    "first_seen": 17
+  },
+  {
+    "id": "river-and-sea-cathedral",
+    "name": "River and Sea Cathedral",
+    "type": "location",
+    "first_seen": 17
+  },
+  {
+    "id": "special-operations-department",
+    "name": "Special Operations Department",
+    "type": "organization",
+    "first_seen": 17
+  },
+  {
+    "id": "seventh-unit",
+    "name": "Seventh Unit",
+    "type": "organization",
+    "first_seen": 17
+  },
+  {
+    "id": "unit-six",
+    "name": "Unit Six",
+    "type": "organization",
+    "first_seen": 17
+  },
+  {
+    "id": "unit-five",
+    "name": "Unit Five",
+    "type": "organization",
+    "first_seen": 17
+  },
+  {
+    "id": "tingen-honest-paper",
+    "name": "Tingen City Honest Paper",
+    "type": "organization",
+    "first_seen": 17
+  },
+  {
+    "id": "soaring-express",
+    "name": "Soaring Express",
+    "type": "item",
+    "first_seen": 17
+  },
+  {
+    "id": "brindisi-bay",
+    "name": "Brindisi Bay",
+    "type": "location",
+    "first_seen": 17
+  },
+  {
+    "id": "golden-indus-region",
+    "name": "Golden Indus region",
+    "type": "location",
+    "first_seen": 17
+  },
+  {
+    "id": "dark-sacred-emblem",
+    "name": "Dark Sacred Emblem",
+    "type": "concept",
+    "first_seen": 17
+  },
+  {
+    "id": "chaos-epoch",
+    "name": "Chaos Epoch",
+    "type": "concept",
+    "first_seen": 18,
+    "aliases": [
+      "First Epoch"
+    ]
+  },
+  {
+    "id": "cataclysm-epoch",
+    "name": "Cataclysm Epoch",
+    "type": "concept",
+    "first_seen": 18,
+    "aliases": [
+      "Third Epoch"
+    ]
+  },
+  {
+    "id": "creation-myth",
+    "name": "Creation Myth",
+    "type": "concept",
+    "first_seen": 18
+  },
+  {
+    "id": "sequence-system",
+    "name": "Sequences",
+    "type": "concept",
+    "first_seen": 18,
+    "aliases": [
+      "Sequence"
+    ]
+  },
+  {
+    "id": "archbishop-chanis",
+    "name": "Archbishop Chanis",
+    "type": "character",
+    "first_seen": 18
+  },
+  {
+    "id": "paz-river-valley",
+    "name": "Paz River Valley",
+    "type": "location",
+    "first_seen": 18
+  },
+  {
+    "id": "fermo-coffee",
+    "name": "Fermo coffee",
+    "type": "item",
+    "first_seen": 18
+  },
+  {
+    "id": "feynapotter-plateau",
+    "name": "Feynapotter plateau",
+    "type": "location",
+    "first_seen": 18
+  },
+  {
+    "id": "breidt",
+    "name": "Bredt",
+    "type": "character",
+    "first_seen": 19
+  },
+  {
+    "id": "old-neil",
+    "name": "Old Neil",
+    "type": "character",
+    "first_seen": 19
+  },
+  {
+    "id": "holy-cathedral",
+    "name": "Holy Cathedral",
+    "type": "location",
+    "first_seen": 19,
+    "aliases": [
+      "Cathedral of Serenity"
+    ]
+  },
+  {
+    "id": "winter-county",
+    "name": "Winter County",
+    "type": "location",
+    "first_seen": 19
+  },
+  {
+    "id": "sealed-artifacts",
+    "name": "Sealed Artifacts",
+    "type": "concept",
+    "first_seen": 19
+  },
+  {
+    "id": "ince-zangwill",
+    "name": "Ince Zangwill",
+    "type": "character",
+    "first_seen": 19
+  },
+  {
+    "id": "sealed-artifact-0-08",
+    "name": "Sealed Artifact 0-08",
+    "type": "artifact",
+    "first_seen": 19
+  },
+  {
+    "id": "mrs-orianna",
+    "name": "Mrs. Orianna",
+    "type": "character",
+    "first_seen": 20
+  },
+  {
+    "id": "bloody-butcher",
+    "name": "Bloody Butcher",
+    "type": "character",
+    "first_seen": 20
+  },
+  {
+    "id": "henry-augustus-i",
+    "name": "Henry Augustus I",
+    "type": "character",
+    "first_seen": 20
+  },
+  {
+    "id": "william-augustus-vi",
+    "name": "William Augustus VI",
+    "type": "character",
+    "first_seen": 20
+  },
+  {
+    "id": "roselle-diary",
+    "name": "Roselle Gustav's Diary",
+    "type": "item",
+    "first_seen": 20
+  },
+  {
+    "id": "underground-shooting-range",
+    "name": "Underground Shooting Range",
+    "type": "location",
+    "first_seen": 20
+  },
+  {
+    "id": "chinese-language",
+    "name": "Chinese",
+    "type": "language",
+    "first_seen": 20
+  },
+  {
+    "id": "leonard-mitchell",
+    "name": "Leonard Mitchell",
+    "type": "character",
+    "first_seen": 21,
+    "aliases": [
+      "Leonard"
+    ]
+  },
+  {
+    "id": "midnight-poet",
+    "name": "Midnight Poet",
+    "type": "concept",
+    "first_seen": 21
+  },
+  {
+    "id": "demon-hunting-bullets",
+    "name": "Demon Hunting Bullets",
+    "type": "item",
+    "first_seen": 21
+  },
+  {
+    "id": "ox-hide-underarm-holster",
+    "name": "Ox-hide Underarm Holster",
+    "type": "item",
+    "first_seen": 21
+  },
+  {
+    "id": "seventh-unit-badge",
+    "name": "Seventh Unit, Special Operations Department Badge",
+    "type": "item",
+    "first_seen": 21
+  },
+  {
+    "id": "forsaken-land-of-god",
+    "name": "Forsaken Land of God",
+    "type": "location",
+    "first_seen": 21
+  },
+  {
+    "id": "lady-florena",
+    "name": "Lady Florena",
+    "type": "character",
+    "first_seen": 21
+  },
+  {
+    "id": "miss-ithaca",
+    "name": "Miss Ithaca",
+    "type": "character",
+    "first_seen": 21
+  },
+  {
+    "id": "sleepless",
+    "name": "Sleepless",
+    "type": "concept",
+    "first_seen": 22
+  },
+  {
+    "id": "nightmare",
+    "name": "Nightmare",
+    "type": "concept",
+    "first_seen": 22
+  },
+  {
+    "id": "mystery-pryer",
+    "name": "Mystery Pryer",
+    "type": "concept",
+    "first_seen": 22
+  },
+  {
+    "id": "wilker-clothing-and-hats",
+    "name": "Wilker Clothing and Hats",
+    "type": "organization",
+    "first_seen": 23
+  },
+  {
+    "id": "ironheart-wood-cane",
+    "name": "Ironheart Wood Cane",
+    "type": "item",
+    "first_seen": 23
+  },
+  {
+    "id": "mr-hayes",
+    "name": "Mr. Hayes",
+    "type": "character",
+    "first_seen": 23
+  },
+  {
+    "id": "ebony-wood-cane",
+    "name": "Ebony Wood Cane",
+    "type": "item",
+    "first_seen": 23
+  },
+  {
+    "id": "silver-crown-restaurant",
+    "name": "Silver Crown Restaurant",
+    "type": "organization",
+    "first_seen": 23
+  },
+  {
+    "id": "jenny",
+    "name": "Jenny",
+    "type": "character",
+    "first_seen": 23
+  },
+  {
+    "id": "lower-street",
+    "name": "Lower Street",
+    "type": "location",
+    "first_seen": 23
+  },
+  {
+    "id": "selena",
+    "name": "Selena",
+    "type": "character",
+    "first_seen": 24
+  },
+  {
+    "id": "chris-selena",
+    "name": "Chris",
+    "type": "character",
+    "first_seen": 24
+  },
+  {
+    "id": "harvin-stone",
+    "name": "Harvin Stone",
+    "type": "character",
+    "first_seen": 24
+  },
+  {
+    "id": "quentin-cohen",
+    "name": "Quentin Cohen",
+    "type": "character",
+    "first_seen": 24
+  },
+  {
+    "id": "khoy-river",
+    "name": "Khoy River",
+    "type": "location",
+    "first_seen": 24
+  },
+  {
+    "id": "rowing-club",
+    "name": "Khoy University Rowing Club",
+    "type": "organization",
+    "first_seen": 24
+  },
+  {
+    "id": "tingen-morning-post",
+    "name": "Tingen Morning Post",
+    "type": "organization",
+    "first_seen": 25
+  },
+  {
+    "id": "backlund-daily-tribune",
+    "name": "Backlund Daily Tribune",
+    "type": "organization",
+    "first_seen": 25
+  },
+  {
+    "id": "tussock-times",
+    "name": "Tussock Times",
+    "type": "organization",
+    "first_seen": 25
+  },
+  {
+    "id": "red-moonlight-street",
+    "name": "Red Moonlight Street",
+    "type": "location",
+    "first_seen": 25
+  },
+  {
+    "id": "john-browning",
+    "name": "John Browning",
+    "type": "character",
+    "first_seen": 25
   }
 ]
