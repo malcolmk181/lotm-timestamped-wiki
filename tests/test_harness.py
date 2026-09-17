@@ -1,11 +1,15 @@
 """Tests for the extraction harness's parsing and normalization logic."""
+
+import json
+import tomllib
+
+import harness.extract as ex
 from harness.extract import (
     active_facts_for,
     apply_drafts,
     chapter_files,
     clean_text,
     compute_changed_entities,
-    extract_json,
     link_summaries,
     normalize_delta,
     parse_json,
@@ -49,21 +53,32 @@ def test_parse_json_surrounded_by_prose():
 def test_normalize_delta_dedups_entities_and_facts():
     prior = {
         "entities": [{"id": "e1", "name": "One", "type": "concept", "first_seen": 1}],
-        "facts": [{"id": "f1", "statement": "s", "established_at": 1,
-                   "entities": ["e1"]}],
+        "facts": [
+            {"id": "f1", "statement": "s", "established_at": 1, "entities": ["e1"]}
+        ],
         "summaries": [],
     }
     raw = {
         "new_entities": [
-            {"id": "e1", "name": "One", "type": "concept"},       # duplicate
+            {"id": "e1", "name": "One", "type": "concept"},  # duplicate
             {"id": "e2", "name": "Two", "type": "character"},
-            {"id": "e3", "type": "character"},                    # missing name
+            {"id": "e3", "type": "character"},  # missing name
         ],
         "new_facts": [
-            {"id": "f2", "statement": "s2", "entities": ["e2"],
-             "certainty": "fact", "sources": [{"chapter": 2, "quote": "q"}]},
-            {"id": "f3", "statement": "s3", "entities": ["e2"],
-             "certainty": "wrong", "sources": [{"chapter": 2, "quote": "q"}]},
+            {
+                "id": "f2",
+                "statement": "s2",
+                "entities": ["e2"],
+                "certainty": "fact",
+                "sources": [{"chapter": 2, "quote": "q"}],
+            },
+            {
+                "id": "f3",
+                "statement": "s3",
+                "entities": ["e2"],
+                "certainty": "wrong",
+                "sources": [{"chapter": 2, "quote": "q"}],
+            },
         ],
     }
     norm, warns = normalize_delta(raw, prior, 2)
@@ -89,11 +104,14 @@ def test_normalize_delta_drops_whole_junk_without_raising():
 
 def test_normalize_delta_assigns_coarse_kind():
     prior = {"entities": [], "facts": [], "summaries": []}
-    raw = {"new_entities": [
-        {"id": "a", "name": "A", "type": "character"},
-        {"id": "b", "name": "B", "type": "pathway"},
-        {"id": "c", "name": "C", "type": "zoo"},
-    ], "new_facts": []}
+    raw = {
+        "new_entities": [
+            {"id": "a", "name": "A", "type": "character"},
+            {"id": "b", "name": "B", "type": "pathway"},
+            {"id": "c", "name": "C", "type": "zoo"},
+        ],
+        "new_facts": [],
+    }
     norm, _ = normalize_delta(raw, prior, 1)
     kinds = {e["id"]: e["kind"] for e in norm["new_entities"]}
     assert kinds == {"a": "person", "b": "idea", "c": "thing"}
@@ -114,10 +132,20 @@ def test_active_facts_for_excludes_superseded():
     prior = {
         "entities": [],
         "facts": [
-            {"id": "f1", "statement": "old", "established_at": 1,
-             "entities": ["e"], "supersedes": []},
-            {"id": "f2", "statement": "new", "established_at": 2,
-             "entities": ["e"], "supersedes": ["f1"]},
+            {
+                "id": "f1",
+                "statement": "old",
+                "established_at": 1,
+                "entities": ["e"],
+                "supersedes": [],
+            },
+            {
+                "id": "f2",
+                "statement": "new",
+                "established_at": 2,
+                "entities": ["e"],
+                "supersedes": ["f1"],
+            },
         ],
         "summaries": [],
     }
@@ -128,8 +156,9 @@ def test_link_summaries_autolinks_supersede():
     prior = {
         "entities": [{"id": "e1", "name": "One", "type": "concept", "first_seen": 1}],
         "facts": [],
-        "summaries": [{"id": "s-e1-1", "entity": "e1", "established_at": 1,
-                       "text": "v1"}],
+        "summaries": [
+            {"id": "s-e1-1", "entity": "e1", "established_at": 1, "text": "v1"}
+        ],
     }
     out, warns = link_summaries([{"entity": "e1", "text": "v2"}], prior, 2)
     assert out[0]["id"] == "s-e1-2"
@@ -173,7 +202,6 @@ def _resp(content):
 
 
 def test_extract_json_retries_on_empty_then_succeeds(monkeypatch):
-    import harness.extract as ex
     calls = {"n": 0}
 
     def fake_post(api_key, model, messages, response_format):
@@ -186,13 +214,15 @@ def test_extract_json_retries_on_empty_then_succeeds(monkeypatch):
 
 
 def test_extract_json_retries_on_malformed_then_succeeds(monkeypatch):
-    import harness.extract as ex
     calls = {"n": 0}
 
     def fake_post(api_key, model, messages, response_format):
         calls["n"] += 1
-        return (_resp('{"new_entities": [broken') if calls["n"] == 1
-                else _resp('{"new_entities": []}'))
+        return (
+            _resp('{"new_entities": [broken')
+            if calls["n"] == 1
+            else _resp('{"new_entities": []}')
+        )
 
     monkeypatch.setattr(ex, "_openrouter_post", fake_post)
     assert ex.extract_json("k", "m", [], {}, "test") == {"new_entities": []}
@@ -200,7 +230,6 @@ def test_extract_json_retries_on_malformed_then_succeeds(monkeypatch):
 
 
 def test_extract_json_downgrades_tier_on_response_format_error(monkeypatch):
-    import harness.extract as ex
     formats = []
 
     def fake_post(api_key, model, messages, response_format):
@@ -211,14 +240,11 @@ def test_extract_json_downgrades_tier_on_response_format_error(monkeypatch):
 
     monkeypatch.setattr(ex, "_openrouter_post", fake_post)
     assert ex.extract_json("k", "m", [], {}, "test") == {"new_entities": []}
-    assert formats[0]["type"] == "json_schema"   # rejected -> downgrade
-    assert formats[1]["type"] == "json_object"   # accepted
+    assert formats[0]["type"] == "json_schema"  # rejected -> downgrade
+    assert formats[1]["type"] == "json_object"  # accepted
 
 
 def test_apply_drafts_writes_and_roundtrips(tmp_path):
-    import json
-    import tomllib
-
     draft_dir = tmp_path / "draft"
     draft_dir.mkdir()
     data_dir = tmp_path / "data"
@@ -226,24 +252,41 @@ def test_apply_drafts_writes_and_roundtrips(tmp_path):
     for name in ("entities", "facts", "summaries"):
         (data_dir / f"{name}.toml").write_text(f"# {name} header\n\n")
 
-    (draft_dir / "ch-0001.json").write_text(json.dumps({
-        "new_entities": [
-            {"id": "klein-moretti-family", "name": "Klein Moretti's Family",
-             "type": "family", "first_seen": 1, "aliases": ["the Morettis"]},
-        ],
-        "new_facts": [
-            {"id": "f-note", "statement": 'The note reads "Everyone will die" — a warning.',
-             "entities": ["klein-moretti-family"], "established_at": 1,
-             "certainty": "fact",
-             "sources": [{"chapter": 1, "quote": "\"Everyone will die\""}]},
-        ],
-        "summary_updates": [
-            {"id": "s-klein-moretti-family-1", "entity": "klein-moretti-family",
-             "established_at": 1,
-             "text": "Klein's family — poor but proud — lives in Tingen.",
-             "supersedes": [], "sources": [{"chapter": 1}]},
-        ],
-    }))
+    (draft_dir / "ch-0001.json").write_text(
+        json.dumps(
+            {
+                "new_entities": [
+                    {
+                        "id": "klein-moretti-family",
+                        "name": "Klein Moretti's Family",
+                        "type": "family",
+                        "first_seen": 1,
+                        "aliases": ["the Morettis"],
+                    },
+                ],
+                "new_facts": [
+                    {
+                        "id": "f-note",
+                        "statement": 'The note reads "Everyone will die" — a warning.',
+                        "entities": ["klein-moretti-family"],
+                        "established_at": 1,
+                        "certainty": "fact",
+                        "sources": [{"chapter": 1, "quote": '"Everyone will die"'}],
+                    },
+                ],
+                "summary_updates": [
+                    {
+                        "id": "s-klein-moretti-family-1",
+                        "entity": "klein-moretti-family",
+                        "established_at": 1,
+                        "text": "Klein's family — poor but proud — lives in Tingen.",
+                        "supersedes": [],
+                        "sources": [{"chapter": 1}],
+                    },
+                ],
+            }
+        )
+    )
 
     assert apply_drafts(draft_dir, data_dir) == 0
 

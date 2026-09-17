@@ -8,6 +8,7 @@ both facts and summaries).
 
 No third-party dependencies: uses only the stdlib (tomllib, json, pathlib).
 """
+
 from __future__ import annotations
 
 import json
@@ -72,14 +73,16 @@ def resolve_temporal(items: list[dict]) -> list[dict]:
             if by_id[dep]["established_at"] >= it["established_at"]:
                 raise BuildError(
                     f"{it['id']!r}: supersedes {dep!r} which is not strictly "
-                    "older — overturn must point backward in time")
+                    "older — overturn must point backward in time"
+                )
         for dep in it.get("refines", []):
             if dep not in by_id:
                 raise BuildError(f"{it['id']!r}: refines unknown {dep!r}")
             if by_id[dep]["established_at"] > it["established_at"]:
                 raise BuildError(
                     f"{it['id']!r}: refines {dep!r} which is established "
-                    "later — refinement must point backward")
+                    "later — refinement must point backward"
+                )
 
     resolved = []
     for it in items:
@@ -113,8 +116,7 @@ def validate_entities(entities: list[dict]) -> None:
         raise BuildError("duplicate entity id")
     for e in entities:
         if not isinstance(e.get("type"), str) or not e["type"].strip():
-            raise BuildError(
-                f"entity {e['id']!r}: type must be a non-empty string")
+            raise BuildError(f"entity {e['id']!r}: type must be a non-empty string")
         if e["first_seen"] < 1:
             raise BuildError(f"entity {e['id']!r}: first_seen must be >= 1")
 
@@ -122,8 +124,7 @@ def validate_entities(entities: list[dict]) -> None:
 def validate_facts(facts: list[dict], entity_ids: set) -> None:
     for f in facts:
         if f["certainty"] not in CERTAINTIES:
-            raise BuildError(
-                f"fact {f['id']!r}: unknown certainty {f['certainty']!r}")
+            raise BuildError(f"fact {f['id']!r}: unknown certainty {f['certainty']!r}")
         if f["established_at"] < 1:
             raise BuildError(f"fact {f['id']!r}: established_at must be >= 1")
         for ent in f["entities"]:
@@ -138,16 +139,15 @@ def validate_summaries(summaries: list[dict], entity_ids: set) -> None:
     by_id = {s["id"]: s for s in summaries}
     for s in summaries:
         if s["entity"] not in entity_ids:
-            raise BuildError(
-                f"summary {s['id']!r}: unknown entity {s['entity']!r}")
+            raise BuildError(f"summary {s['id']!r}: unknown entity {s['entity']!r}")
         if s["established_at"] < 1:
-            raise BuildError(
-                f"summary {s['id']!r}: established_at must be >= 1")
+            raise BuildError(f"summary {s['id']!r}: established_at must be >= 1")
         for dep in s.get("supersedes", []):
             if dep in by_id and by_id[dep]["entity"] != s["entity"]:
                 raise BuildError(
                     f"summary {s['id']!r}: supersedes {dep!r} which belongs "
-                    "to a different entity")
+                    "to a different entity"
+                )
         for src in s["sources"]:
             if src.get("chapter", 0) < 1:
                 raise BuildError(f"summary {s['id']!r}: source missing chapter")
@@ -182,21 +182,27 @@ def build():
 
     out = SITE / "data"
     out.mkdir(parents=True, exist_ok=True)
-    (out / "facts.json").write_text(
-        json.dumps(out_facts, ensure_ascii=False, indent=2))
+    (out / "facts.json").write_text(json.dumps(out_facts, ensure_ascii=False, indent=2))
     (out / "entities.json").write_text(
-        json.dumps(entities, ensure_ascii=False, indent=2))
+        json.dumps(entities, ensure_ascii=False, indent=2)
+    )
     (out / "summaries.json").write_text(
-        json.dumps(out_summaries, ensure_ascii=False, indent=2))
-    (out / "meta.json").write_text(json.dumps({
-        "max_chapter": max_chapter,
-        "title": "Lord of the Mysteries — World Wiki",
-        "fact_count": len(out_facts),
-        "entity_count": len(entities),
-        "summary_count": len(out_summaries),
-        "chapters": {str(n): t for n, t in read_chapter_titles().items()},
-        "read_url_base": READ_URL_BASE,
-    }, indent=2))
+        json.dumps(out_summaries, ensure_ascii=False, indent=2)
+    )
+    (out / "meta.json").write_text(
+        json.dumps(
+            {
+                "max_chapter": max_chapter,
+                "title": "Lord of the Mysteries — World Wiki",
+                "fact_count": len(out_facts),
+                "entity_count": len(entities),
+                "summary_count": len(out_summaries),
+                "chapters": {str(n): t for n, t in read_chapter_titles().items()},
+                "read_url_base": READ_URL_BASE,
+            },
+            indent=2,
+        )
+    )
 
     print(
         f"built: {len(entities)} entities, {len(out_facts)} facts, "
@@ -206,22 +212,50 @@ def build():
 
 def selfcheck():
     """Synthetic corpus proving supersede/refine resolution (facts + summaries)."""
-    entities = [
-        {"id": "x", "name": "X", "type": "concept", "first_seen": 1},
-    ]
     facts = [
-        {"id": "a", "statement": "A", "entities": ["x"], "established_at": 1,
-         "certainty": "fact", "sources": [{"chapter": 1}]},
-        {"id": "b", "statement": "B", "entities": ["x"], "established_at": 2,
-         "certainty": "fact", "sources": [{"chapter": 2}], "refines": ["a"]},
-        {"id": "c", "statement": "C", "entities": ["x"], "established_at": 3,
-         "certainty": "fact", "sources": [{"chapter": 3}], "supersedes": ["a"]},
+        {
+            "id": "a",
+            "statement": "A",
+            "entities": ["x"],
+            "established_at": 1,
+            "certainty": "fact",
+            "sources": [{"chapter": 1}],
+        },
+        {
+            "id": "b",
+            "statement": "B",
+            "entities": ["x"],
+            "established_at": 2,
+            "certainty": "fact",
+            "sources": [{"chapter": 2}],
+            "refines": ["a"],
+        },
+        {
+            "id": "c",
+            "statement": "C",
+            "entities": ["x"],
+            "established_at": 3,
+            "certainty": "fact",
+            "sources": [{"chapter": 3}],
+            "supersedes": ["a"],
+        },
     ]
     summaries = [
-        {"id": "s1", "entity": "x", "established_at": 1,
-         "text": "v1", "sources": [{"chapter": 1}]},
-        {"id": "s2", "entity": "x", "established_at": 3,
-         "text": "v2", "sources": [{"chapter": 3}], "supersedes": ["s1"]},
+        {
+            "id": "s1",
+            "entity": "x",
+            "established_at": 1,
+            "text": "v1",
+            "sources": [{"chapter": 1}],
+        },
+        {
+            "id": "s2",
+            "entity": "x",
+            "established_at": 3,
+            "text": "v2",
+            "sources": [{"chapter": 3}],
+            "supersedes": ["s1"],
+        },
     ]
     rf = resolve_temporal(facts)
     a = next(f for f in rf if f["id"] == "a")

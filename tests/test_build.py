@@ -1,4 +1,5 @@
 """Tests for build.py's temporal resolution and validation."""
+
 import pytest
 
 from build import (
@@ -52,40 +53,62 @@ def test_supersede_unknown_id_rejected():
 
 def test_validate_entities_rejects_missing_type():
     with pytest.raises(BuildError):
-        validate_entities([{"id": "x", "name": "X", "type": "",
-                            "first_seen": 1}])
+        validate_entities([{"id": "x", "name": "X", "type": "", "first_seen": 1}])
 
 
 def test_validate_entities_accepts_new_type():
     # entity types are free-form and grow with the book
-    validate_entities([{"id": "x", "name": "X", "type": "pathway",
-                        "first_seen": 1}])
+    validate_entities([{"id": "x", "name": "X", "type": "pathway", "first_seen": 1}])
 
 
 def test_validate_facts_rejects_unknown_entity():
     with pytest.raises(BuildError):
-        validate_facts([{
-            "id": "f1", "statement": "s", "entities": ["nope"],
-            "certainty": "fact", "established_at": 1,
-            "sources": [{"chapter": 1}],
-        }], {"x"})
+        validate_facts(
+            [
+                {
+                    "id": "f1",
+                    "statement": "s",
+                    "entities": ["nope"],
+                    "certainty": "fact",
+                    "established_at": 1,
+                    "sources": [{"chapter": 1}],
+                }
+            ],
+            {"x"},
+        )
 
 
 def test_validate_facts_rejects_bad_certainty():
     with pytest.raises(BuildError):
-        validate_facts([{
-            "id": "f1", "statement": "s", "entities": ["x"],
-            "certainty": "maybe", "established_at": 1,
-            "sources": [{"chapter": 1}],
-        }], {"x"})
+        validate_facts(
+            [
+                {
+                    "id": "f1",
+                    "statement": "s",
+                    "entities": ["x"],
+                    "certainty": "maybe",
+                    "established_at": 1,
+                    "sources": [{"chapter": 1}],
+                }
+            ],
+            {"x"},
+        )
 
 
 def test_validate_summaries_rejects_unknown_entity():
     with pytest.raises(BuildError):
-        validate_summaries([{
-            "id": "s1", "entity": "nope", "established_at": 1,
-            "text": "t", "sources": [{"chapter": 1}],
-        }], {"x"})
+        validate_summaries(
+            [
+                {
+                    "id": "s1",
+                    "entity": "nope",
+                    "established_at": 1,
+                    "text": "t",
+                    "sources": [{"chapter": 1}],
+                }
+            ],
+            {"x"},
+        )
 
 
 def test_read_chapter_titles(tmp_path):

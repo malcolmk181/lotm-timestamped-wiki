@@ -10,6 +10,7 @@ NOT an enum — new types must pass through, not be rejected. `Certainty` is the
 one closed enum (a fixed epistemic scale). Keep it in sync with the
 `CERTAINTIES` set in `build.py` (build.py stays stdlib-only).
 """
+
 from __future__ import annotations
 
 import re
@@ -61,8 +62,12 @@ def clean_type(type_: str) -> str:
     first = t.split("-")[0] if t else ""
     if first and first in KIND_MAP:
         return first
-    generic = {"person": "character", "place": "location",
-               "thing": "item", "idea": "concept"}
+    generic = {
+        "person": "character",
+        "place": "location",
+        "thing": "item",
+        "idea": "concept",
+    }
     return generic[kind_for(t)]
 
 

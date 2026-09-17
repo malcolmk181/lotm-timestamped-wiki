@@ -11,8 +11,26 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest>=9.1.1",
+    "ruff>=0.16.8",
 ]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "UP", "PL"]
+ignore = [
+    "E501",     # line-too-long: ruff format owns line length; long prose/URLs are fine
+    # pylint rules that are more noise than signal for this small codebase
+    "PLR0913",  # too-many-arguments
+    "PLR0917",  # too-many-positional-arguments
+    "PLR2004",  # magic-value-comparison
+    "PLR0911",  # too-many-return-statements
+    "PLR0912",  # too-many-branches
+    "PLR0915",  # too-many-statements (main() is long by design)
+]

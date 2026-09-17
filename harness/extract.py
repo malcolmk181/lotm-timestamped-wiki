@@ -17,6 +17,7 @@ Usage:
 Requires OPENROUTER_API_KEY in a .env at the repo root (see .env.example).
 Model is qwen/qwen3.8-27b by default (non-thinking); override with LOTM_MODEL.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -25,22 +26,26 @@ import os
 import re
 import sys
 import time
-import tomllib
 import urllib.error
 import urllib.request
 from pathlib import Path
 
 from dotenv import load_dotenv
+from pydantic import ValidationError
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from build import BuildError, load_toml  # noqa: E402
 from harness.schema import (  # noqa: E402
-    DELTA_SCHEMA, SUMMARY_SCHEMA, NewEntity, NewFact, SummaryUpdate,
-    clean_type, kind_for,
+    DELTA_SCHEMA,
+    SUMMARY_SCHEMA,
+    NewEntity,
+    NewFact,
+    SummaryUpdate,
+    clean_type,
+    kind_for,
 )
-from pydantic import ValidationError
 
 DATA = ROOT / "data"
 DRAFT = ROOT / "_draft"
@@ -63,7 +68,7 @@ def clean_text(md: str) -> str:
     if md.startswith("---"):
         end = md.find("---", 3)
         if end != -1:
-            md = md[end + 3:]
+            md = md[end + 3 :]
     # remove markdown images ![alt](path){...} — keep nothing of them
     md = re.sub(r"!\[[^\]]*\]\([^)]*\)(?:\{[^}]*\})?", "", md)
     # collapse blank lines, trim trailing spaces
@@ -143,7 +148,9 @@ FIELD RULES:
 Write entity names, quotes, and claims exactly as the chapter states them. Do not editorialize beyond what the text says."""
 
 
-def build_user_prompt(chapter_num: int, title: str, text: str, prior_prompt: str) -> str:
+def build_user_prompt(
+    chapter_num: int, title: str, text: str, prior_prompt: str
+) -> str:
     return (
         f"CHAPTER {chapter_num}: {title}\n\n"
         f"--- CHAPTER TEXT ---\n{text}\n\n"
@@ -167,8 +174,10 @@ OUTPUT SCHEMA (exactly this JSON object):
 
 
 def build_summary_prompt(changed: list[dict], chapter_num: int) -> str:
-    lines = [f"Chapter {chapter_num}. For each entity below, write one paragraph "
-             "summarizing what is currently known about it."]
+    lines = [
+        f"Chapter {chapter_num}. For each entity below, write one paragraph "
+        "summarizing what is currently known about it."
+    ]
     for item in changed:
         lines.append(f"\nENTITY {item['id']} | {item['name']} | type {item['type']}")
         for f in item["facts"]:
@@ -186,8 +195,13 @@ class ResponseFormatError(RuntimeError):
     """The provider rejected the requested response_format (downgrade trigger)."""
 
 
-def _openrouter_post(api_key: str, model: str, messages: list[dict],
-                     response_format, max_retries: int = 3) -> dict:
+def _openrouter_post(
+    api_key: str,
+    model: str,
+    messages: list[dict],
+    response_format,
+    max_retries: int = 3,
+) -> dict:
     """Single chat completion with retry/backoff on transient errors.
 
     Returns the raw API response. Raises ResponseFormatError if the provider
@@ -211,7 +225,9 @@ def _openrouter_post(api_key: str, model: str, messages: list[dict],
     last_err = None
     for attempt in range(max_retries):
         req = urllib.request.Request(
-            API_URL, data=data, method="POST",
+            API_URL,
+            data=data,
+            method="POST",
             headers={
                 "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json",
@@ -223,8 +239,10 @@ def _openrouter_post(api_key: str, model: str, messages: list[dict],
         except urllib.error.HTTPError as e:
             last_err = e
             detail = e.read().decode("utf-8", "replace")
-            if any(k in detail for k in
-                   ("response_format", "json_schema", "structured_output")):
+            if any(
+                k in detail
+                for k in ("response_format", "json_schema", "structured_output")
+            ):
                 raise ResponseFormatError(detail) from e
             if e.code == 429 or e.code >= 500:
                 retry_after = e.headers.get("Retry-After")
@@ -247,8 +265,14 @@ def _openrouter_post(api_key: str, model: str, messages: list[dict],
     raise RuntimeError(f"OpenRouter request failed: {last_err}")
 
 
-def extract_json(api_key: str, model: str, messages: list[dict],
-                 schema: dict, name: str, attempts_per_tier: int = 3) -> dict:
+def extract_json(
+    api_key: str,
+    model: str,
+    messages: list[dict],
+    schema: dict,
+    name: str,
+    attempts_per_tier: int = 3,
+) -> dict:
     """Get a parseable, non-empty JSON object, retrying and downgrading.
 
     Tries response_format tiers (json_schema -> json_object -> none). For each
@@ -257,15 +281,20 @@ def extract_json(api_key: str, model: str, messages: list[dict],
     main extraction pass and the summary pass.
     """
     tiers = [
-        {"type": "json_schema",
-         "json_schema": {"name": name, "schema": schema, "strict": False}},
+        {
+            "type": "json_schema",
+            "json_schema": {"name": name, "schema": schema, "strict": False},
+        },
         {"type": "json_object"},
         None,
     ]
     failure = None
     for tier in tiers:
-        print(f"    [response_format] "
-              f"{('none' if tier is None else tier.get('type', '?'))}", flush=True)
+        print(
+            f"    [response_format] "
+            f"{('none' if tier is None else tier.get('type', '?'))}",
+            flush=True,
+        )
         for _ in range(attempts_per_tier):
             try:
                 resp = _openrouter_post(api_key, model, messages, tier)
@@ -285,14 +314,16 @@ def extract_json(api_key: str, model: str, messages: list[dict],
                 delta = parse_json(content)
                 usage = resp.get("usage", {})
                 if usage:
-                    print(f"    [usage] {usage.get('prompt_tokens')} prompt -> "
-                          f"{usage.get('completion_tokens')} completion", flush=True)
+                    print(
+                        f"    [usage] {usage.get('prompt_tokens')} prompt -> "
+                        f"{usage.get('completion_tokens')} completion",
+                        flush=True,
+                    )
                 return delta
             except (BuildError, json.JSONDecodeError) as e:
                 failure = f"unparseable JSON: {e}"
                 continue  # retry this tier
-    raise RuntimeError(f"no parseable delta after all tiers/retries "
-                       f"(last: {failure})")
+    raise RuntimeError(f"no parseable delta after all tiers/retries (last: {failure})")
 
 
 def parse_json(text: str) -> dict:
@@ -308,7 +339,7 @@ def parse_json(text: str) -> dict:
     start = text.find("{")
     end = text.rfind("}")
     if start != -1 and end > start:
-        return json.loads(text[start:end + 1])
+        return json.loads(text[start : end + 1])
     raise BuildError("model did not return valid JSON")
 
 
@@ -344,12 +375,19 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
         raw_type = (e.type or "").strip()
         t = clean_type(raw_type)
         if len(raw_type) > 60:
-            warnings.append(f"entity {e.id!r}: type was reasoning-soup, coerced to {t!r}")
-        new_entities.append({
-            "id": e.id, "name": e.name, "type": t,
-            "kind": kind_for(t),
-            "aliases": e.aliases, "first_seen": chapter_num,
-        })
+            warnings.append(
+                f"entity {e.id!r}: type was reasoning-soup, coerced to {t!r}"
+            )
+        new_entities.append(
+            {
+                "id": e.id,
+                "name": e.name,
+                "type": t,
+                "kind": kind_for(t),
+                "aliases": e.aliases,
+                "first_seen": chapter_num,
+            }
+        )
     entity_ids = existing_entity | seen_entity_ids
 
     # --- facts (pydantic-validated; drop invalid ones individually) ---
@@ -367,24 +405,33 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
         if not ents:
             warnings.append(f"fact {f.id!r}: no valid entity refs, dropped")
             continue
-        refines = [d for d in f.refines
-                   if d in existing_fact and facts_index[d]["established_at"] < chapter_num]
-        supersedes = [d for d in f.supersedes
-                      if d in existing_fact and facts_index[d]["established_at"] < chapter_num]
-        srcs = [{"chapter": chapter_num, "quote": s.quote}
-                for s in f.sources if s.quote]
+        refines = [
+            d
+            for d in f.refines
+            if d in existing_fact and facts_index[d]["established_at"] < chapter_num
+        ]
+        supersedes = [
+            d
+            for d in f.supersedes
+            if d in existing_fact and facts_index[d]["established_at"] < chapter_num
+        ]
+        srcs = [
+            {"chapter": chapter_num, "quote": s.quote} for s in f.sources if s.quote
+        ]
         if not srcs:
             srcs = [{"chapter": chapter_num}]
-        new_facts.append({
-            "id": f.id,
-            "statement": f.statement,
-            "entities": ents,
-            "certainty": f.certainty,
-            "sources": srcs,
-            "refines": refines,
-            "supersedes": supersedes,
-            "established_at": chapter_num,
-        })
+        new_facts.append(
+            {
+                "id": f.id,
+                "statement": f.statement,
+                "entities": ents,
+                "certainty": f.certainty,
+                "sources": srcs,
+                "refines": refines,
+                "supersedes": supersedes,
+                "established_at": chapter_num,
+            }
+        )
 
     return {
         "new_entities": new_entities,
@@ -423,7 +470,9 @@ def active_facts_for(entity_id: str, prior: dict, chapter_num: int) -> list[dict
     return acts
 
 
-def link_summaries(summaries: list[dict], prior: dict, chapter_num: int) -> tuple[list[dict], list[str]]:
+def link_summaries(
+    summaries: list[dict], prior: dict, chapter_num: int
+) -> tuple[list[dict], list[str]]:
     """Validate the summary batch and auto-link each version's supersedes to the
     entity's previous latest summary (harness owns versioning)."""
     warnings: list[str] = []
@@ -450,20 +499,23 @@ def link_summaries(summaries: list[dict], prior: dict, chapter_num: int) -> tupl
         n = version.get(su.entity, 0) + 1
         version[su.entity] = n
         prev = latest.get(su.entity)
-        out.append({
-            "id": f"s-{su.entity}-{n}",
-            "entity": su.entity,
-            "established_at": chapter_num,
-            "text": su.text,
-            "supersedes": [prev] if prev else [],
-            "sources": [{"chapter": chapter_num}],
-        })
+        out.append(
+            {
+                "id": f"s-{su.entity}-{n}",
+                "entity": su.entity,
+                "established_at": chapter_num,
+                "text": su.text,
+                "supersedes": [prev] if prev else [],
+                "sources": [{"chapter": chapter_num}],
+            }
+        )
         latest[su.entity] = f"s-{su.entity}-{n}"
     return out, warnings
 
 
-def generate_summaries(api_key: str, model: str, changed: set[str],
-                       prior: dict, chapter_num: int) -> tuple[list[dict], list[str]]:
+def generate_summaries(
+    api_key: str, model: str, changed: set[str], prior: dict, chapter_num: int
+) -> tuple[list[dict], list[str]]:
     """Write prose summaries for the changed entities via one batched call."""
     entities = {e["id"]: e for e in prior["entities"]}
     items = []
@@ -471,10 +523,14 @@ def generate_summaries(api_key: str, model: str, changed: set[str],
         e = entities.get(eid)
         if e is None:
             continue
-        items.append({
-            "id": eid, "name": e["name"], "type": e["type"],
-            "facts": active_facts_for(eid, prior, chapter_num),
-        })
+        items.append(
+            {
+                "id": eid,
+                "name": e["name"],
+                "type": e["type"],
+                "facts": active_facts_for(eid, prior, chapter_num),
+            }
+        )
     if not items:
         return [], []
 
@@ -489,7 +545,14 @@ def generate_summaries(api_key: str, model: str, changed: set[str],
 # ---------------------------------------------------------------------------
 # Draft writing (and optional apply)
 # ---------------------------------------------------------------------------
-def write_draft(chapter_num: int, normalized: dict, title: str, model: str, report: str, warnings: list[str]) -> Path:
+def write_draft(
+    chapter_num: int,
+    normalized: dict,
+    title: str,
+    model: str,
+    report: str,
+    warnings: list[str],
+) -> Path:
     DRAFT.mkdir(exist_ok=True)
     payload = {
         "chapter": chapter_num,
@@ -505,23 +568,31 @@ def write_draft(chapter_num: int, normalized: dict, title: str, model: str, repo
     return path
 
 
-def render_report(chapter_num: int, title: str, normalized: dict, warnings: list[str]) -> str:
+def render_report(
+    chapter_num: int, title: str, normalized: dict, warnings: list[str]
+) -> str:
     lines = [f"# Chapter {chapter_num}: {title} — draft", ""]
     ne = normalized["new_entities"]
     nf = normalized["new_facts"]
     su = normalized["summary_updates"]
-    lines.append(f"- {len(ne)} new entities, {len(nf)} new facts, {len(su)} summary updates")
+    lines.append(
+        f"- {len(ne)} new entities, {len(nf)} new facts, {len(su)} summary updates"
+    )
     if ne:
         lines += ["", "## New entities", ""]
         for e in ne:
-            lines.append(f"- **{e['name']}** (`{e['id']}`, {e['type']}, {e.get('kind', '?')})"
-                         + (f" aka {', '.join(e['aliases'])}" if e.get("aliases") else ""))
+            lines.append(
+                f"- **{e['name']}** (`{e['id']}`, {e['type']}, {e.get('kind', '?')})"
+                + (f" aka {', '.join(e['aliases'])}" if e.get("aliases") else "")
+            )
     if nf:
         lines += ["", "## New facts", ""]
         for f in nf:
             links = ", ".join(f.get("refines", [])) or "—"
             over = ", ".join(f.get("supersedes", [])) or "—"
-            srcs = "; ".join(f"ch{s['chapter']} “{s.get('quote','')}”" for s in f["sources"])
+            srcs = "; ".join(
+                f"ch{s['chapter']} “{s.get('quote', '')}”" for s in f["sources"]
+            )
             lines.append(f"- [{f['certainty']}] {f['statement']} `{f['id']}`")
             lines.append(f"    - entities: {', '.join(f['entities'])}")
             lines.append(f"    - refines: {links} · supersedes: {over}")
@@ -535,8 +606,11 @@ def render_report(chapter_num: int, title: str, normalized: dict, warnings: list
     if warnings:
         lines += ["", "## Dropped / warnings", ""]
         lines += [f"- {w}" for w in warnings]
-    lines += ["", "Review, then `uv run python harness/extract.py --chapters "
-              f"{chapter_num} --apply` to merge (or edit data/*.toml by hand)."]
+    lines += [
+        "",
+        "Review, then `uv run python harness/extract.py --chapters "
+        f"{chapter_num} --apply` to merge (or edit data/*.toml by hand).",
+    ]
     return "\n".join(lines)
 
 
@@ -544,12 +618,20 @@ def render_report(chapter_num: int, title: str, normalized: dict, warnings: list
 def mock_delta(chapter_num: int, prior: dict) -> dict:
     return {
         "new_entities": [
-            {"id": f"mock-entity-{chapter_num}", "name": "Mock Entity", "type": "concept"},
+            {
+                "id": f"mock-entity-{chapter_num}",
+                "name": "Mock Entity",
+                "type": "concept",
+            },
         ],
         "new_facts": [
-            {"id": f"f-mock-{chapter_num}", "statement": "MOCK FACT — do not trust.",
-             "entities": [f"mock-entity-{chapter_num}"],
-             "certainty": "fact", "sources": [{"chapter": chapter_num, "quote": "mock"}]},
+            {
+                "id": f"f-mock-{chapter_num}",
+                "statement": "MOCK FACT — do not trust.",
+                "entities": [f"mock-entity-{chapter_num}"],
+                "certainty": "fact",
+                "sources": [{"chapter": chapter_num, "quote": "mock"}],
+            },
         ],
     }
 
@@ -569,8 +651,8 @@ def _toml_basic(s: str) -> str:
             out.append("\\n")
         elif ch == "\t":
             out.append("\\t")
-        elif ord(ch) < 0x20 or ord(ch) == 0x7f:
-            out.append("\\u%04X" % ord(ch))
+        elif ord(ch) < 0x20 or ord(ch) == 0x7F:
+            out.append(f"\\u{ord(ch):04X}")
         else:
             out.append(ch)
     return '"' + "".join(out) + '"'
@@ -605,8 +687,9 @@ def _render_entities(entities: list[dict]) -> str:
         out.append(f"type = {_toml_basic(e['type'])}")
         out.append(f"first_seen = {e['first_seen']}")
         if e.get("aliases"):
-            out.append("aliases = [" +
-                       ", ".join(_toml_basic(a) for a in e["aliases"]) + "]")
+            out.append(
+                "aliases = [" + ", ".join(_toml_basic(a) for a in e["aliases"]) + "]"
+            )
         out.append("")
     return "\n".join(out)
 
@@ -623,8 +706,9 @@ def _render_facts(facts: list[dict]) -> str:
             out.append("[[facts]]")
             out.append(f"id = {_toml_basic(f['id'])}")
             out.append(f"statement = {_toml_multiline(f['statement'])}")
-            out.append("entities = [" +
-                       ", ".join(_toml_basic(e) for e in f["entities"]) + "]")
+            out.append(
+                "entities = [" + ", ".join(_toml_basic(e) for e in f["entities"]) + "]"
+            )
             out.append(f"established_at = {f['established_at']}")
             out.append(f"certainty = {_toml_basic(f['certainty'])}")
             out.append("sources = [")
@@ -633,11 +717,17 @@ def _render_facts(facts: list[dict]) -> str:
                 out.append(f"  {{ chapter = {s['chapter']}{q} }},")
             out.append("]")
             if f.get("refines"):
-                out.append("refines = [" +
-                           ", ".join(_toml_basic(r) for r in f["refines"]) + "]")
+                out.append(
+                    "refines = ["
+                    + ", ".join(_toml_basic(r) for r in f["refines"])
+                    + "]"
+                )
             if f.get("supersedes"):
-                out.append("supersedes = [" +
-                           ", ".join(_toml_basic(s) for s in f["supersedes"]) + "]")
+                out.append(
+                    "supersedes = ["
+                    + ", ".join(_toml_basic(s) for s in f["supersedes"])
+                    + "]"
+                )
             out.append("")
     return "\n".join(out)
 
@@ -656,8 +746,11 @@ def _render_summaries(summaries: list[dict]) -> str:
             out.append(f"entity = {_toml_basic(s['entity'])}")
             out.append(f"established_at = {s['established_at']}")
             if s.get("supersedes"):
-                out.append("supersedes = [" +
-                           ", ".join(_toml_basic(x) for x in s["supersedes"]) + "]")
+                out.append(
+                    "supersedes = ["
+                    + ", ".join(_toml_basic(x) for x in s["supersedes"])
+                    + "]"
+                )
             out.append(f"text = {_toml_multiline(s['text'])}")
             out.append("sources = [")
             for src in s["sources"]:
@@ -686,10 +779,15 @@ def apply_drafts(draft_dir: Path, data_dir: Path) -> int:
             if e["id"] in seen_e:
                 continue
             seen_e.add(e["id"])
-            entities.append({
-                "id": e["id"], "name": e["name"], "type": e["type"],
-                "first_seen": e["first_seen"], "aliases": e.get("aliases", []),
-            })
+            entities.append(
+                {
+                    "id": e["id"],
+                    "name": e["name"],
+                    "type": e["type"],
+                    "first_seen": e["first_seen"],
+                    "aliases": e.get("aliases", []),
+                }
+            )
         for f in d.get("new_facts", []):
             if f["id"] in seen_f:
                 continue
@@ -704,8 +802,10 @@ def apply_drafts(draft_dir: Path, data_dir: Path) -> int:
     (data_dir / "facts.toml").write_text(fh + _render_facts(facts))
     (data_dir / "summaries.toml").write_text(sh + _render_summaries(summaries))
 
-    print(f"applied {len(entities)} entities, {len(facts)} facts, "
-          f"{len(summaries)} summaries -> {data_dir}")
+    print(
+        f"applied {len(entities)} entities, {len(facts)} facts, "
+        f"{len(summaries)} summaries -> {data_dir}"
+    )
     return 0
 
 
@@ -714,15 +814,27 @@ def apply_drafts(draft_dir: Path, data_dir: Path) -> int:
 # ---------------------------------------------------------------------------
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--chapters", nargs="+", type=int,
-                    help="single chapter, or start end (inclusive)")
+    ap.add_argument(
+        "--chapters",
+        nargs="+",
+        type=int,
+        help="single chapter, or start end (inclusive)",
+    )
     ap.add_argument("--model", default=None)
     ap.add_argument("--webnovel-dir", default=None)
-    ap.add_argument("--mock", action="store_true", help="offline plumbing test (no API call)")
-    ap.add_argument("--apply", action="store_true",
-                    help="promote _draft/ into data/ (replaces the corpus; no extraction)")
-    ap.add_argument("--fresh", action="store_true",
-                    help="start from an empty corpus (ignore existing data/) for a clean from-scratch run")
+    ap.add_argument(
+        "--mock", action="store_true", help="offline plumbing test (no API call)"
+    )
+    ap.add_argument(
+        "--apply",
+        action="store_true",
+        help="promote _draft/ into data/ (replaces the corpus; no extraction)",
+    )
+    ap.add_argument(
+        "--fresh",
+        action="store_true",
+        help="start from an empty corpus (ignore existing data/) for a clean from-scratch run",
+    )
     args = ap.parse_args()
 
     if args.apply:
@@ -733,7 +845,9 @@ def main() -> int:
 
     load_dotenv(ROOT / ".env")
     model = args.model or os.environ.get("LOTM_MODEL") or DEFAULT_MODEL
-    webnovel_dir = Path(args.webnovel_dir or os.environ.get("LOTM_WEBWOVEL_DIR") or DEFAULT_WEBWOVEL)
+    webnovel_dir = Path(
+        args.webnovel_dir or os.environ.get("LOTM_WEBWOVEL_DIR") or DEFAULT_WEBWOVEL
+    )
 
     start_n = args.chapters[0]
     end_n = args.chapters[-1]
@@ -744,7 +858,11 @@ def main() -> int:
             print("OPENROUTER_API_KEY not found in .env — add it (see .env.example).")
             return 1
 
-    prior = load_prior_state() if not args.fresh else {"entities": [], "facts": [], "summaries": []}
+    prior = (
+        load_prior_state()
+        if not args.fresh
+        else {"entities": [], "facts": [], "summaries": []}
+    )
     files = dict(chapter_files(webnovel_dir))
     missing = [n for n in range(start_n, end_n + 1) if n not in files]
     if missing:
@@ -766,10 +884,16 @@ def main() -> int:
         else:
             print(f"chapter {n}: calling {model} ...", flush=True)
             try:
-                raw = extract_json(api_key, model, [
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": user},
-                ], DELTA_SCHEMA, "extraction")
+                raw = extract_json(
+                    api_key,
+                    model,
+                    [
+                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {"role": "user", "content": user},
+                    ],
+                    DELTA_SCHEMA,
+                    "extraction",
+                )
             except RuntimeError as e:
                 print(f"chapter {n}: FAILED after retries — {e}")
                 continue
@@ -791,11 +915,13 @@ def main() -> int:
         if not args.mock:
             changed = compute_changed_entities(normalized)
             if changed:
-                print(f"chapter {n}: summarizing {len(changed)} entities ...",
-                      flush=True)
+                print(
+                    f"chapter {n}: summarizing {len(changed)} entities ...", flush=True
+                )
                 try:
                     summaries, swarn = generate_summaries(
-                        api_key, model, changed, prior, n)
+                        api_key, model, changed, prior, n
+                    )
                 except RuntimeError as e:
                     print(f"chapter {n}: summary pass failed — {e}")
         for w in swarn:
@@ -806,10 +932,12 @@ def main() -> int:
         report = render_report(n, title, normalized, warnings + swarn)
         path = write_draft(n, normalized, title, model, report, warnings + swarn)
         # accumulate so the next chapter sees this chapter's output as known
-        print(f"chapter {n}: drafted {path} "
-              f"({len(normalized['new_entities'])} entities, "
-              f"{len(normalized['new_facts'])} facts, "
-              f"{len(normalized['summary_updates'])} summaries)")
+        print(
+            f"chapter {n}: drafted {path} "
+            f"({len(normalized['new_entities'])} entities, "
+            f"{len(normalized['new_facts'])} facts, "
+            f"{len(normalized['summary_updates'])} summaries)"
+        )
 
     return 0
 
