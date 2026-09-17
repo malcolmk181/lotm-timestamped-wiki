@@ -14,8 +14,9 @@
   `Certainty` is the one closed enum and must stay in sync with `build.py`'s
   `CERTAINTIES` set.
 - Dependencies: avoid unnecessary ones, but small, well-known, performant
-  packages that solve an annoying problem are fine (pydantic, python-dotenv).
-  For frontend JS in `site/`, load libraries from a CDN rather than vendoring.
+  packages that solve an annoying problem are fine (pydantic, python-dotenv;
+  ruff as a dev-only lint/format tool). For frontend JS in `site/`, load
+  libraries from a CDN rather than vendoring.
 
 ## Data authoring (the important part)
 - **No spoilers.** A fact may only cite/mention what is knowable by its own
@@ -56,13 +57,18 @@
 - Model: `qwen/qwen3.8-27b` by default (`LOTM_MODEL` to override). Reasoning is
   forced off via `reasoning:{enabled:false}` — Qwen3.8/DeepSeek think by
   default and otherwise leak chain-of-thought into the JSON.
-- Draft-first: `harness/extract.py` writes to `_draft/` and never mutates
-  `data/` unless `--apply`. Review the `.report.md` before merging.
-- The extraction is spoiler-bounded by construction: one chapter at a time,
-  in order, with only that chapter's text + prior `data/` state in the prompt.
+- Two passes per chapter. (1) Main pass emits entities + facts only.
+  (2) Deterministic summary pass computes which entities' understanding changed
+  this chapter (newly created, or the subject of a `refines`/`supersedes`) and
+  writes prose for just those in a separate, batched, parallelizable call.
+  Summary versioning (`supersedes` linking) is harness-owned.
+- Draft-first: `--chapters 1 N` writes to `_draft/` and never touches `data/`.
+  Review the `.report.md`, then `--apply` promotes the whole `_draft/` corpus
+  into `data/*.toml` (replacing it).
+- The extraction is spoiler-bounded by construction: one chapter at a time, in
+  order, with only that chapter's text + prior state in the prompt.
 - When you tune the prompt, beware the residual risk anyway: the model has the
-  novel in its training data, so keep the hard "use ONLY provided text" rule,
-  and spot-check early chapters against the hand-authored set.
+  novel in its training data, so keep the hard "use ONLY provided text" rule.
 
 ## Testing
 - `tests/` is pytest (`uv run pytest`). Add a test for anything touching
