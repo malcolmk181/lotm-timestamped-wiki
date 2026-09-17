@@ -105,9 +105,16 @@ uv run pytest -q            # condensed
 [`harness/extract.py`](harness/extract.py) turns novel chapters into the data
 schema one chapter at a time, in strict reading order. It feeds an LLM (via
 OpenRouter) only the current chapter's text plus a compact "prior state" (what
-`data/` currently believes) and asks for a *delta*: new entities, new facts,
-and summary revisions — so it cannot leak later chapters, and it has to link
-`refines`/`supersedes` to existing ids.
+`data/` currently believes) and asks for a *delta*: new entities and new facts
+— so it cannot leak later chapters, and it has to link `refines`/`supersedes`
+to existing ids.
+
+Summaries are a **separate, deterministic pass**: after the facts are
+extracted, the harness computes which entities' understanding *changed* this
+chapter (newly created, or the subject of a `refines`/`supersedes`), then makes
+a second, batched model call that writes a prose summary for just those
+entities. The summary calls are independent of one another and can be
+parallelized; the main fact-extraction pass stays sequential.
 
 - **Model:** `qwen/qwen3.8-27b` (cheap, open-weight). Reasoning is forced off
   (`reasoning:{enabled:false}`) so chain-of-thought can't leak into the JSON.

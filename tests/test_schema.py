@@ -4,9 +4,11 @@ from pydantic import ValidationError
 
 from harness.schema import (
     DELTA_SCHEMA,
+    SUMMARY_SCHEMA,
     ExtractionDelta,
     NewEntity,
     NewFact,
+    SummaryBatch,
     SummaryUpdate,
     clean_type,
     kind_for,
@@ -20,11 +22,9 @@ def test_full_delta_roundtrip():
             "id": "f1", "statement": "s", "entities": ["e1"],
             "certainty": "fact", "sources": [{"chapter": 1, "quote": "q"}],
         }],
-        "summary_updates": [{"entity": "e1", "text": "hello"}],
     })
     assert d.new_entities[0].id == "e1"
     assert d.new_facts[0].certainty == "fact"
-    assert d.summary_updates[0].text == "hello"
 
 
 def test_new_entity_type_accepted():
@@ -51,7 +51,14 @@ def test_defaults_applied():
 
 def test_schema_exposes_top_level_keys():
     assert set(DELTA_SCHEMA["properties"].keys()) == {
-        "new_entities", "new_facts", "summary_updates"}
+        "new_entities", "new_facts"}
+
+
+def test_summary_batch_schema():
+    assert set(SUMMARY_SCHEMA["properties"].keys()) == {"summaries"}
+    b = SummaryBatch.model_validate(
+        {"summaries": [{"entity": "e1", "text": "hi"}]})
+    assert b.summaries[0].entity == "e1"
 
 
 def test_summary_update_shape_has_no_supersedes_field():

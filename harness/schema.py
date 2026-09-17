@@ -96,8 +96,14 @@ class SummaryUpdate(BaseModel):
 class ExtractionDelta(BaseModel):
     new_entities: list[NewEntity] = Field(default_factory=list)
     new_facts: list[NewFact] = Field(default_factory=list)
-    summary_updates: list[SummaryUpdate] = Field(default_factory=list)
 
 
-# The JSON schema we hand to the model for structured output / guidance.
+class SummaryBatch(BaseModel):
+    summaries: list[SummaryUpdate] = Field(default_factory=list)
+
+
+# The JSON schemas handed to the model for structured output / guidance.
+# Two schemas: the main extraction (entities + facts) and the separate,
+# deterministic summary pass (prose per changed entity).
 DELTA_SCHEMA = ExtractionDelta.model_json_schema()
+SUMMARY_SCHEMA = SummaryBatch.model_json_schema()

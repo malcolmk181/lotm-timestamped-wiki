@@ -37,7 +37,8 @@ sys.path.insert(0, str(ROOT))
 
 from build import BuildError, load_toml  # noqa: E402
 from harness.schema import (  # noqa: E402
-    DELTA_SCHEMA, NewEntity, NewFact, SummaryUpdate, clean_type, kind_for,
+    DELTA_SCHEMA, SUMMARY_SCHEMA, NewEntity, NewFact, SummaryUpdate,
+    clean_type, kind_for,
 )
 from pydantic import ValidationError
 
@@ -118,7 +119,7 @@ HARD RULES:
 2. Current chapter is N. Every fact and summary you emit is first known at chapter N. Never mention anything checkable only at a later chapter.
 3. Respond with a single JSON object and nothing else — no markdown fences, no prose.
 4. Be noisy and detailed: prefer many small, specific claims over a few big ones. This is what makes later refinements and overturns meaningful.
-5. Output NOTHING already captured in the prior state. new_entities is ONLY for entities not listed under ENTITIES below; new_facts is ONLY for claims the FACTS list does not already state; emit a summary_update ONLY when you add to or change an entity's description. If a chapter adds nothing new, return empty arrays. Re-emiting an existing entity id is a hard error.
+5. Output NOTHING already captured in the prior state. new_entities is ONLY for entities not listed under ENTITIES below; new_facts is ONLY for claims the FACTS list does not already state. If a chapter adds nothing new, return empty arrays. Re-emitting an existing entity id is a hard error.
 6. Enumerate fully. When the text gives a list or roll-call (e.g. "seven orthodox gods: the Eternal Blazing Sun, the Lord of Storms, ..."), do not truncate it: emit an entity for the collective plus one entity for each named member, and a fact that names the complete list. Lists like this are core world-building and must not be shortened.
 7. Field values are literal strings ONLY. Never write reasoning, questions, hedging, or alternatives inside a value (e.g. type is "character", never "character, or maybe 'person'").
 
@@ -126,7 +127,6 @@ OUTPUT SCHEMA (exactly this JSON object):
 {
   "new_entities": [ {"id": "<slug>", "name": "<name>", "type": "<type>", "aliases": ["<name>"]} ],
   "new_facts": [ {"id": "<slug>", "statement": "<claim>", "entities": ["<entity-id>"], "certainty": "<level>", "sources": [{"chapter": N, "quote": "<exact short quote>"}], "refines": ["<fact-id>"], "supersedes": ["<fact-id>"]} ],
-  "summary_updates": [ {"entity": "<entity-id>", "text": "<prose paragraph>"} ],
 }
 Omit empty arrays. Omit optional fields you don't need.
 
@@ -140,8 +140,6 @@ FIELD RULES:
 - fact.sources[].quote: a short exact phrase from the chapter, verbatim, that backs the claim.
 - refines: ids of facts this claim EXTENDS or clarifies without contradicting. Only point at facts established in an EARLIER chapter (their established_at < N).
 - supersedes: ids of facts this claim CONTRADICTS/REPLACES. Only earlier facts. This is how the wiki records that a prior understanding was wrong.
-- summary_updates: write a readable prose PARAGRAPH for an entity ONLY when this chapter materially changes what that entity IS (its identity, nature, or role). Do NOT emit a summary for routine new details, and never re-summarize an entity whose existing summary is still accurate. Most chapters will have few or no summary_updates.
-- summary text must be chapter-accurate: it may only state what is knowable by chapter N.
 
 Write entity names, quotes, and claims exactly as the chapter states them. Do not editorialize beyond what the text says."""
 
@@ -153,6 +151,33 @@ def build_user_prompt(chapter_num: int, title: str, text: str, prior_prompt: str
         f"--- PRIOR STATE (what the wiki already believes) ---\n{prior_prompt}\n\n"
         f"Output the JSON delta for chapter {chapter_num} (current chapter N = {chapter_num})."
     )
+
+
+# ---------------------------------------------------------------------------
+# Summary pass (separate, deterministic; runs AFTER the main extraction)
+# ---------------------------------------------------------------------------
+SUMMARY_SYSTEM_PROMPT = """You write concise prose descriptions for a spoiler-safe, chapter-timestamped wiki of "Lord of the Mysteries". You are given a set of entities and, for each, the facts currently known about it as of a given chapter. Write ONE short paragraph (2-4 sentences) per entity summarizing what is currently known, based ONLY on the provided facts. If two facts conflict, prefer the later-established one. Do not add detail the facts do not support, do not editorialize, and do not mention chapter numbers, fact ids, or sources.
+
+Respond with a single JSON object and nothing else — no markdown fences, no prose.
+
+OUTPUT SCHEMA (exactly this JSON object):
+{
+  "summaries": [ {"entity": "<entity-id>", "text": "<prose paragraph>"} ]
+}
+"""
+
+
+def build_summary_prompt(changed: list[dict], chapter_num: int) -> str:
+    lines = [f"Chapter {chapter_num}. For each entity below, write one paragraph "
+             "summarizing what is currently known about it."]
+    for item in changed:
+        lines.append(f"\nENTITY {item['id']} | {item['name']} | type {item['type']}")
+        for f in item["facts"]:
+            lines.append(f"- [{f['certainty']}] {f['statement']}")
+        if not item["facts"]:
+            lines.append("- (no facts yet)")
+    lines.append("\nOutput the JSON summaries for every entity listed above.")
+    return "\n".join(lines)
 
 
 # ---------------------------------------------------------------------------
@@ -223,17 +248,18 @@ def _openrouter_post(api_key: str, model: str, messages: list[dict],
     raise RuntimeError(f"OpenRouter request failed: {last_err}")
 
 
-def extract_delta(api_key: str, model: str, messages: list[dict],
-                  attempts_per_tier: int = 3) -> dict:
-    """Get a parseable, non-empty delta, retrying and downgrading as needed.
+def extract_json(api_key: str, model: str, messages: list[dict],
+                 schema: dict, name: str, attempts_per_tier: int = 3) -> dict:
+    """Get a parseable, non-empty JSON object, retrying and downgrading.
 
     Tries response_format tiers (json_schema -> json_object -> none). For each
     tier it retries on empty output and malformed JSON, then downgrades the
-    tier. Raises RuntimeError only if every tier and retry fails.
+    tier. Raises RuntimeError only if every tier and retry fails. Shared by the
+    main extraction pass and the summary pass.
     """
     tiers = [
         {"type": "json_schema",
-         "json_schema": {"name": "extraction", "schema": DELTA_SCHEMA, "strict": False}},
+         "json_schema": {"name": name, "schema": schema, "strict": False}},
         {"type": "json_object"},
         None,
     ]
@@ -303,16 +329,6 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
     existing_fact = {f["id"] for f in prior["facts"]}
     facts_index = {f["id"]: f for f in prior["facts"]}
 
-    # latest summary version id per entity, to auto-link supersedes
-    latest_summary_id: dict[str, str] = {}
-    summary_version: dict[str, int] = {}
-    for s in prior["summaries"]:
-        m = re.search(r"-(\d+)$", s["id"])
-        n = int(m.group(1)) if m else 0
-        if n >= summary_version.get(s["entity"], 0):
-            summary_version[s["entity"]] = n
-            latest_summary_id[s["entity"]] = s["id"]
-
     # --- entities (pydantic-validated; drop dupes/bad on warning) ---
     seen_entity_ids: set[str] = set()
     new_entities: list[dict] = []
@@ -371,21 +387,71 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
             "established_at": chapter_num,
         })
 
-    # --- summary updates (harness owns versioning + linking) ---
-    out_summaries: list[dict] = []
-    for su_raw in raw.get("summary_updates", []):
+    return {
+        "new_entities": new_entities,
+        "new_facts": new_facts,
+    }, warnings
+
+
+# ---------------------------------------------------------------------------
+# Deterministic summary pass
+# ---------------------------------------------------------------------------
+def compute_changed_entities(normalized: dict) -> set[str]:
+    """Entities whose understanding changed this chapter: newly created, or the
+    subject of a fact that refines/supersedes an earlier fact."""
+    changed = {e["id"] for e in normalized["new_entities"]}
+    for f in normalized["new_facts"]:
+        if f["refines"] or f["supersedes"]:
+            changed.update(f["entities"])
+    return changed
+
+
+def active_facts_for(entity_id: str, prior: dict, chapter_num: int) -> list[dict]:
+    """Facts about entity_id in effect as of chapter_num (not superseded)."""
+    revoked: set[str] = set()
+    for f in prior["facts"]:
+        if f.get("established_at", 0) > chapter_num:
+            continue
+        revoked.update(f.get("supersedes", []))
+    acts = []
+    for f in prior["facts"]:
+        if f.get("established_at", 0) > chapter_num:
+            continue
+        if f["id"] in revoked or entity_id not in f.get("entities", []):
+            continue
+        acts.append(f)
+    acts.sort(key=lambda f: f["established_at"])
+    return acts
+
+
+def link_summaries(summaries: list[dict], prior: dict, chapter_num: int) -> tuple[list[dict], list[str]]:
+    """Validate the summary batch and auto-link each version's supersedes to the
+    entity's previous latest summary (harness owns versioning)."""
+    warnings: list[str] = []
+    entity_ids = {e["id"] for e in prior["entities"]}
+    latest: dict[str, str] = {}
+    version: dict[str, int] = {}
+    for s in prior["summaries"]:
+        m = re.search(r"-(\d+)$", s["id"])
+        n = int(m.group(1)) if m else 0
+        if n >= version.get(s["entity"], 0):
+            version[s["entity"]] = n
+            latest[s["entity"]] = s["id"]
+
+    out: list[dict] = []
+    for su_raw in summaries:
         try:
             su = SummaryUpdate.model_validate(su_raw)
         except ValidationError as err:
             warnings.append(f"summary invalid: {err}")
             continue
         if su.entity not in entity_ids:
-            warnings.append(f"summary_update unknown entity {su.entity!r}")
+            warnings.append(f"summary unknown entity {su.entity!r}")
             continue
-        n = summary_version.get(su.entity, 0) + 1
-        summary_version[su.entity] = n
-        prev = latest_summary_id.get(su.entity)
-        out_summaries.append({
+        n = version.get(su.entity, 0) + 1
+        version[su.entity] = n
+        prev = latest.get(su.entity)
+        out.append({
             "id": f"s-{su.entity}-{n}",
             "entity": su.entity,
             "established_at": chapter_num,
@@ -393,13 +459,32 @@ def normalize_delta(raw: dict, prior: dict, chapter_num: int) -> tuple[dict, lis
             "supersedes": [prev] if prev else [],
             "sources": [{"chapter": chapter_num}],
         })
-        latest_summary_id[su.entity] = f"s-{su.entity}-{n}"
+        latest[su.entity] = f"s-{su.entity}-{n}"
+    return out, warnings
 
-    return {
-        "new_entities": new_entities,
-        "new_facts": new_facts,
-        "summary_updates": out_summaries,
-    }, warnings
+
+def generate_summaries(api_key: str, model: str, changed: set[str],
+                       prior: dict, chapter_num: int) -> tuple[list[dict], list[str]]:
+    """Write prose summaries for the changed entities via one batched call."""
+    entities = {e["id"]: e for e in prior["entities"]}
+    items = []
+    for eid in sorted(changed):
+        e = entities.get(eid)
+        if e is None:
+            continue
+        items.append({
+            "id": eid, "name": e["name"], "type": e["type"],
+            "facts": active_facts_for(eid, prior, chapter_num),
+        })
+    if not items:
+        return [], []
+
+    messages = [
+        {"role": "system", "content": SUMMARY_SYSTEM_PROMPT},
+        {"role": "user", "content": build_summary_prompt(items, chapter_num)},
+    ]
+    raw = extract_json(api_key, model, messages, SUMMARY_SCHEMA, "summaries")
+    return link_summaries(raw.get("summaries", []), prior, chapter_num)
 
 
 # ---------------------------------------------------------------------------
@@ -467,7 +552,6 @@ def mock_delta(chapter_num: int, prior: dict) -> dict:
              "entities": [f"mock-entity-{chapter_num}"],
              "certainty": "fact", "sources": [{"chapter": chapter_num, "quote": "mock"}]},
         ],
-        "summary_updates": [],
     }
 
 
@@ -525,10 +609,10 @@ def main() -> int:
         else:
             print(f"chapter {n}: calling {model} ...", flush=True)
             try:
-                raw = extract_delta(api_key, model, [
+                raw = extract_json(api_key, model, [
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": user},
-                ])
+                ], DELTA_SCHEMA, "extraction")
             except RuntimeError as e:
                 print(f"chapter {n}: FAILED after retries — {e}")
                 continue
@@ -537,12 +621,34 @@ def main() -> int:
         for w in warnings:
             print(f"  chapter {n}: note: {w}")
 
-        report = render_report(n, title, normalized, warnings)
-        path = write_draft(n, normalized, title, model, report, warnings)
-        # accumulate so the next chapter sees this chapter's output as known
+        # accumulate entities + facts so the summary pass (and next chapter)
+        # sees this chapter's additions as known
         prior["entities"].extend(normalized["new_entities"])
         prior["facts"].extend(normalized["new_facts"])
-        prior["summaries"].extend(normalized["summary_updates"])
+
+        # deterministic summary pass: summarize entities whose understanding
+        # changed this chapter (new, or refined/superseded). A separate,
+        # independent LLM call — parallelizable later.
+        summaries: list[dict] = []
+        swarn: list[str] = []
+        if not args.mock:
+            changed = compute_changed_entities(normalized)
+            if changed:
+                print(f"chapter {n}: summarizing {len(changed)} entities ...",
+                      flush=True)
+                try:
+                    summaries, swarn = generate_summaries(
+                        api_key, model, changed, prior, n)
+                except RuntimeError as e:
+                    print(f"chapter {n}: summary pass failed — {e}")
+        for w in swarn:
+            print(f"  chapter {n}: note (summary): {w}")
+        normalized["summary_updates"] = summaries
+        prior["summaries"].extend(summaries)
+
+        report = render_report(n, title, normalized, warnings + swarn)
+        path = write_draft(n, normalized, title, model, report, warnings + swarn)
+        # accumulate so the next chapter sees this chapter's output as known
         print(f"chapter {n}: drafted {path} "
               f"({len(normalized['new_entities'])} entities, "
               f"{len(normalized['new_facts'])} facts, "
