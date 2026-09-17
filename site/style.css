@@ -254,8 +254,11 @@ body {
 /* ---- about view ---- */
 .about { max-width: 640px; }
 .about h2 { border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.about h3 { margin-top: 28px; color: var(--gold); font-variant: small-caps; letter-spacing: 1px; }
 .about p, .about li { line-height: 1.65; }
 .about ul { padding-left: 22px; }
+.about a { color: var(--gold); }
+.about a:hover { color: var(--crimson-bright); }
 .about .about-note { color: var(--text-dim); font-size: 0.85rem; margin-top: 24px; }
 
 /* ---- changes view ---- */

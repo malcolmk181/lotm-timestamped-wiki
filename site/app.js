@@ -318,7 +318,10 @@ function renderAbout(sidebar, content) {
     "  <li><strong>Sourced.</strong> Every fact cites its chapter and an exact quote from the text.</li>",
     "</ul>",
     "<p>Browse <strong>Entities</strong> for people, places, and concepts, or <strong>Temporal changes</strong> to see how the wiki\u2019s understanding has shifted. Content so far covers chapters 1\u2013" + meta.max_chapter + ".</p>",
-    "<p class=\"about-note\">Unofficial fan reference, not affiliated with the author or publisher. See the project README for full attribution.</p>",
+    "<h3>Attribution</h3>",
+    "<p><em>Lord of the Mysteries</em> is written by <strong>Cuttlefish That Loves Diving</strong> (\u7231\u6f5c\u6c34\u7684\u4e4c\u8d3c). Read the official English translation on <a href=\"https://www.webnovel.com/book/lord-of-mysteries_110227330062345055\" target=\"_blank\" rel=\"noopener\">Webnovel</a>.</p>",
+    "<p>Chapter text is an unofficial fan translation from <a href=\"https://beyonder.pages.dev\" target=\"_blank\" rel=\"noopener\">LOTM-Reader</a>, a fan project by <a href=\"https://github.com/Bittu5134\" target=\"_blank\" rel=\"noopener\">@Bittu5134</a> (<a href=\"https://github.com/Bittu5134/LOTM-Reader\" target=\"_blank\" rel=\"noopener\">github.com/Bittu5134/LOTM-Reader</a>), using its webnovel translation.</p>",
+    "<p class=\"about-note\">Built with <a href=\"https://hermes-agent.nousresearch.com/docs\" target=\"_blank\" rel=\"noopener\">Hermes Agent</a> (Nous Research) and <a href=\"https://www.deepseek.com\" target=\"_blank\" rel=\"noopener\">DeepSeek</a> language models via OpenRouter. An independent, non-profit fan reference \u2014 not affiliated with the author, publisher, or LOTM-Reader.</p>",
   ].join("");
   content.appendChild(box);
 }
