@@ -123,9 +123,15 @@ function render() {
   const footer = document.getElementById("footer");
   const layout = document.querySelector(".layout");
   layout.classList.toggle("no-sidebar", view !== "entities");
+
+  const nEntities = entities.filter((e) => isVisibleAt(e, chapter)).length;
+  const nFacts = facts.filter((f) => isActiveAt(f, chapter)).length;
+  const nSummaries = summaries.filter(
+    (s) => s.established_at <= chapter &&
+      (s.revoked_at === null || s.revoked_at > chapter)).length;
   footer.textContent =
-    `${meta.entity_count} entities · ${meta.fact_count} facts · ` +
-    `${meta.summary_count} descriptions · showing world as of chapter ${chapter}`;
+    `${nEntities} entities · ${nFacts} facts · ` +
+    `${nSummaries} descriptions · showing world as of chapter ${chapter}`;
 
   if (view === "about") {
     renderAbout(sidebar, content);
