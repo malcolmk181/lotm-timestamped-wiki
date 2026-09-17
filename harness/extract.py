@@ -12,7 +12,7 @@ real corpus (or wait until you trust it, then use --apply directly).
 Usage:
     uv run python harness/extract.py --chapters 1 25          # extract, draft
     uv run python harness/extract.py --chapters 1 3 --mock    # offline plumbing test
-    uv run python harness/extract.py --chapters 4 --apply     # extract AND merge ch 4
+    uv run python harness/extract.py --apply                  # promote _draft/ -> data/
 
 Requires OPENROUTER_API_KEY in a .env at the repo root (see .env.example).
 Model is qwen/qwen3.8-27b by default (non-thinking); override with LOTM_MODEL.
@@ -555,23 +555,181 @@ def mock_delta(chapter_num: int, prior: dict) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Promoting _draft/ back into data/ (stdlib TOML serialization)
+# ---------------------------------------------------------------------------
+def _toml_basic(s: str) -> str:
+    """Emit a TOML basic (double-quoted) string with correct escaping."""
+    out = []
+    for ch in s:
+        if ch == "\\":
+            out.append("\\\\")
+        elif ch == '"':
+            out.append('\\"')
+        elif ch == "\n":
+            out.append("\\n")
+        elif ch == "\t":
+            out.append("\\t")
+        elif ord(ch) < 0x20 or ord(ch) == 0x7f:
+            out.append("\\u%04X" % ord(ch))
+        else:
+            out.append(ch)
+    return '"' + "".join(out) + '"'
+
+
+def _toml_multiline(s: str) -> str:
+    """Emit a TOML multiline basic string (for prose statements/summaries)."""
+    s = s.replace("\\", "\\\\").replace('"""', '\\"""')
+    if s.startswith('"'):
+        s = " " + s
+    return '"""' + s + '"""'
+
+
+def _file_header(path: Path) -> str:
+    """The comment block preceding the first [[table]] of a data file."""
+    head = []
+    for ln in path.read_text().splitlines():
+        if ln.lstrip().startswith("[["):
+            break
+        head.append(ln)
+    while head and not head[-1].strip():
+        head.pop()
+    return "\n".join(head) + "\n\n"
+
+
+def _render_entities(entities: list[dict]) -> str:
+    out = []
+    for e in entities:
+        out.append("[[entities]]")
+        out.append(f"id = {_toml_basic(e['id'])}")
+        out.append(f"name = {_toml_basic(e['name'])}")
+        out.append(f"type = {_toml_basic(e['type'])}")
+        out.append(f"first_seen = {e['first_seen']}")
+        if e.get("aliases"):
+            out.append("aliases = [" +
+                       ", ".join(_toml_basic(a) for a in e["aliases"]) + "]")
+        out.append("")
+    return "\n".join(out)
+
+
+def _render_facts(facts: list[dict]) -> str:
+    by_chapter = {}
+    for f in facts:
+        by_chapter.setdefault(f["established_at"], []).append(f)
+    out = []
+    for ch in sorted(by_chapter):
+        out.append(f"# ---- Chapter {ch} " + "-" * 60)
+        out.append("")
+        for f in by_chapter[ch]:
+            out.append("[[facts]]")
+            out.append(f"id = {_toml_basic(f['id'])}")
+            out.append(f"statement = {_toml_multiline(f['statement'])}")
+            out.append("entities = [" +
+                       ", ".join(_toml_basic(e) for e in f["entities"]) + "]")
+            out.append(f"established_at = {f['established_at']}")
+            out.append(f"certainty = {_toml_basic(f['certainty'])}")
+            out.append("sources = [")
+            for s in f["sources"]:
+                q = f", quote = {_toml_basic(s['quote'])}" if s.get("quote") else ""
+                out.append(f"  {{ chapter = {s['chapter']}{q} }},")
+            out.append("]")
+            if f.get("refines"):
+                out.append("refines = [" +
+                           ", ".join(_toml_basic(r) for r in f["refines"]) + "]")
+            if f.get("supersedes"):
+                out.append("supersedes = [" +
+                           ", ".join(_toml_basic(s) for s in f["supersedes"]) + "]")
+            out.append("")
+    return "\n".join(out)
+
+
+def _render_summaries(summaries: list[dict]) -> str:
+    by_entity = {}
+    for s in summaries:
+        by_entity.setdefault(s["entity"], []).append(s)
+    out = []
+    for entity in sorted(by_entity):
+        out.append(f"# ---- {entity} " + "-" * 60)
+        out.append("")
+        for s in by_entity[entity]:
+            out.append("[[summaries]]")
+            out.append(f"id = {_toml_basic(s['id'])}")
+            out.append(f"entity = {_toml_basic(s['entity'])}")
+            out.append(f"established_at = {s['established_at']}")
+            if s.get("supersedes"):
+                out.append("supersedes = [" +
+                           ", ".join(_toml_basic(x) for x in s["supersedes"]) + "]")
+            out.append(f"text = {_toml_multiline(s['text'])}")
+            out.append("sources = [")
+            for src in s["sources"]:
+                q = f", quote = {_toml_basic(src['quote'])}" if src.get("quote") else ""
+                out.append(f"  {{ chapter = {src['chapter']}{q} }},")
+            out.append("]")
+            out.append("")
+    return "\n".join(out)
+
+
+def apply_drafts(draft_dir: Path, data_dir: Path) -> int:
+    """Promote every _draft/ch-*.json into data/*.toml, replacing the corpus."""
+    drafts = sorted(draft_dir.glob("ch-*.json"))
+    if not drafts:
+        print(f"no drafts under {draft_dir}")
+        return 1
+
+    entities: list[dict] = []
+    facts: list[dict] = []
+    summaries: list[dict] = []
+    seen_e: set[str] = set()
+    seen_f: set[str] = set()
+    for fp in drafts:
+        d = json.loads(fp.read_text())
+        for e in d.get("new_entities", []):
+            if e["id"] in seen_e:
+                continue
+            seen_e.add(e["id"])
+            entities.append({
+                "id": e["id"], "name": e["name"], "type": e["type"],
+                "first_seen": e["first_seen"], "aliases": e.get("aliases", []),
+            })
+        for f in d.get("new_facts", []):
+            if f["id"] in seen_f:
+                continue
+            seen_f.add(f["id"])
+            facts.append(f)
+        summaries.extend(d.get("summary_updates", []))
+
+    eh = _file_header(data_dir / "entities.toml")
+    fh = _file_header(data_dir / "facts.toml")
+    sh = _file_header(data_dir / "summaries.toml")
+    (data_dir / "entities.toml").write_text(eh + _render_entities(entities))
+    (data_dir / "facts.toml").write_text(fh + _render_facts(facts))
+    (data_dir / "summaries.toml").write_text(sh + _render_summaries(summaries))
+
+    print(f"applied {len(entities)} entities, {len(facts)} facts, "
+          f"{len(summaries)} summaries -> {data_dir}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--chapters", nargs="+", type=int, required=True,
+    ap.add_argument("--chapters", nargs="+", type=int,
                     help="single chapter, or start end (inclusive)")
     ap.add_argument("--model", default=None)
     ap.add_argument("--webnovel-dir", default=None)
     ap.add_argument("--mock", action="store_true", help="offline plumbing test (no API call)")
-    ap.add_argument("--apply", action="store_true", help="merge drafts into data/ (not yet implemented)")
+    ap.add_argument("--apply", action="store_true",
+                    help="promote _draft/ into data/ (replaces the corpus; no extraction)")
     ap.add_argument("--fresh", action="store_true",
                     help="start from an empty corpus (ignore existing data/) for a clean from-scratch run")
     args = ap.parse_args()
 
     if args.apply:
-        print("--apply is not implemented yet; run draft mode and review first.")
-        return 1
+        return apply_drafts(DRAFT, DATA)
+
+    if not args.chapters:
+        ap.error("--chapters is required (use --apply to just promote drafts)")
 
     load_dotenv(ROOT / ".env")
     model = args.model or os.environ.get("LOTM_MODEL") or DEFAULT_MODEL

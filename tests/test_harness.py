@@ -1,6 +1,7 @@
 """Tests for the extraction harness's parsing and normalization logic."""
 from harness.extract import (
     active_facts_for,
+    apply_drafts,
     chapter_files,
     clean_text,
     compute_changed_entities,
@@ -212,3 +213,46 @@ def test_extract_json_downgrades_tier_on_response_format_error(monkeypatch):
     assert ex.extract_json("k", "m", [], {}, "test") == {"new_entities": []}
     assert formats[0]["type"] == "json_schema"   # rejected -> downgrade
     assert formats[1]["type"] == "json_object"   # accepted
+
+
+def test_apply_drafts_writes_and_roundtrips(tmp_path):
+    import json
+    import tomllib
+
+    draft_dir = tmp_path / "draft"
+    draft_dir.mkdir()
+    data_dir = tmp_path / "data"
+    data_dir.mkdir()
+    for name in ("entities", "facts", "summaries"):
+        (data_dir / f"{name}.toml").write_text(f"# {name} header\n\n")
+
+    (draft_dir / "ch-0001.json").write_text(json.dumps({
+        "new_entities": [
+            {"id": "klein-moretti-family", "name": "Klein Moretti's Family",
+             "type": "family", "first_seen": 1, "aliases": ["the Morettis"]},
+        ],
+        "new_facts": [
+            {"id": "f-note", "statement": 'The note reads "Everyone will die" — a warning.',
+             "entities": ["klein-moretti-family"], "established_at": 1,
+             "certainty": "fact",
+             "sources": [{"chapter": 1, "quote": "\"Everyone will die\""}]},
+        ],
+        "summary_updates": [
+            {"id": "s-klein-moretti-family-1", "entity": "klein-moretti-family",
+             "established_at": 1,
+             "text": "Klein's family — poor but proud — lives in Tingen.",
+             "supersedes": [], "sources": [{"chapter": 1}]},
+        ],
+    }))
+
+    assert apply_drafts(draft_dir, data_dir) == 0
+
+    ents = tomllib.loads((data_dir / "entities.toml").read_text())["entities"]
+    facts = tomllib.loads((data_dir / "facts.toml").read_text())["facts"]
+    sums = tomllib.loads((data_dir / "summaries.toml").read_text())["summaries"]
+
+    assert ents[0]["name"] == "Klein Moretti's Family"
+    assert ents[0]["aliases"] == ["the Morettis"]
+    assert facts[0]["statement"] == 'The note reads "Everyone will die" — a warning.'
+    assert facts[0]["sources"][0]["quote"] == '"Everyone will die"'
+    assert sums[0]["text"] == "Klein's family — poor but proud — lives in Tingen."
