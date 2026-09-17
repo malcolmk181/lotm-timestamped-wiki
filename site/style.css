@@ -249,6 +249,13 @@ body {
 }
 .source-quote { font-style: italic; overflow-wrap: anywhere; }
 
+/* ---- about view ---- */
+.about { max-width: 640px; }
+.about h2 { border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.about p, .about li { line-height: 1.65; }
+.about ul { padding-left: 22px; }
+.about .about-note { color: var(--text-dim); font-size: 0.85rem; margin-top: 24px; }
+
 /* ---- changes view ---- */
 .changes-intro { color: var(--text-dim); }
 .change { margin: 24px 0; }

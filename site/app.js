@@ -6,7 +6,7 @@ let entities = [];
 let summaries = [];
 let meta = { max_chapter: 1 };
 let chapter = 1;
-let view = "entities";
+let view = "about";
 let selectedId = null;
 
 const byId = (arr) => Object.fromEntries(arr.map((e) => [e.id, e]));
@@ -125,7 +125,9 @@ function render() {
     `${meta.entity_count} entities · ${meta.fact_count} facts · ` +
     `${meta.summary_count} descriptions · showing world as of chapter ${chapter}`;
 
-  if (view === "entities") {
+  if (view === "about") {
+    renderAbout(sidebar, content);
+  } else if (view === "entities") {
     renderEntityIndex(sidebar);
     renderEntityDetail(content);
   } else {
@@ -297,6 +299,26 @@ function renderEntityDetail(content) {
     p.textContent = "Nothing specific established yet for this entity.";
     content.appendChild(p);
   }
+}
+
+function renderAbout(sidebar, content) {
+  sidebar.innerHTML = "";
+  content.innerHTML = "";
+
+  const box = document.createElement("div");
+  box.className = "about";
+  box.innerHTML = [
+    "<h2>About this wiki</h2>",
+    "<p>A spoiler-safe, chapter-timestamped wiki of <em>Lord of the Mysteries</em>. Move the Chapter slider and the whole wiki rewinds or fast-forwards: you see only what is knowable at that point in the story.</p>",
+    "<ul>",
+    "  <li><strong>Timestamped knowledge.</strong> Facts and descriptions exist only from the chapter that establishes them \u2014 nothing from later chapters leaks backward.</li>",
+    "  <li><strong>Reversals, kept.</strong> When a later chapter overturns an earlier understanding, the old one isn\u2019t erased \u2014 it stays visible as <em>previous understanding</em>, with sources, alongside what replaced it.</li>",
+    "  <li><strong>Sourced.</strong> Every fact cites its chapter and an exact quote from the text.</li>",
+    "</ul>",
+    "<p>Browse <strong>Entities</strong> for people, places, and concepts, or <strong>Temporal changes</strong> to see how the wiki\u2019s understanding has shifted. Content so far covers chapters 1\u2013" + meta.max_chapter + ".</p>",
+    "<p class=\"about-note\">Unofficial fan reference, not affiliated with the author or publisher. See the project README for full attribution.</p>",
+  ].join("");
+  content.appendChild(box);
 }
 
 function renderChanges(sidebar, content) {
