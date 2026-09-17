@@ -5,6 +5,29 @@ Mysteries*. Explore the setting **as understood at any given chapter** — facts
 are missing until established, and overturned facts are kept as *previous
 understandings* with sources and a pointer to what replaced them.
 
+## Attribution
+
+*Lord of the Mysteries* is written by **Cuttlefish That Loves Diving**
+(爱潜水的乌贼). All rights to the novel and its world belong to the author and
+the official publisher. Read the official English translation on
+[Webnovel](https://www.webnovel.com/book/lord-of-mysteries_110227330062345055).
+
+The chapter text this wiki is built from is an unofficial fan translation,
+sourced from **LOTM-Reader**, a fan project by
+[@Bittu5134](https://github.com/Bittu5134) hosted at
+[beyonder.pages.dev](https://beyonder.pages.dev)
+([github.com/Bittu5134/LOTM-Reader](https://github.com/Bittu5134/LOTM-Reader));
+we use its `webnovel` translation. This wiki is an independent, non-profit fan
+reference and is not affiliated with the author, the publisher, or LOTM-Reader.
+If you enjoy the story, please support the official release.
+
+## Built with
+
+Authored with [Hermes Agent](https://hermes-agent.nousresearch.com/docs) (Nous
+Research) and [DeepSeek](https://www.deepseek.com) language models via
+OpenRouter. The extraction harness feeds each chapter to the model one at a
+time; its structured output is reviewed by a human before entering `data/`.
+
 ## How it works
 
 There is no server and no database. The whole thing is:
@@ -115,4 +138,4 @@ validated against the schema, output committed to git.
 - [x] Extraction harness (spoiler-bounded, per-chapter, draft-first)
 - [ ] Match harness output to hand-authored ch 1–3; then extract ch 4–25
 - [ ] `--apply` merge step (currently manual review-and-merge)
-- [ ] GitHub Pages deployment
+- [x] GitHub Pages deployment
