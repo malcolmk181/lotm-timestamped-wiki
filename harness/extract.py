@@ -15,7 +15,7 @@ Usage:
     uv run python harness/extract.py --chapters 4 --apply     # extract AND merge ch 4
 
 Requires OPENROUTER_API_KEY in a .env at the repo root (see .env.example).
-Model is deepseek/deepseek-v4-flash by default; override with LOTM_MODEL.
+Model is qwen/qwen3.8-27b by default (non-thinking); override with LOTM_MODEL.
 """
 from __future__ import annotations
 
@@ -43,7 +43,7 @@ from pydantic import ValidationError
 
 DATA = ROOT / "data"
 DRAFT = ROOT / "_draft"
-DEFAULT_MODEL = "deepseek/deepseek-v4-flash"
+DEFAULT_MODEL = "qwen/qwen3.8-27b"
 DEFAULT_WEBWOVEL = ROOT / ".." / "LOTM-Reader" / "chapters" / "lotm" / "webnovel"
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
 

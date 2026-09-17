@@ -53,8 +53,9 @@
 ## Extraction harness
 - Harness reads the `webnovel` translation (NOT `oldtl`), at
   `../LOTM-Reader/chapters/lotm/webnovel`.
-- Model: `deepseek/deepseek-v4-flash` by default (`LOTM_MODEL` to override;
-  `deepseek/deepseek-v4-pro` is the quality fallback once locked in).
+- Model: `qwen/qwen3.8-27b` by default (`LOTM_MODEL` to override). Reasoning is
+  forced off via `reasoning:{enabled:false}` — Qwen3.8/DeepSeek think by
+  default and otherwise leak chain-of-thought into the JSON.
 - Draft-first: `harness/extract.py` writes to `_draft/` and never mutates
   `data/` unless `--apply`. Review the `.report.md` before merging.
 - The extraction is spoiler-bounded by construction: one chapter at a time,

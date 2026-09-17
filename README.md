@@ -24,7 +24,8 @@ If you enjoy the story, please support the official release.
 ## Built with
 
 Authored with [Hermes Agent](https://hermes-agent.nousresearch.com/docs) (Nous
-Research) and [DeepSeek](https://www.deepseek.com) language models via
+Research) and [Qwen](https://qwenlm.github.io/) and
+[DeepSeek](https://www.deepseek.com) language models via
 OpenRouter. The extraction harness feeds each chapter to the model one at a
 time; its structured output is reviewed by a human before entering `data/`.
 
@@ -108,8 +109,9 @@ OpenRouter) only the current chapter's text plus a compact "prior state" (what
 and summary revisions — so it cannot leak later chapters, and it has to link
 `refines`/`supersedes` to existing ids.
 
-- **Model:** `deepseek/deepseek-v4-flash` (cheap, low refusal). Override with
-  `LOTM_MODEL` for higher prose quality (`deepseek/deepseek-v4-pro`) once locked.
+- **Model:** `qwen/qwen3.8-27b` (cheap, open-weight). Reasoning is forced off
+  (`reasoning:{enabled:false}`) so chain-of-thought can't leak into the JSON.
+  Override with `LOTM_MODEL`.
 - **Source:** the `webnovel` translation (not `oldtl`).
 - **Schema + structured output:** the delta shape is defined once in
   [`harness/schema.py`](harness/schema.py) as pydantic models; their JSON
