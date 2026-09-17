@@ -175,6 +175,11 @@ def _openrouter_post(api_key: str, model: str, messages: list[dict],
         "messages": messages,
         "temperature": 0,
         "max_tokens": 12000,
+        # Force non-thinking mode. Hybrid models (Qwen 3.8, DeepSeek, …) reason
+        # by default and leak their chain-of-thought into structured output.
+        # OpenRouter maps this to the provider's "thinking off" switch and
+        # ignores it for models with no reasoning mode.
+        "reasoning": {"enabled": False},
     }
     if response_format is not None:
         body["response_format"] = response_format
