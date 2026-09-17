@@ -94,7 +94,6 @@ class SummaryUpdate(BaseModel):
 
 
 class ExtractionDelta(BaseModel):
-    reasoning: str = ""
     new_entities: list[NewEntity] = Field(default_factory=list)
     new_facts: list[NewFact] = Field(default_factory=list)
     summary_updates: list[SummaryUpdate] = Field(default_factory=list)

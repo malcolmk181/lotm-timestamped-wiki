@@ -120,11 +120,10 @@ HARD RULES:
 4. Be noisy and detailed: prefer many small, specific claims over a few big ones. This is what makes later refinements and overturns meaningful.
 5. Output NOTHING already captured in the prior state. new_entities is ONLY for entities not listed under ENTITIES below; new_facts is ONLY for claims the FACTS list does not already state; emit a summary_update ONLY when you add to or change an entity's description. If a chapter adds nothing new, return empty arrays. Re-emiting an existing entity id is a hard error.
 6. Enumerate fully. When the text gives a list or roll-call (e.g. "seven orthodox gods: the Eternal Blazing Sun, the Lord of Storms, ..."), do not truncate it: emit an entity for the collective plus one entity for each named member, and a fact that names the complete list. Lists like this are core world-building and must not be shortened.
-7. Use the top-level `reasoning` field for any chain-of-thought (it is discarded). Every OTHER field value is a literal string ONLY — never put reasoning, questions, hedging, or alternatives inside a value (e.g. type is "character", never "character, or maybe 'person'").
+7. Field values are literal strings ONLY. Never write reasoning, questions, hedging, or alternatives inside a value (e.g. type is "character", never "character, or maybe 'person'").
 
 OUTPUT SCHEMA (exactly this JSON object):
 {
-  "reasoning": "<optional free-form chain-of-thought — discarded; use THIS to think, never the other fields>",
   "new_entities": [ {"id": "<slug>", "name": "<name>", "type": "<type>", "aliases": ["<name>"]} ],
   "new_facts": [ {"id": "<slug>", "statement": "<claim>", "entities": ["<entity-id>"], "certainty": "<level>", "sources": [{"chapter": N, "quote": "<exact short quote>"}], "refines": ["<fact-id>"], "supersedes": ["<fact-id>"]} ],
   "summary_updates": [ {"entity": "<entity-id>", "text": "<prose paragraph>"} ],

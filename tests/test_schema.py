@@ -51,7 +51,7 @@ def test_defaults_applied():
 
 def test_schema_exposes_top_level_keys():
     assert set(DELTA_SCHEMA["properties"].keys()) == {
-        "reasoning", "new_entities", "new_facts", "summary_updates"}
+        "new_entities", "new_facts", "summary_updates"}
 
 
 def test_summary_update_shape_has_no_supersedes_field():
