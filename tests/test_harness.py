@@ -164,7 +164,7 @@ def test_prior_state_prompt_lists_entities_and_facts():
     text = prior_state_prompt(prior)
     assert "e1 | One | concept" in text
     assert "f1 | s | 1" in text
-    assert "s-e1-1 | e1 | 1" in text
+    assert "s-e1-1" not in text  # summaries excluded from the main prior state
 
 
 def _resp(content):

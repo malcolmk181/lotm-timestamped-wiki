@@ -102,10 +102,9 @@ def prior_state_prompt(prior: dict) -> str:
     lines.append("FACTS (id | statement | established_at):")
     for f in prior["facts"]:
         lines.append(f"- {f['id']} | {f['statement']} | {f['established_at']}")
-    lines.append("")
-    lines.append("SUMMARIES (id | entity | established_at):")
-    for s in prior["summaries"]:
-        lines.append(f"- {s['id']} | {s['entity']} | {s['established_at']}")
+    # Note: summaries are deliberately NOT listed here — the main pass emits
+    # entities + facts only, and summaries are a separate, later pass. Keeping
+    # them out trims the prior-state prompt as the summary count grows.
     return "\n".join(lines)
 
 
