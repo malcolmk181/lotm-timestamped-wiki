@@ -121,6 +121,8 @@ function render() {
   const sidebar = document.getElementById("sidebar");
   const content = document.getElementById("content");
   const footer = document.getElementById("footer");
+  const layout = document.querySelector(".layout");
+  layout.classList.toggle("no-sidebar", view !== "entities");
   footer.textContent =
     `${meta.entity_count} entities · ${meta.fact_count} facts · ` +
     `${meta.summary_count} descriptions · showing world as of chapter ${chapter}`;

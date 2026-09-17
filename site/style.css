@@ -108,6 +108,8 @@ body {
   margin: 0 auto;
   align-items: start;
 }
+.layout.no-sidebar { grid-template-columns: 1fr; }
+.layout.no-sidebar .sidebar { display: none; }
 
 .sidebar {
   position: sticky;
